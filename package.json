@@ -4,11 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Par-For-Loops/Gallivant.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Par-For-Loops/Gallivant/issues"
+  },
+  "homepage": "https://github.com/Par-For-Loops/Gallivant#readme",
   "dependencies": {
     "axios": "^1.6.7",
     "dotenv": "^16.4.1",
