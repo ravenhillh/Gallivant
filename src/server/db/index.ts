@@ -14,6 +14,8 @@ db.authenticate()
         console.error('Unable to connect to the database:', error);
     })
 
+
+// CREATED USERS TABLE   
 const User = db.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -26,11 +28,13 @@ const User = db.define('User', {
         type: DataTypes.INTEGER,
         references: {
             model: 'Tours',
-            key: 'id'
+            key: 'id',
+            allowNull: false
         }
     }
 }, { timestamps: true })
 
+// CREATED TOURS TABLE
 const Tour = db.define('Tour', {
     id: {
         type: DataTypes.INTEGER,
@@ -41,7 +45,8 @@ const Tour = db.define('Tour', {
         type: DataTypes.INTEGER,
         references: {
             model: User,
-            key: 'id'
+            key: 'id',
+            allowNull: false
         }
     },
     type: DataTypes.STRING,
@@ -55,7 +60,88 @@ const Tour = db.define('Tour', {
     startLat: DataTypes.DECIMAL
 })
 
-// console.log(User === db.models.User);
+
+// CREATED WAYPOINTS TABLE
+const Waypoint = db.define('Waypoint', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    description: DataTypes.TEXT,
+    prompt: DataTypes.TEXT,
+    answer: DataTypes.STRING,
+    long: DataTypes.DECIMAL,
+    lat: DataTypes.DECIMAL,
+    ratingAvg: DataTypes.DECIMAL
+})
+
+// CREATED CATEGORIES TABLE
+const Category = db.define('Category', { //waypoint description
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    category: DataTypes.STRING,
+    icon: DataTypes.STRING
+})
+
+// CREATED IMAGES TABLE
+const Image = db.define('Image', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    thumbnail: DataTypes.STRING,
+    largeImg: DataTypes.STRING
+})
+
+// CREATED REVIEWS TABLE
+const Review = db.define('Review', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    feedback: DataTypes.STRING,
+    rating: DataTypes.INTEGER
+})
+
+// CREATED CHATS TABLE
+const Chat = db.define('Chat', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    message: DataTypes.STRING
+})
 
 //   Table Users_Waypoints {
 //     id_user int [ref: - Users.id]
@@ -63,26 +149,11 @@ const Tour = db.define('Tour', {
 //     status varchar
 //   }
 
-//   Table Waypoints {
-//     id int [primary key]
-//     description varchar
-//     prompt varchar
-//     answer varchar
-//     long float
-//     lat float
-//     rating_avg float //denormalized?
-//   }
-
 //   Table Images_Waypoints {
 //     id_waypoint int [ref: - Waypoints.id]
 //     id_image int [ref: - Images.id]
 //   }
 
-//   Table Categories { //waypoint description
-//     id int [primary key]
-//     category varchar
-//     icon varchar
-//   }
 
 //   Table Waypoints_Categories {
 //     id_waypoint int [ref: - Waypoints.id]
@@ -101,12 +172,6 @@ const Tour = db.define('Tour', {
 //     id_user int [ref: - Users.id]
 //   }
 
-//   Table Images {
-//     id int [primary key]
-//     id_user int [ref: > Users.id]
-//     thumbnail varchar
-//     large_img varchar
-//   }
 
 //   Table Images_Reviews {
 //     id_review int [ref: - Reviews.id]
@@ -118,12 +183,6 @@ const Tour = db.define('Tour', {
 //     id_image int [ref: - Images.id]
 //   }
 
-//   Table Reviews {
-//     id int [primary key]
-//     id_user int [ref: > Users.id]
-//     feedback varchar
-//     rating int
-//   }
 
 //   Table Reviews_Tours {
 //     id_review int [ref: - Reviews.id]
@@ -135,11 +194,6 @@ const Tour = db.define('Tour', {
 //     id_waypoint int [ref: - Waypoints.id]
 //   }
 
-//   Table Chats {
-//     id int [primary key]
-//     id_user int [ref: > Users.id]
-//     message varchar
-//   }
 
 //   Table Chats_Tours {
 //     id_chat int [ref: - Chats.id]
