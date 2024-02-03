@@ -25,7 +25,7 @@ const User = db.define('User', {
     id_currentTour: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'tours',
+            model: 'Tours',
             key: 'id'
         }
     }
@@ -145,6 +145,6 @@ const Tour = db.define('Tour', {
 //     id_chat int [ref: - Chats.id]
 //     id_tour int [ref: - Tours.id]
 //   } 
-
+db.sync()
 
 export default { db, Tour, User }
