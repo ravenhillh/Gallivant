@@ -3,7 +3,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const db = new Sequelize('gallivant', 'root', '', {
     host: 'localhost',
     dialect: 'mysql'
-})
+});
 
 
 db.authenticate()
@@ -12,10 +12,10 @@ db.authenticate()
     })
     .catch((error: string) => {
         console.error('Unable to connect to the database:', error);
-    })
+    });
 
 
-// CREATED USERS TABLE   
+// CREATED USERS TABLE
 const User = db.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -32,7 +32,7 @@ const User = db.define('User', {
             allowNull: false
         }
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
 // CREATED TOURS TABLE
 const Tour = db.define('Tour', {
@@ -58,7 +58,7 @@ const Tour = db.define('Tour', {
     totalWaypoints: DataTypes.INTEGER,
     startLong: DataTypes.DECIMAL,
     startLat: DataTypes.DECIMAL
-})
+}, { timestamps: true });
 
 
 // CREATED WAYPOINTS TABLE
@@ -74,7 +74,7 @@ const Waypoint = db.define('Waypoint', {
     long: DataTypes.DECIMAL,
     lat: DataTypes.DECIMAL,
     ratingAvg: DataTypes.DECIMAL
-})
+}, { timestamps: true });
 
 // CREATED CATEGORIES TABLE
 const Category = db.define('Category', { //waypoint description
@@ -85,7 +85,7 @@ const Category = db.define('Category', { //waypoint description
     },
     category: DataTypes.STRING,
     icon: DataTypes.STRING
-})
+});
 
 // CREATED IMAGES TABLE
 const Image = db.define('Image', {
@@ -104,7 +104,7 @@ const Image = db.define('Image', {
     },
     thumbnail: DataTypes.STRING,
     largeImg: DataTypes.STRING
-})
+}, { timestamps: true });
 
 // CREATED REVIEWS TABLE
 const Review = db.define('Review', {
@@ -123,7 +123,7 @@ const Review = db.define('Review', {
     },
     feedback: DataTypes.STRING,
     rating: DataTypes.INTEGER
-})
+}, { timestamps: true });
 
 // CREATED CHATS TABLE
 const Chat = db.define('Chat', {
@@ -141,64 +141,224 @@ const Chat = db.define('Chat', {
         }
     },
     message: DataTypes.STRING
-})
+}, { timestamps: true });
 
-//   Table Users_Waypoints {
-//     id_user int [ref: - Users.id]
-//     id_waypoint int [ref: - Waypoints.id]
-//     status varchar
-//   }
+const Users_Waypoints = db.define('Users_Waypoints', {
+    id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Waypoint,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    status: DataTypes.STRING
+  }, { timestamps: true });
 
-//   Table Images_Waypoints {
-//     id_waypoint int [ref: - Waypoints.id]
-//     id_image int [ref: - Images.id]
-//   }
-
-
-//   Table Waypoints_Categories {
-//     id_waypoint int [ref: - Waypoints.id]
-//     id_category int [ref: - Categories.id]
-//   }
-
-
-//   Table Tours_Waypoints {
-//     id_tour int [ref: - Tours.id]
-//     id_waypoint int [ref: - Waypoints.id]
-//     order int
-//   }
-
-//   Table Completed_Tours {
-//     id_tour int [ref: - Tours.id]
-//     id_user int [ref: - Users.id]
-//   }
-
-
-//   Table Images_Reviews {
-//     id_review int [ref: - Reviews.id]
-//     id_image int [ref: - Images.id]
-//   }
-
-//   Table Images_Tours {
-//     id_tour int [ref: - Tours.id]
-//     id_image int [ref: - Images.id]
-//   }
-
-
-//   Table Reviews_Tours {
-//     id_review int [ref: - Reviews.id]
-//     id_tour int [ref: - Tours.id]
-//   }
-
-//   Table Reviews_Waypoints {
-//     id_review int [ref: - Reviews.id]
-//     id_waypoint int [ref: - Waypoints.id]
-//   }
+const Images_Waypoints = db.define('Images_Waypoints', {
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Waypoint,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_image: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Image,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  }, { timestamps: true });
 
 
-//   Table Chats_Tours {
-//     id_chat int [ref: - Chats.id]
-//     id_tour int [ref: - Tours.id]
-//   } 
-db.sync()
+const Waypoints_Categories = db.define('Waypoints_Categories', {
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Waypoint,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_category: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Category,
+            key: 'id',
+            allowNull: false
+        }
+    },
+});
 
-export default { db, Tour, User }
+
+const Tours_Waypoints = db.define('Tours_Waypoints', {
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Waypoint,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    order: DataTypes.INTEGER
+  });
+
+const Completed_Tours = db.define('Completed_Tours', {
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  }, { timestamps: true });
+
+
+const Images_Reviews = db.define('Images_Reviews', {
+    id_review: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Review,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_image: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Image,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  });
+
+const Images_Tours  = db.define('Images_Tours', {
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_image: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Image,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  });
+
+
+const Reviews_Tours = db.define('Reviews_Tours', {
+    id_review: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Review,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  });
+
+const Reviews_Waypoints = db.define('Reviews_Waypoints', {
+    id_review: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Review,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Waypoint,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  });
+
+
+const Chats_Tours = db.define('Chats_Tours', {
+    id_chat: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Chat,
+            key: 'id',
+            allowNull: false
+        }
+    },
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
+  });
+
+db.sync();
+
+module.exports = {
+    db,
+    Tour,
+    User,
+    Waypoint,
+    Category,
+    Image,
+    Review,
+    Chat,
+    Users_Waypoints,
+    Images_Waypoints,
+    Waypoints_Categories,
+    Tours_Waypoints,
+    Completed_Tours,
+    Images_Reviews,
+    Images_Tours,
+    Reviews_Tours,
+    Reviews_Waypoints,
+    Chats_Tours
+};
