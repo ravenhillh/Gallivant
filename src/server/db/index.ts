@@ -340,9 +340,13 @@ const Chats_Tours = db.define('Chats_Tours', {
     },
   });
 
+db.options.logging = false;
+
 db.sync();
 
-module.exports = {
+db.options.logging = true;
+
+export {
     db,
     Tour,
     User,
