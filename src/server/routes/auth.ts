@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
@@ -17,7 +18,6 @@ passport.use(
       clientSecret,
       callbackURL: 'http://localhost:3000/auth/google/callback',
       passReqToCallback: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     },
     function (
       req: any,
@@ -28,8 +28,7 @@ passport.use(
     ) {
       User.findOrCreate({
         where: {
-          id: profile.id,
-          email: profile.emails[0].value,
+          googleId: profile.id,
           username: profile.displayName,
         },
       })

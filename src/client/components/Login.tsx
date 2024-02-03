@@ -5,7 +5,7 @@ function Login() {
     <div>
       <h1>Temporary Login Page</h1>
       <button id='login'>
-        <a className='button google' href='/login/federated/google'>
+        <a className='button google' href='/auth/google'>
           Sign in with Google
         </a>
       </button>

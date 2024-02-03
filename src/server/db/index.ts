@@ -23,7 +23,7 @@ const User = db.define('User', {
         autoIncrement: true
     },
     username: DataTypes.STRING,
-    email: DataTypes.STRING,
+    googleId: DataTypes.STRING,
     id_currentTour: {
         type: DataTypes.INTEGER,
         references: {

@@ -34,6 +34,9 @@ app.use(passport.authenticate('session'));
 
 // ROUTES
 app.use('/', authRouter);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(3000, () => {
   console.info('Gallivant server listening on port 3000. http://localhost:3000');
