@@ -1,9 +1,18 @@
 import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 
-const App = () => {
-  return (
-    <h1>Hello World</h1>
-  );
-};
+import Home from './Home';
+import Login from './Login';
+
+const App = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />
+  },
+  {
+    path: '/home',
+    element: <Home />
+  }
+]);
 
 export default App;
