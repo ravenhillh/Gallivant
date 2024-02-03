@@ -23,7 +23,7 @@ const User = db.define('User', {
         autoIncrement: true
     },
     username: DataTypes.STRING,
-    email: DataTypes.STRING,
+    googleId: DataTypes.STRING,
     id_currentTour: {
         type: DataTypes.INTEGER,
         references: {
@@ -340,9 +340,13 @@ const Chats_Tours = db.define('Chats_Tours', {
     },
   });
 
+db.options.logging = false;
+
 db.sync();
 
-module.exports = {
+db.options.logging = true;
+
+export {
     db,
     Tour,
     User,
