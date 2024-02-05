@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
@@ -19,13 +18,7 @@ passport.use(
       callbackURL: 'http://localhost:3000/auth/google/callback',
       passReqToCallback: true,
     },
-    function (
-      req: any,
-      accessToken: string,
-      refreshToken: string,
-      profile: any,
-      cb: any
-    ) {
+    function (req, accessToken, refreshToken, profile, cb) {
       User.findOrCreate({
         where: {
           googleId: profile.id,
@@ -46,9 +39,7 @@ passport.use(
 passport.serializeUser(function (user, cb) {
   cb(null, user);
 });
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-passport.deserializeUser(function (user: any, cb) {
+passport.deserializeUser(function (user: object, cb) {
   cb(null, user);
 });
 
@@ -64,7 +55,7 @@ authRouter.get(
 
 authRouter.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
     // Successful authentication, redirect home.
     res.redirect('/home');
