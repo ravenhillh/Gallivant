@@ -34,7 +34,7 @@ const App = createBrowserRouter([
         element: <Icon />,
       }
     ]
-  },
+  }
 ]);
 
 export default App;

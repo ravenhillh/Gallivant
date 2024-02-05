@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 // import Map from './Map';
 // import Camera from './Camera';
@@ -15,17 +15,18 @@ function NavBar() {
     <div className="nav-bar">
       <ul>
         <li className="map-link">
-          <Link to="/map" reloadDocument={true}>Map</Link>
+          <Link to="map">Map</Link>
         </li>
         <li className="camera-link">
-          <Link to="/camera">Camera</Link>
+          <Link to="camera">Camera</Link>
         </li>
         <li className="tours-link">
-          <Link to="/tours">Tours</Link>
+          <Link to="tours">Tours</Link>
         </li>
         <li className="Icon-link">
-          <Link to="/icon">Icon</Link>
+          <Link to="icon">Icon</Link>
         </li>
+        <Outlet />
       </ul>
     </div>
   );
