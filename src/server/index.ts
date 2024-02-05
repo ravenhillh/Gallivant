@@ -16,9 +16,9 @@ const SequelizeStore = connectSessionSequelize(session.Store);
 const app = express();
 
 // MIDDLEWARE
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev')); // logger
+app.use(express.json()); // body parser
+app.use(express.urlencoded({ extended: false })); // url-encoded body parser
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 // Authentication session middleware
