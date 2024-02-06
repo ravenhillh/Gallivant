@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import express from 'express';
+import express, { RequestHandler, Request, Response } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../db/index';
@@ -19,13 +18,7 @@ passport.use(
       callbackURL: 'http://localhost:3000/auth/google/callback',
       passReqToCallback: true,
     },
-    function (
-      req: any,
-      accessToken: string,
-      refreshToken: string,
-      profile: any,
-      cb: any
-    ) {
+    function (req, accessToken, refreshToken, profile, cb) {
       User.findOrCreate({
         where: {
           googleId: profile.id,
@@ -46,17 +39,18 @@ passport.use(
 passport.serializeUser(function (user, cb) {
   cb(null, user);
 });
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-passport.deserializeUser(function (user: any, cb) {
+passport.deserializeUser(function (user: object, cb) {
   cb(null, user);
 });
 
 //AUTH ROUTES
-authRouter.get('/login', function (req, res) {
-  res.render('login');
+// client side authentication check for protected component loaders
+authRouter.get('/auth/client', (req: Request, res: Response) => {
+  const verify: boolean = req.isAuthenticated();
+  res.status(200).send(verify);
 });
 
+// Google authentication and redirect callback
 authRouter.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
@@ -64,10 +58,10 @@ authRouter.get(
 
 authRouter.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/home');
+    res.redirect('/');
   }
 );
 
@@ -76,7 +70,7 @@ authRouter.post('/logout', function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.redirect('/');
+    res.redirect('/login');
   });
 });
 
