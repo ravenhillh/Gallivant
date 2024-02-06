@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import session from 'express-session';
+import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
@@ -30,8 +31,20 @@ app.use(session({
 }));
 app.use(passport.authenticate('session'));
 
+const checkLoggedIn: RequestHandler = (req, res, next) => {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    next();
+  }
+  res.redirect('/login');
+};
+
+// protected routes in this array
+app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
+
 // ROUTES
 app.use('/', authRouter);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
