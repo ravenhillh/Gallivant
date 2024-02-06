@@ -3,43 +3,39 @@ import { useState } from 'react';
 
 // make state photo variable that holds photo file
 function Camera():JSX.Element {
+  // image is a 'preview', before image is selected to be POSTED to database
   const [image, setImage] = useState('');
+  // use ternary to hide img tag until image value has been set?
 
   // function to access photo data
   // check for env or user id
-  // set id to be dynamic, either environment or user
+  // set id to be dynamic, either environment or user (button click)
+  // after lunch fix errors
 
-  const sendPic = () => {
-    // const preview:HTMLElement | null = document.querySelector('img');
-    // let file = fileInput.files[0];
-    const fileInput = document.getElementById('environment');
-    const selectedFile = fileInput!.files[0];
-    // console.log(selectedFile);
-    // fileInput.onchange = () => {
-    //   const selectedFile = fileInput.files[0];
-    //   // console.log(selectedFile);
-    //   // setImage(selectedFile.)
-    // };
+  const sendPic = (e) => {
+    // access image file from file picker
+    const selectedFile = e.target.files[0];
+    // File Reader to read selectedFile as base 64
     const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      // convert image file to base64 string
-      // console.log(typeof reader.result);
-      setImage(reader.result);
-      // preview!.src = reader.result;
-      // console.log(preview.src)
-      }, false);
-
     if (selectedFile) {
+      // read result as data url
       reader.readAsDataURL(selectedFile);
     }
- 
+
+    // setState and read generate dataURL
+    reader.addEventListener('load', () => {
+
+      setImage(reader.result as string);
+      // console.log(reader.result);
+      }, false);
+
   };
 
   const handleChange = (e) => {
     // prevent default to stop loop
     e.preventDefault();
-    sendPic();
+    sendPic(e);
   };
 
   return (
@@ -61,6 +57,7 @@ function Camera():JSX.Element {
         id="user"
         capture="user"
         accept="image/*"
+        onChange={handleChange}
       />
       <img src={image} height="200" alt="Image preview"/>
     </div>
