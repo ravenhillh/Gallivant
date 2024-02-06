@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { RequestHandler, Request, Response } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../db/index';
@@ -44,10 +44,13 @@ passport.deserializeUser(function (user: object, cb) {
 });
 
 //AUTH ROUTES
-authRouter.get('/login', function (req, res) {
-  res.render('login');
+// client side authentication check for protected component loaders
+authRouter.get('/auth/client', (req: Request, res: Response) => {
+  const verify: boolean = req.isAuthenticated();
+  res.status(200).send(verify);
 });
 
+// Google authentication and redirect callback
 authRouter.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
@@ -58,7 +61,7 @@ authRouter.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/home');
+    res.redirect('/');
   }
 );
 
@@ -67,7 +70,7 @@ authRouter.post('/logout', function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.redirect('/');
+    res.redirect('/login');
   });
 });
 
