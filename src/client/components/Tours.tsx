@@ -22,7 +22,7 @@ const Tours = (): JSX.Element => {
     <div>
       <h1>Tours</h1>
       <div>Map goes here.</div>
-      <h3>{tourName}</h3>
+      <h2>{tourName}</h2>
       <p>{description}</p>
       <div>
         <label>Tour name:</label>

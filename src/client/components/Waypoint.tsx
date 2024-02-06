@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const Waypoint = ({ waypoint }): JSX.Element => {
+const Waypoint = (props: { waypoint: string }): JSX.Element => {
+  const { waypoint } = props;
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
@@ -14,12 +15,18 @@ const Waypoint = ({ waypoint }): JSX.Element => {
   return (
     <li>
       {waypoint}
-      <h3>
-        Place: {name}
-      </h3>
-      <div>
-        description: {description}
-      </div>
+      <h3>Place: {name}</h3>
+      <div>description: {description}</div>
+      <input
+        type='text'
+        placeholder='Give the waypoint a name'
+        onChange={(e) => handleChange(e, setName)}
+      />
+      <input
+        type='text'
+        placeholder='Describe the place'
+        onChange={(e) => handleChange(e, setDescription)}
+      />
     </li>
   );
 };
