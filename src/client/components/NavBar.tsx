@@ -12,19 +12,24 @@ export interface NavBarProps {
 
 function NavBar() {
   return (
-    <div className="nav-bar">
+    <div className='nav-bar'>
       <ul>
-        <li className="map-link">
-          <Link to="map">Map</Link>
+        <li className='map-link'>
+          <Link to='map'>Map</Link>
         </li>
-        <li className="camera-link">
-          <Link to="camera">Camera</Link>
+        <li className='camera-link'>
+          <Link to='camera'>Camera</Link>
         </li>
-        <li className="tours-link">
-          <Link to="tours">Tours</Link>
+        <li className='tours-link'>
+          <Link to='tours'>Tours</Link>
         </li>
-        <li className="Icon-link">
-          <Link to="icon">Icon</Link>
+        <li className='icon-link'>
+          <Link to='icon'>Icon</Link>
+        </li>
+        <li className='logout-link'>
+          <form action='/logout' method='post'>
+            <button type='submit'>Sign out</button>
+          </form>
         </li>
         <Outlet />
       </ul>
