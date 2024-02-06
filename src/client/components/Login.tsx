@@ -9,9 +9,6 @@ function Login() {
           Sign in with Google
         </a>
       </button>
-      <form action='/logout' method='post'>
-        <button type='submit'>Sign out</button>
-      </form>
     </div>
   );
 }
