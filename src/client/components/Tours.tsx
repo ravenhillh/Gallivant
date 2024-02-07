@@ -22,8 +22,8 @@ const Tours = (): JSX.Element => {
     <div>
       <h1>Tours</h1>
       <div>Map goes here.</div>
-      <h2>{tourName}</h2>
-      <p>{description}</p>
+      <h2>Tour Name: {tourName}</h2>
+      <p>Description: {description}</p>
       <div>
         <label>Tour name:</label>
         <input type='text' value={tourName} onChange={(e) => handleChange(e, setName)}/>
