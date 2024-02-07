@@ -7,13 +7,14 @@ import React, { useRef, useEffect, useState } from 'react';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
-function Map(): JSX.Element {
+function MapView(): JSX.Element {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-90);
   const [lat, setLat] = useState(29.9);
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
+  // const [myLoc, setMyLoc] = useState()
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -23,7 +24,6 @@ function Map(): JSX.Element {
       center: [lng, lat],
       zoom: zoom,
     });
-
     map.current.on('move', () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
@@ -32,9 +32,34 @@ function Map(): JSX.Element {
 
   }, []);
   
+  function findAllMarkers() {
+    //send axios request to db to retrieve coordinates
+    axios.get('/maps/waypoints')
+    .then(({ data }) => {
+      setAllMarkers(data);
+      console.log(data);
+    })
+    .catch((err) => console.log(err, 'get markers failed'));
+  }
+
+  // function showMarkers() {
+  //   map.marker = new mapboxgl.Marker({
+  //     color: 'orange',
+  //     draggable: false
+  // })
+  // .setLngLat([allMarkers[0].long, allMarkers[0].lat])
+  //     .addTo(map.current);
+  // }
+
   return (
     <div>
       <h1>Map</h1>
+      <button type='submit' onClick={() => findAllMarkers()}>
+        send request
+      </button>
+      {/* <button type='submit' onClick={() => showMarkers()}>
+        show
+      </button> */}
       <div className="sidebar" >
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
@@ -43,4 +68,4 @@ function Map(): JSX.Element {
   );
 }
 
-export default Map;
+export default MapView;
