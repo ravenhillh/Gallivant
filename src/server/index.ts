@@ -10,6 +10,7 @@ dotenv.config();
 
 import  { db } from './db';
 import  authRouter  from './routes/auth';
+import  mapRouter   from './routes/map';
 
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
@@ -44,6 +45,8 @@ app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
 
 // ROUTES
 app.use('/', authRouter);
+app.use('/maps', mapRouter);
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));

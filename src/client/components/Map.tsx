@@ -1,4 +1,6 @@
 import mapboxgl from 'mapbox-gl';
+import axios from 'axios';
+import { Popup, Marker } from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 //import { JsxE } from 'typescript';
 
@@ -11,6 +13,8 @@ function Map(): JSX.Element {
   const [lng, setLng] = useState(-90);
   const [lat, setLat] = useState(29.9);
   const [zoom, setZoom] = useState(9);
+  const [allMarkers, setAllMarkers] = [];
+  // const [myLoc, setMyLoc] = useState()
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -25,12 +29,25 @@ function Map(): JSX.Element {
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
+
   }, []);
-  //style={{ color: '#fff', padding: '6px 12px', position: 'absolute', top: '0', left: '0', margin: '12px',}}
+  
+  function findAllMarkers() {
+    //send axios request to db to retrieve coordinates
+    //render returned points to map using setState
+    axios.get('/maps/waypoints')
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch((err) => console.log(err, 'get markers failed'));
+  }
 
   return (
     <div>
       <h1>Map</h1>
+      <button type='submit' onClick={() => findAllMarkers()}>
+        send request
+      </button>
       <div className="sidebar" >
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
