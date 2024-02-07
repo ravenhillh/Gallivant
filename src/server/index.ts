@@ -41,7 +41,7 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 };
 
 // protected routes in this array
-app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
+// app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
 
 // ROUTES
 app.use('/', authRouter);
