@@ -24,22 +24,22 @@ const App = createBrowserRouter([
       {
         path: '/map',
         element: <Map />,
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
       {
         path: '/camera',
         element: <Camera />,
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
       {
         path: '/tours',
         element: <Tours />,
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
       {
         path: '/icon',
         element: <Icon />,
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       }
     ]
   }
