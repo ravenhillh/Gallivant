@@ -1,6 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const db = new Sequelize('gallivant', 'root', '', {
+import dotenv from 'dotenv';
+dotenv.config();
+
+const sqlPw: string = process.env.SQL_PW ?? '';
+
+const db = new Sequelize('gallivant', 'root', sqlPw, {
     host: 'localhost',
     dialect: 'mysql'
 });
