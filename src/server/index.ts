@@ -21,8 +21,8 @@ const app = express();
 
 // MIDDLEWARE
 app.use(morgan('dev')); // logger
-app.use(express.json()); // body parser
-app.use(express.urlencoded({ extended: false })); // url-encoded body parser
+app.use(express.json({limit: '10mb'})); // body parser
+app.use(express.urlencoded({ extended: false, limit: '10mb' })); // url-encoded body parser
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 
 // Authentication session middleware
