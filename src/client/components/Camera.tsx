@@ -26,7 +26,7 @@ function Camera():JSX.Element {
   const sendPic = (e: React.ChangeEvent<HTMLInputElement>) => {
     // access image file from file picker
     const selectedFile = e.target.files![0];
-    // console.log(selectedFile);
+    console.log(selectedFile);
     setName(selectedFile.name);
     // File Reader to read selectedFile as base 64
     const reader = new FileReader();
