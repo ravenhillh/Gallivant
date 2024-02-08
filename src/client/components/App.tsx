@@ -6,7 +6,7 @@ import Login from './Login';
 import Map from './Map';
 import Camera from './Camera';
 import Tours from './Tours';
-import Icon from './Icon';
+import MyThree from './Icon';
 
 const App = createBrowserRouter([
   {
@@ -31,7 +31,7 @@ const App = createBrowserRouter([
       },
       {
         path: '/icon',
-        element: <Icon />,
+        element: <MyThree />,
       }
     ]
   }
