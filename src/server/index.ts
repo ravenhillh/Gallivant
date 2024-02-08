@@ -5,12 +5,14 @@ import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
+import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
 import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
+import imageRouter from './routes/image';
 
 import {uploadPhoto, getFileStream } from './services/s3';
 
@@ -43,11 +45,12 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 };
 
 // protected routes in this array
-// app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
+// app.use(['/map', '/tours', '/icon', '/images'], checkLoggedIn);
 
 // ROUTES
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
+app.use('/images', imageRouter);
 
 // ** API ROUTES **
 
@@ -62,10 +65,23 @@ app.get('/api/images/:key', (req, res) => {
 // POST image to S3
 app.post('/api/images', (req, res) => {
   const { imageName, base64 } = req.body;
-
+  // const { id } = req.user[0];
+  console.log('user data ', req.user);
   uploadPhoto(imageName, base64)
-    .then(data => console.log('uploadData ', data))
-    .catch(err => console.error('upload error ', err));
+    .then((data) => {
+      // axios.post('images/post', {
+      //   image: {
+      //     id_user: req.user[0].id,
+      //     largeImg: data.Key
+      //   }
+      // });
+      res.send(data).status(201);
+      console.log('uploadData ', data);
+    })
+    .catch((err) => {
+      console.error('upload error ', err);
+      res.sendStatus(500);
+    });
 });
 
 app.get('*', (req, res) => {
