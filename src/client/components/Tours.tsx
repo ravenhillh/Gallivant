@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import Waypoint from './Waypoint';
+import Waypoint from './tourComponents/Waypoint';
 import Map from './Map';
 
 const Tours = (): JSX.Element => {
-  const [waypoints, setWaypoints] = useState<string[]>([]);
+  type Tour = {
+    name: string;
+    description: string;
+  };
+
+  const [tours, setTours] = useState<Tour[]>([]);
   const [description, setDescription] = useState<string>('');
   const [tourName, setName] = useState<string>('');
 
-  const waypointBtnClick = () => {
-    setWaypoints((prevState) => prevState.concat('Coordinates Placeholder'));
+  const createTourBtnClick = () => {
+    setTours((prevState) => prevState.concat({ name: tourName, description }));
   };
 
   const handleChange = (
@@ -22,21 +28,30 @@ const Tours = (): JSX.Element => {
   return (
     <div>
       <h1>Tours</h1>
-      <Map />
-      <h2>Tour Name: {tourName}</h2>
-      <p>Description: {description}</p>
       <div>
         <label>Tour name:</label>
-        <input type='text' value={tourName} onChange={(e) => handleChange(e, setName)}/>
+        <input
+          type='text'
+          value={tourName}
+          onChange={(e) => handleChange(e, setName)}
+        />
       </div>
       <div>
         <label>Tour description:</label>
-        <input type='text' value={description} onChange={(e) => handleChange(e, setDescription)}/>
+        <input
+          type='text'
+          value={description}
+          onChange={(e) => handleChange(e, setDescription)}
+        />
       </div>
-      <button onClick={waypointBtnClick}>Add Waypoint</button>
-      <ol>
-        {waypoints.map((wp, i) => <Waypoint key={i} waypoint={wp}></Waypoint>)}
-      </ol>
+      <button onClick={createTourBtnClick}>Create Tour</button>
+      <ul>
+        {tours.map((tour, i) => (
+          <li key={i}>
+            <Link to="">{tour.name}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
