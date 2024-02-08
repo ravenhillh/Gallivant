@@ -1,6 +1,4 @@
 import mapboxgl from 'mapbox-gl';
-import axios from 'axios';
-import { Popup, Marker } from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 //import { JsxE } from 'typescript';
 
@@ -8,12 +6,11 @@ mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
 function Map(): JSX.Element {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
+  const mapContainer = useRef('');
+  const map = useRef< null| mapboxgl.Map >(null);
   const [lng, setLng] = useState(-90);
   const [lat, setLat] = useState(29.9);
   const [zoom, setZoom] = useState(9);
-  const [allMarkers, setAllMarkers] = useState([]);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -25,9 +22,9 @@ function Map(): JSX.Element {
     });
 
     map.current.on('move', () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
-      setZoom(map.current.getZoom().toFixed(2));
+      setLng(Number(map.current?.getCenter().lng.toFixed(4)));
+      setLat(Number(map.current?.getCenter().lat.toFixed(4)));
+      setZoom(Number(map.current?.getZoom().toFixed(2)));
     });
 
   }, []);
