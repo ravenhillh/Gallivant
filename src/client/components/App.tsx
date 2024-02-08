@@ -7,7 +7,7 @@ import Login from './Login';
 import Map from './Map';
 import Camera from './Camera';
 import Tours from './Tours';
-import Icon from './Icon';
+import MyThree from './Icon';
 import MapView from './MapView';
 
 // authentication checker for protected route loaders.
@@ -39,8 +39,7 @@ const App = createBrowserRouter([
       },
       {
         path: '/icon',
-        element: <Icon />,
-        // loader: async () => await requireAuth(),
+        element: <MyThree />,
       }
     ]
   }
