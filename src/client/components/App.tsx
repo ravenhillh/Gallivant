@@ -8,6 +8,7 @@ import Map from './Map';
 import Camera from './Camera';
 import Tours from './Tours';
 import Icon from './Icon';
+import MapView from './MapView';
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -22,8 +23,8 @@ const App = createBrowserRouter([
     element: <NavBar />,
     children: [
       {
-        path: '/map',
-        element: <Map />,
+        path: '/mapview',
+        element: <MapView />,
         // loader: async () => await requireAuth(),
       },
       {
