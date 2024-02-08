@@ -15,7 +15,7 @@ function NavBar() {
     <div className='nav-bar'>
       <ul>
         <li className='map-link'>
-          <Link to='map'>Map</Link>
+          <Link to='mapview'>MapView</Link>
         </li>
         <li className='camera-link'>
           <Link to='camera'>Camera</Link>
