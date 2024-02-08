@@ -12,6 +12,8 @@ import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
 
+import {uploadPhoto, getFileStream } from './services/s3';
+
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
 
@@ -47,6 +49,24 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
 
+// ** API ROUTES **
+
+// GET image from s3
+app.get('/api/images/:key', (req, res) => {
+  const { key } = req.params;
+  const readStream = getFileStream(key);
+
+  readStream.pipe(res);
+});
+
+// POST image to S3
+app.post('/api/images', (req, res) => {
+  const { imageName, base64 } = req.body;
+
+  uploadPhoto(imageName, base64)
+    .then(data => console.log('uploadData ', data))
+    .catch(err => console.error('upload error ', err));
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
