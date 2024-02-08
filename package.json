@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Par-For-Loops/Gallivant#readme",
   "dependencies": {
+    "aws-sdk": "^2.1553.0",
     "axios": "^1.6.7",
     "connect-session-sequelize": "^7.1.7",
     "dotenv": "^16.4.1",
