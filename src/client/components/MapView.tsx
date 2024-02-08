@@ -29,13 +29,14 @@ function MapView(): JSX.Element {
       setLat(Number(map.current?.getCenter().lat.toFixed(4)));
       setZoom(Number(map.current?.getZoom().toFixed(2)));
     });
-    // map.current.addControl(new mapboxgl.GeolocateControl({
-    //   positionOptions: {
-    //   enableHighAccuracy: true
-    //   },
-    //   trackUserLocation: true,
-    //   showUserHeading: true
-    //   }));
+    map.current.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+      }));
+
   }, []);
 
   function findAllMarkers() {
@@ -49,6 +50,7 @@ function MapView(): JSX.Element {
   }
   
   function showMarkers() {
+
     new mapboxgl.Marker({
       color: 'blue',
       draggable: false
