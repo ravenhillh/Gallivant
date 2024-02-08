@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Waypoint from './Waypoint';
+import Map from './Map';
 
 const Tours = (): JSX.Element => {
   const [waypoints, setWaypoints] = useState<string[]>([]);
@@ -21,7 +22,7 @@ const Tours = (): JSX.Element => {
   return (
     <div>
       <h1>Tours</h1>
-      <div>Map goes here.</div>
+      <Map />
       <h2>Tour Name: {tourName}</h2>
       <p>Description: {description}</p>
       <div>
