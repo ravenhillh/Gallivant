@@ -11,6 +11,7 @@ dotenv.config();
 import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
+import tourRouter from './routes/tours';
 
 import {uploadPhoto, getFileStream } from './services/s3';
 
@@ -48,6 +49,7 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 // ROUTES
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
+app.use('/', tourRouter);
 
 // ** API ROUTES **
 
