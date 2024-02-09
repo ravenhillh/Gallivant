@@ -27,7 +27,6 @@ function Camera():JSX.Element {
   const sendPic = (e: React.ChangeEvent<HTMLInputElement>) => {
     // access image file from file picker
     const selectedFile = e.target.files![0];
-    // console.log(selectedFile);
     // setName(selectedFile.name);
     // File Reader to read selectedFile as base 64
     const reader = new FileReader();
@@ -55,6 +54,7 @@ function Camera():JSX.Element {
   const handleClick = () => {
     // call axios function
     // generate UUID to pass in as name/key
+   
     const name = uuidv4();
     postBucket(name, image);
     // console.log(image);

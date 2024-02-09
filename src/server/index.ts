@@ -5,7 +5,7 @@ import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
-import axios from 'axios';
+// import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,6 +15,13 @@ import  mapRouter   from './routes/map';
 import imageRouter from './routes/image';
 
 import {uploadPhoto, getFileStream } from './services/s3';
+
+// import { User } from 'express-serve-static-core';
+// declare module 'express-serve-static-core' {
+//   interface User {
+//     id?: number
+//   }
+// }
 
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
@@ -63,10 +70,12 @@ app.get('/api/images/:key', (req, res) => {
 });
 
 // POST image to S3
+
 app.post('/api/images', (req, res) => {
   const { imageName, base64 } = req.body;
-  // const { id } = req.user[0];
-  console.log('user data ', req.user);
+  // const { id } = req.user;
+  // id throws error here 
+  // console.log(req.user.id);
   uploadPhoto(imageName, base64)
     .then((data) => {
       // axios.post('images/post', {

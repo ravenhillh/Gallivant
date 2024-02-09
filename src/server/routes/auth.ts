@@ -2,6 +2,8 @@ import express, { RequestHandler, Request, Response } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../db/index';
+
+// import { Express } from 'express-serve-static-core';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -25,7 +27,8 @@ passport.use(
           username: profile.displayName,
         },
       })
-        .then((user: object) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((user: Array<any>) => {
           cb(null, user);
         })
         .catch((err: string) => {
@@ -37,11 +40,18 @@ passport.use(
 );
 
 passport.serializeUser(function (user, cb) {
+  // console.log(user);
+  // if I try to access user.id here I get error:
+  // Property 'id' does not exist on type 'User'
+  // server crashes
   cb(null, user);
 });
-passport.deserializeUser(function (user: object, cb) {
-  cb(null, user);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+passport.deserializeUser(function ([userInstance, created], cb) {
+  // console.log(user);
+  cb(null, userInstance);
 });
+
 
 //AUTH ROUTES
 // client side authentication check for protected component loaders
