@@ -62,8 +62,8 @@ const Tour = db.define('Tour', {
     neighborhood: DataTypes.STRING,
     completions: DataTypes.INTEGER,
     totalWaypoints: DataTypes.INTEGER,
-    startLong: DataTypes.DECIMAL,
-    startLat: DataTypes.DECIMAL
+    startLong: DataTypes.DECIMAL(7,5),
+    startLat: DataTypes.DECIMAL(7,5)
 }, { timestamps: true });
 
 
@@ -77,8 +77,8 @@ const Waypoint = db.define('Waypoint', {
     description: DataTypes.TEXT,
     prompt: DataTypes.TEXT,
     answer: DataTypes.STRING,
-    long: DataTypes.DECIMAL,
-    lat: DataTypes.DECIMAL,
+    long: DataTypes.DECIMAL(7,5),
+    lat: DataTypes.DECIMAL(7,5),
     ratingAvg: DataTypes.DECIMAL
 }, { timestamps: true });
 
