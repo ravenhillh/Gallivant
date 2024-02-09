@@ -17,12 +17,6 @@ import imageRouter from './routes/image';
 
 import {uploadPhoto, getFileStream } from './services/s3';
 
-// import { User } from 'express-serve-static-core';
-// declare module 'express-serve-static-core' {
-//   interface User {
-//     id?: number
-//   }
-// }
 
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
