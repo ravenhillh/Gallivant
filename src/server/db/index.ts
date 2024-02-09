@@ -57,6 +57,7 @@ const Tour = db.define('Tour', {
     type: DataTypes.STRING,
     ratingAvg: DataTypes.DECIMAL,
     tourName: DataTypes.STRING,
+    description: DataTypes.TEXT,
     isOrdered: DataTypes.BOOLEAN,
     neighborhood: DataTypes.STRING,
     completions: DataTypes.INTEGER,
@@ -346,10 +347,9 @@ const Chats_Tours = db.define('Chats_Tours', {
   });
 
 db.options.logging = false;
-
 db.sync();
-
-db.options.logging = true;
+db.options.logging = console.log;
+// db.options.logging = (...msg: any) => console.log(msg);
 
 export {
     db,
