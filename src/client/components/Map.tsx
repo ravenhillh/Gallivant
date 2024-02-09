@@ -33,6 +33,17 @@ function Map(props: MapProps): JSX.Element {
       setLat(Number(map.current?.getCenter().lat.toFixed(4)));
       setZoom(Number(map.current?.getZoom().toFixed(2)));
     });
+    map.current.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+    );
+    const nav = new mapboxgl.NavigationControl();
+    map.current.addControl(nav, 'top-right');
     clickToCreateMarker();
   }, []);
 
@@ -45,13 +56,12 @@ function Map(props: MapProps): JSX.Element {
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
       passCoords(e.lngLat.lng, e.lngLat.lat);
-      // marker.remove();
+      marker.remove();
     });
   }
 
   return (
     <div>
-      <h1>Map</h1>
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
