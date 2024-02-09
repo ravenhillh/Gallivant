@@ -5,15 +5,19 @@ import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:3000';
 import dotenv from 'dotenv';
 dotenv.config();
 
 import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
+import imageRouter from './routes/image';
 import tourRouter from './routes/tours';
 
 import {uploadPhoto, getFileStream } from './services/s3';
+
 
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
@@ -44,11 +48,12 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 };
 
 // protected routes in this array
-// app.use(['/map', '/tours', '/icon', '/camera'], checkLoggedIn);
+// app.use(['/map', '/tours', '/icon', '/images'], checkLoggedIn);
 
 // ROUTES
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
+app.use('/images', imageRouter);
 app.use('/', tourRouter);
 
 // ** API ROUTES **
@@ -62,12 +67,27 @@ app.get('/api/images/:key', (req, res) => {
 });
 
 // POST image to S3
+
 app.post('/api/images', (req, res) => {
   const { imageName, base64 } = req.body;
-
+  const { id } = req.user;
+  // id throws error here
   uploadPhoto(imageName, base64)
-    .then(data => console.log('uploadData ', data))
-    .catch(err => console.error('upload error ', err));
+    .then((data) => {
+      axios.post('/images/post', {
+        image: {
+          id_user: id,
+          largeImg: data.Key
+        }
+      })
+      .catch(err => console.error('axios post err ', err));
+      res.sendStatus(201);
+      // console.log('uploadData ', data);
+    })
+    .catch((err) => {
+      console.error('upload error ', err);
+      res.sendStatus(500);
+    });
 });
 
 app.get('*', (req, res) => {
