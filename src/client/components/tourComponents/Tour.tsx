@@ -15,6 +15,7 @@ const Tour = (): JSX.Element => {
     description: string;
   };
   const [tour, setTour] = useState<Tour>();
+  const [creator, setCreator] = useState<string>('');
 
   //state for Waypoints array, modal pop-up dialog
   const [waypoints, setWaypoints] = useState<string[]>([]);
@@ -32,8 +33,18 @@ const Tour = (): JSX.Element => {
     axios(`/db/tour/${id}`)
       .then(({ data }) => {
         setTour(data[0]);
+        const userId = data[0].id_createdByUser;
+        getCreator(userId);
       })
       .catch((err: string) => console.error('Could not GET tour by id: ', err));
+  };
+
+  const getCreator = (userId: number | undefined) => {
+    axios(`/db/tourCreatedBy/${userId}`)
+      .then(({ data }) => {
+        setCreator(data[0].username);
+      })
+      .catch((err: string) => console.error('Could not GET user by id: ', err));
   };
 
   // and post waypoint to db
@@ -56,6 +67,7 @@ const Tour = (): JSX.Element => {
 
       <h2>Tour Name: {tour?.tourName}</h2>
       <p>Description: {tour?.description}</p>
+      <p>Created by: {creator}</p>
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
         <label>Waypoint Name:</label>

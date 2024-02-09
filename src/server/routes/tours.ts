@@ -1,5 +1,5 @@
 import express from 'express';
-import { Tour } from '../db/index';
+import { User, Tour } from '../db/index';
 
 const tourRouter = express.Router();
 
@@ -22,9 +22,19 @@ tourRouter.get('/db/tour/:id', (req, res) => {
     });
 });
 
+tourRouter.get('/db/tourCreatedBy/:userId', (req, res) => {
+  const { userId } = req.params;
+  User.findAll({ where: { id: userId }})
+    .then((user: object[]) => res.status(200).send(user))
+    .catch((err: string) => {
+      console.error('Failed to find user by id: ', err);
+      res.status(500);
+    });
+});
+
 tourRouter.post('/db/tours', (req, res) => {
   const { tour } = req.body;
-  Tour.create(tour)
+  Tour.create({ ...tour, id_createdByUser: req.user.id })
     .then((newTour: object) => {
       res.status(201).send(newTour);
     })
