@@ -21,12 +21,19 @@ const Tour = (): JSX.Element => {
   const [waypoints, setWaypoints] = useState<string[]>([]);
   const [wpName, setWpName] = useState<string>('');
   const [wpDesc, setWpDesc] = useState<string>('');
+  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(0);
   const [modal, setModal] = useState<boolean>(false);
 
   //initial useEffect, not sure how to use params hook from loader atm
   useEffect(() => {
     getTour(id);
   }, []);
+
+  const passCoords = (long: number, lat: number) => {
+    setLong(long);
+    setLat(lat);
+  };
 
   // axios requests to db to get tour by id
   const getTour = (id: string | undefined) => {
@@ -63,13 +70,14 @@ const Tour = (): JSX.Element => {
   return (
     <div>
       <h1>Tours</h1>
-      <Map />
+      <Map passCoords={passCoords} />
 
       <h2>Tour Name: {tour?.tourName}</h2>
       <p>Description: {tour?.description}</p>
       <p>Created by: {creator}</p>
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
+        <div>Long: {long}, Lat: {lat}</div>
         <label>Waypoint Name:</label>
         <input
           type='text'
