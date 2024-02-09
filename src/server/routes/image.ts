@@ -7,9 +7,13 @@ const imageRouter = express.Router();
 imageRouter.post('/post', (req, res) => {
   const { image } = req.body;
 
-  // .create
-  // req.body[0].id
-  // uploadData.key
+  Image.create(image)
+    .then(() => res.sendStatus(201))
+    .catch((err:string) => {
+      console.error(' db post error ', err);
+      res.sendStatus(500);
+    });
+
 });
 
 export default imageRouter;

@@ -40,15 +40,10 @@ passport.use(
 );
 
 passport.serializeUser(function (user, cb) {
-  // console.log(user);
-  // if I try to access user.id here I get error:
-  // Property 'id' does not exist on type 'User'
-  // server crashes
   cb(null, user);
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 passport.deserializeUser(function ([userInstance, created], cb) {
-  // console.log(user);
   cb(null, userInstance);
 });
 
