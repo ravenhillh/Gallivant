@@ -44,7 +44,7 @@ const App = createBrowserRouter([
       },
       {
         path: '/tour/:id',
-        element: <Tour />
+        element: <Tour />,
       }
     ]
   }
