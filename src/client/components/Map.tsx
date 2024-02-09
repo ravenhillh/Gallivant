@@ -5,7 +5,12 @@ import React, { useRef, useEffect, useState } from 'react';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
-function Map(): JSX.Element {
+type MapProps = {
+  passCoords: (long: number, lat: number) => void;
+}
+
+function Map(props: MapProps): JSX.Element {
+  const { passCoords } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
@@ -39,7 +44,8 @@ function Map(): JSX.Element {
         .addTo(map.current);
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
-      marker.remove();
+      passCoords(e.lngLat.lng, e.lngLat.lat);
+      // marker.remove();
     });
   }
 
