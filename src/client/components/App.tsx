@@ -4,14 +4,15 @@ import { createBrowserRouter } from 'react-router-dom';
 // import Home from './Home';
 import NavBar from './NavBar';
 import Login from './Login';
-import Map from './Map';
+// import Map from './Map';
 import Camera from './Camera';
 import Tours from './Tours';
+import Tour from './tourComponents/Tour';
 import MyThree from './Icon';
 import MapView from './MapView';
 
 // authentication checker for protected route loaders.
-import requireAuth from '../utils/requireAuth';
+// import requireAuth from '../utils/requireAuth';
 
 const App = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const App = createBrowserRouter([
       {
         path: '/icon',
         element: <MyThree />,
+      },
+      {
+        path: '/tour/:id',
+        element: <Tour />
       }
     ]
   }

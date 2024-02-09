@@ -12,12 +12,21 @@ tourRouter.get('/db/tours', (req, res) => {
     });
 });
 
+tourRouter.get('/db/tour/:id', (req, res) => {
+  const { id } = req.params;
+  Tour.findAll({ where: { id }})
+    .then((tour: object[]) => res.status(200).send(tour))
+    .catch((err: string) => {
+      console.error('Failed to find tour by id: ', err);
+      res.status(500);
+    });
+});
+
 tourRouter.post('/db/tours', (req, res) => {
   const { tour } = req.body;
   Tour.create(tour)
-    .then((data: object) => {
-      console.log('Return data: ', data);
-      res.status(201).send(data);
+    .then((newTour: object) => {
+      res.status(201).send(newTour);
     })
     .catch((err: string) => {
       console.error('Failed to create tour: ', err);

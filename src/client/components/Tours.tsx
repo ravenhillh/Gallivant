@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-import Waypoint from './tourComponents/Waypoint';
-import Map from './Map';
+// import Waypoint from './tourComponents/Waypoint';
+// import Map from './Map';
 
 const Tours = (): JSX.Element => {
   type Tour = {
-    name: string;
+    id: number;
+    tourName: string;
     description: string;
   };
 
@@ -14,8 +16,28 @@ const Tours = (): JSX.Element => {
   const [description, setDescription] = useState<string>('');
   const [tourName, setName] = useState<string>('');
 
+  useEffect(() => {
+    getAllTours();
+  }, []);
+
+  const getAllTours = () => {
+    axios('/db/tours')
+      .then(({ data }) => {
+        setTours(data);
+      })
+      .catch((err: string) => console.error('Could not GET all tours: ', err));
+  };
+
   const createTourBtnClick = () => {
-    setTours((prevState) => prevState.concat({ name: tourName, description }));
+    axios.post('/db/tours', { tour: { tourName, description }})
+      .then((res) => {
+        if (res.status === 201) {
+          getAllTours();
+          setName('');
+          setDescription('');
+        }
+      })
+      .catch((err: string) => console.error('Could not POST tour: ', err));
   };
 
   const handleChange = (
@@ -46,11 +68,13 @@ const Tours = (): JSX.Element => {
       </div>
       <button onClick={createTourBtnClick}>Create Tour</button>
       <ul>
-        {tours.map((tour, i) => (
+        {tours.map((tour, i) => {
+          return (
           <li key={i}>
-            <Link to="">{tour.name}</Link>
+            <Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );
