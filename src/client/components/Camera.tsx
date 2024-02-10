@@ -9,6 +9,32 @@ function Camera():JSX.Element {
   const [image, setImage] = useState('');
   // const [name, setName] = useState('');
   // use ternary to hide img tag until image value has been set?
+  const resizePhoto = (image) => {
+    const maxSizeInMB = 4;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+    let dataURL:string;
+
+    const img = new Image();
+    img.src = image;
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext('2d');
+      const width = img.width;
+      const height = img.height;
+      const aspectRatio = width / height;
+      const newWidth = Math.sqrt(maxSizeInBytes * aspectRatio);
+      const newHeight = Math.sqrt(maxSizeInBytes / aspectRatio);
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+      ctx!.drawImage(img, 0, 0, newWidth, newHeight);
+      const quality = 0.8;
+      dataURL = canvas.toDataURL('image/jpeg', quality);
+      console.log(dataURL);
+      //call function here?
+    };
+    // return dataURL;
+  };
+
 
   // function to access photo data
   // check for env or user id
@@ -54,10 +80,10 @@ function Camera():JSX.Element {
   const handleClick = () => {
     // call axios function
     // generate UUID to pass in as name/key
-   
-    const name = uuidv4();
-    postBucket(name, image);
-    // console.log(image);
+    // resizePhoto(image);
+    // const name = uuidv4();
+    // postBucket(name, image);
+    console.log(image);
   };
 
   return (
