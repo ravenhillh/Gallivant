@@ -5,7 +5,21 @@ import React, { useRef, useEffect, useState } from 'react';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
-function Map(): JSX.Element {
+type Waypoint = {
+  id: number;
+  waypointName: string;
+  description: string;
+  long: number;
+  lat: number;
+};
+
+type MapProps = {
+  passCoords: (long: number, lat: number) => void;
+  waypoints: Waypoint[];
+};
+
+function Map(props: MapProps): JSX.Element {
+  const { passCoords } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
@@ -28,6 +42,17 @@ function Map(): JSX.Element {
       setLat(Number(map.current?.getCenter().lat.toFixed(4)));
       setZoom(Number(map.current?.getZoom().toFixed(2)));
     });
+    map.current.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+    );
+    const nav = new mapboxgl.NavigationControl();
+    map.current.addControl(nav, 'top-right');
     clickToCreateMarker();
   }, []);
 
@@ -39,13 +64,13 @@ function Map(): JSX.Element {
         .addTo(map.current);
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
+      passCoords(e.lngLat.lng, e.lngLat.lat);
       marker.remove();
     });
   }
 
   return (
     <div>
-      <h1>Map</h1>
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
@@ -53,9 +78,9 @@ function Map(): JSX.Element {
       <div
         style={{ height: '400px' }}
         ref={mapContainer}
-        className="map-container"
+        className='map-container'
       ></div>
-       <div className="sidebar">
+      <div className='sidebar'>
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
     </div>

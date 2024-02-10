@@ -74,6 +74,7 @@ const Waypoint = db.define('Waypoint', {
         primaryKey: true,
         autoIncrement: true
     },
+    waypointName: DataTypes.STRING,
     description: DataTypes.TEXT,
     prompt: DataTypes.TEXT,
     answer: DataTypes.STRING,
