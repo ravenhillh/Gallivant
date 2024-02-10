@@ -1,9 +1,8 @@
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import mapboxgl from 'mapbox-gl'; 
 import axios from 'axios';
-import { Popup, Marker } from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 //import { JsxE } from 'typescript';
-import Map from './Map';
+// import Map from './Map';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
@@ -17,6 +16,7 @@ function MapView(): JSX.Element {
   const [markerLat, setMarkerLat] = useState(0);
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
+  const markerRef = useRef<mapboxgl.Marker>();
   // const [myLoc, setMyLoc] = useState()
 
   useEffect(() => {
@@ -49,7 +49,24 @@ function MapView(): JSX.Element {
 
     findAllWaypoints();
     showMarkers();
+    // clickToCreateMarker();
   }, []);
+
+  // function clickToCreateMarker() {
+  //   map.current?.on('click', (e) => {
+  //     if (markerRef.current) {
+  //       markerRef.current.remove();
+  //       markerRef.current = undefined;
+  //     }
+  //     const coordinates = e.lngLat;
+  //     const marker = new mapboxgl.Marker()
+  //       .setLngLat(coordinates)
+  //       .addTo(map.current);
+  //     setMarkerLng(e.lngLat.lng);
+  //     setMarkerLat(e.lngLat.lat);
+  //     markerRef.current = marker;
+  //   });
+  // }
 
   function findAllWaypoints() {
     //send axios request to db to retrieve coordinates
@@ -68,11 +85,22 @@ function MapView(): JSX.Element {
     //use response data to populate a toursArr on state
   }
 
+  function handlePop() {
+    console.log('popup clicked');
+  }
+
   function showMarkers() {
+  
     allMarkers.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
-      const markerContent = `<h1>${marker.description}<h1>`;
-      const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
+      // const markerContent = `<div>
+      // <div>${marker.description}<div>
+      // <div>${marker.lat}<div>
+      // <div>${marker.long}<div>
+      // </div>`;
+
+      const popUp = new mapboxgl.Popup({ offset: 25 })
+      .setHTML(`<button onclick={${ handlePop }}> Button</button>`);
 
       new mapboxgl.Marker({
       color: 'blue',
