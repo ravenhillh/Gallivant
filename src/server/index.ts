@@ -14,6 +14,8 @@ import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
 import imageRouter from './routes/image';
+import tourRouter from './routes/tours';
+import waypointRouter from './routes/waypoints';
 
 import {uploadPhoto, getFileStream } from './services/s3';
 
@@ -53,6 +55,8 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
 app.use('/images', imageRouter);
+app.use('/', tourRouter);
+app.use('/', waypointRouter);
 
 // ** API ROUTES **
 
