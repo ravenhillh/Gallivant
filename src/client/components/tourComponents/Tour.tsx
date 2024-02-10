@@ -99,7 +99,7 @@ const Tour = (): JSX.Element => {
   return (
     <div>
       <h1>Tours</h1>
-      <Map passCoords={passCoords} />
+      <Map waypoints={waypoints} passCoords={passCoords} />
 
       <h2>Tour Name: {tour?.tourName}</h2>
       <p>Description: {tour?.description}</p>

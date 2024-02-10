@@ -5,9 +5,18 @@ import React, { useRef, useEffect, useState } from 'react';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
+type Waypoint = {
+  id: number;
+  waypointName: string;
+  description: string;
+  long: number;
+  lat: number;
+};
+
 type MapProps = {
   passCoords: (long: number, lat: number) => void;
-}
+  waypoints: Waypoint[];
+};
 
 function Map(props: MapProps): JSX.Element {
   const { passCoords } = props;
@@ -69,9 +78,9 @@ function Map(props: MapProps): JSX.Element {
       <div
         style={{ height: '400px' }}
         ref={mapContainer}
-        className="map-container"
+        className='map-container'
       ></div>
-       <div className="sidebar">
+      <div className='sidebar'>
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
     </div>
