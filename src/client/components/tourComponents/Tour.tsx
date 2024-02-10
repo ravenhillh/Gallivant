@@ -18,7 +18,7 @@ const Tour = (): JSX.Element => {
   const [creator, setCreator] = useState<string>('');
 
   //state for Waypoints array, modal pop-up dialog
-  const [waypoints, setWaypoints] = useState<string[]>([]);
+  const [waypoints, setWaypoints] = useState<object[]>([]);
   const [wpName, setWpName] = useState<string>('');
   const [wpDesc, setWpDesc] = useState<string>('');
   const [long, setLong] = useState(0);
@@ -28,6 +28,7 @@ const Tour = (): JSX.Element => {
   //initial useEffect, not sure how to use params hook from loader atm
   useEffect(() => {
     getTour(id);
+    getTourWPs(id);
   }, []);
 
   const passCoords = (long: number, lat: number) => {
@@ -54,9 +55,37 @@ const Tour = (): JSX.Element => {
       .catch((err: string) => console.error('Could not GET user by id: ', err));
   };
 
+  const getTourWPs = (tourId: string | undefined) => {
+    axios(`/db/tourWaypoints/${tourId}`)
+      .then(({ data }) => {
+        setWaypoints(data);
+      })
+      .catch((err: string) =>
+        console.error('Could not GET waypoints by tour id: ', err)
+      );
+  };
+
   // and post waypoint to db
   const postWaypoint = () => {
-    setWaypoints((prevState) => prevState.concat('Coordinates Placeholder'));
+    axios
+      .post('/db/waypoint/', {
+        waypoint: {
+          waypointName: wpName,
+          description: wpDesc,
+          long,
+          lat,
+        },
+        id_tour: id,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          setModal(false);
+          setWpName('');
+          setWpDesc('');
+          getTourWPs(id);
+        }
+      })
+      .catch((err: string) => console.error('Could not POST waypoint: ', err)); // setWaypoints((prevState) => prevState.concat('Coordinates Placeholder'));
   };
 
   // change event handlers for modal inputs
@@ -77,12 +106,15 @@ const Tour = (): JSX.Element => {
       <p>Created by: {creator}</p>
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
-        <div>Long: {long}, Lat: {lat}</div>
+        <div>
+          Long: {long}, Lat: {lat}
+        </div>
         <label>Waypoint Name:</label>
         <input
           type='text'
           value={wpName}
           onChange={(e) => handleChange(e, setWpName)}
+          autoFocus
         />
         <label>Waypoint Description:</label>
         <input
