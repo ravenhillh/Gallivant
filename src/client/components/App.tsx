@@ -10,6 +10,7 @@ import Tours from './Tours';
 import Tour from './tourComponents/Tour';
 import MyThree from './Icon';
 import MapView from './MapView';
+import Gallery from './Gallery';
 
 // authentication checker for protected route loaders.
 // import requireAuth from '../utils/requireAuth';
@@ -31,6 +32,11 @@ const App = createBrowserRouter([
       {
         path: '/camera',
         element: <Camera />,
+        // loader: async () => await requireAuth(),
+      },
+      {
+        path: '/gallery',
+        element: <Gallery />,
         // loader: async () => await requireAuth(),
       },
       {
