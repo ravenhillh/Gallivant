@@ -47,6 +47,18 @@ waypointRouter.post('/db/waypoint/', async (req, res) => {
   //
 });
 
+waypointRouter.put('/db/waypoint/:id', (req, res) => {
+  const { id } = req.params;
+  // const { waypointName, description } = req.body;
+
+  Waypoint.update(req.body, { where: { id } })
+    .then(() => res.sendStatus(200))
+    .catch((err: string) => {
+      console.error('Failed to put edit on waypoint: ', err);
+      res.sendStatus(500);
+    });
+});
+
 waypointRouter.delete('/db/waypoint/:wp/:tour', async (req, res) => {
   const { wp, tour } = req.params;
   console.log('id_tour: ', tour, 'id_waypoint: ', wp);
@@ -57,7 +69,7 @@ waypointRouter.delete('/db/waypoint/:wp/:tour', async (req, res) => {
       res.sendStatus(200);
     })
     .catch((err: string) => {
-      console.error('Failed to delete waypoint: ', err);
+      console.error('Failed to destroy waypoint: ', err);
       res.sendStatus(500);
     });
 });
