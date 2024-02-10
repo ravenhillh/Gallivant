@@ -16,4 +16,21 @@ imageRouter.post('/post', (req, res) => {
 
 });
 
+// GET images by foreign key/user Id
+imageRouter.get('/user', (req, res) => {
+  const { id } = req.user;
+  // console.log('id ', id);
+
+  Image.findAll({
+    where: {
+      id_user: id
+    }
+  })
+  .then((data:string) => {
+    // console.log('GET image data ', data);
+    res.send(data).status(200);
+  })
+  .catch((err:string) => console.error('could not GET ', err));
+});
+
 export default imageRouter;
