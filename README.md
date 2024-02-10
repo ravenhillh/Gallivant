@@ -30,8 +30,9 @@ See env.example for .env file structure. Create a .env file and copy the content
 
 You will need to set up
 
-Google Auth
-AWS s3 bucket storage
+Google Authentication: You'll need to set up a project in Google Cloud Platform and configure the Client ID and Secret in the API's & Services section.
+
+AWS s3 bucket storage: You will need an AWS account for bucket storage (as well as deployment). 
 
 
 

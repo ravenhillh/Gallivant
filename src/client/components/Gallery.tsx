@@ -38,7 +38,7 @@ const Gallery = () => {
         {
           images.map((image) => (
             <li key={`${image.id}`}>
-              <img style={{ width: '300px', height: 'auto' }}src={`/api/images/${image.largeImg}`} />
+              <img src={`/api/images/${image.largeImg}`} style={{ width: '300px', height: 'auto' }} />
             </li>
           ))
         }
@@ -46,5 +46,7 @@ const Gallery = () => {
     </div>
   );
 };
+
+
 
 export default Gallery;
