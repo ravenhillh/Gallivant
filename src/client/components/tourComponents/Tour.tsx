@@ -85,7 +85,7 @@ const Tour = (): JSX.Element => {
           getTourWPs(id);
         }
       })
-      .catch((err: string) => console.error('Could not POST waypoint: ', err)); // setWaypoints((prevState) => prevState.concat('Coordinates Placeholder'));
+      .catch((err: string) => console.error('Could not POST waypoint: ', err));
   };
 
   // change event handlers for modal inputs
@@ -129,7 +129,12 @@ const Tour = (): JSX.Element => {
       <button onClick={() => setModal(true)}>Add Waypoint</button>
       <ol>
         {waypoints.map((wp, i) => (
-          <Waypoint key={i} waypoint={wp}></Waypoint>
+          <Waypoint
+            key={i}
+            getTourWPs={getTourWPs}
+            id_tour={id}
+            waypoint={wp}
+          ></Waypoint>
         ))}
       </ol>
     </div>
