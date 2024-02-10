@@ -38,7 +38,7 @@ const Gallery = () => {
         {
           images.map((image) => (
             <li key={`${image.id}`}>
-              <img src={`/api/images/${image.largeImg}`} />
+              <img style={{ width: '300px', height: 'auto' }}src={`/api/images/${image.largeImg}`} />
             </li>
           ))
         }
