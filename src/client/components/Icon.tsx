@@ -1,4 +1,7 @@
 import React from 'react';
+import * as THREE from 'three';
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
 
 // function Icon():JSX.Element {
 //   return (
@@ -10,7 +13,6 @@ import React from 'react';
 
 // export default Icon;
 
-import * as THREE from 'three';
 
 import { useEffect, useRef } from "react";
 
@@ -27,8 +29,21 @@ function MyThree() {
     refContainer.current && refContainer.current.appendChild( renderer.domElement );
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+//     //loader
+//     const loader = new GLTFLoader();
+
+// loader.load( 'path/to/model.glb', function ( gltf ) {
+
+// 	scene.add( gltf.scene );
+
+// }, undefined, function ( error ) {
+
+// 	console.error( error );
+
+// } );
     var cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // scene.add(cube);
     camera.position.z = 5;
     var animate = function () {
       requestAnimationFrame(animate);
