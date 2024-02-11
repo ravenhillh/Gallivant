@@ -5,7 +5,7 @@ type Modal = {
   closeModal: () => void;
 };
 
-function Modal(props: PropsWithChildren<Modal>): JSX.Element {
+function Modal(props: PropsWithChildren<Modal> & React.HTMLAttributes<HTMLDivElement>): JSX.Element {
   const { openModal, closeModal, children } = props;
   const dialog = useRef<HTMLDialogElement>(null);
 
