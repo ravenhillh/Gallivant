@@ -10,7 +10,7 @@ function Camera():JSX.Element {
   const [resizedImg, setResizedImg] = useState('');
   // input Ref's for cameras
   const envInputRef = useRef<HTMLInputElement>(null);
-  const selfieInputRef = useRef<HTMLInputElement>(null);
+  // const selfieInputRef = useRef<HTMLInputElement>(null);
 
   const resizePhoto = (image) => {
     const maxSizeInMB = 4;
@@ -110,7 +110,7 @@ function Camera():JSX.Element {
       <br />
       {/* <label htmlFor="user">Capture user:</label> */}
       <br />
-      <input
+      {/* <input
         type="file"
         ref={selfieInputRef}
         id="user"
@@ -124,7 +124,7 @@ function Camera():JSX.Element {
         value="Take Selfie"
         onClick={() => selfieInputRef.current!.click()}
       />
-      <br />
+      <br /> */}
       <img src={image} height="200"/>
       <button onClick={handleClick}>Send</button>
     </div>

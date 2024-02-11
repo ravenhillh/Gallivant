@@ -19,7 +19,7 @@ const Gallery = () => {
   const getImages = () => {
     axios.get('images/user')
       .then(({data}) => {
-        console.log('GET data ', data);
+        // console.log('GET data ', data);
         setImages(data);
       })
       .catch(err => console.error('Could not GET imgs ', err));
