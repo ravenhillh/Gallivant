@@ -11,7 +11,7 @@ type Waypoint = {
   lat: number;
 };
 interface WaypointProps {
-  waypoint: Waypoint;
+  waypoint: object | Waypoint;
   id_tour: string | undefined;
   getTourWPs: (tourId: string | undefined) => void;
 }
