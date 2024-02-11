@@ -1,5 +1,5 @@
 import express from 'express';
-import { Waypoint } from '../db/index';
+import { Waypoint, Tours_Waypoints } from '../db/index';
 
 const mapRouter = express.Router();
 
@@ -19,9 +19,17 @@ mapRouter.get('/waypoints', (req, res) => {
    .catch((err: string) => console.log(err, 'get waypoints failed'));
 });
 
-mapRouter.get('/tours', (req, res) => {
+mapRouter.get('/tours/:id', (req, res) => {
   //get waypoint id and use to query tours/waypoints join table
   //return all tours that include given waypoint
+  const { id } = req.params;
+  Tours_Waypoints.findAll({ where: { id_waypoint: id }})
+  .then((tours: object[]) => {
+    res.status(200).send(tours);
+  })
+  .catch((error: string) => {
+    console.log(error);
+  });
 });
 
 

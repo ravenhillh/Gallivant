@@ -20,6 +20,7 @@ type MapProps = {
 
 function Map(props: MapProps): JSX.Element {
   const { passCoords } = props;
+  const { waypoints } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
@@ -27,6 +28,7 @@ function Map(props: MapProps): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [markerLng, setMarkerLng] = useState(0);
   const [markerLat, setMarkerLat] = useState(0);
+  const markerRef = useRef<mapboxgl.Marker>();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -54,6 +56,7 @@ function Map(props: MapProps): JSX.Element {
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, 'top-right');
     clickToCreateMarker();
+    showMarkers();
   }, []);
 
   function clickToCreateMarker() {
@@ -66,6 +69,30 @@ function Map(props: MapProps): JSX.Element {
       setMarkerLat(e.lngLat.lat);
       passCoords(e.lngLat.lng, e.lngLat.lat);
       marker.remove();
+    });
+  }
+
+  function showMarkers() {
+
+    waypoints.map((marker) => {
+      //use setHTML or setDOMContent to add each tour with a click event
+      const markerContent = `<div>
+      <div>${marker.description}<div>
+      <div>${marker.lat}<div>
+      <div>${marker.long}<div>
+      <button type="button" onclick={axios(map/tours/${marker.id})}>Button</button>
+      </div>`;
+
+      const popUp = new mapboxgl.Popup({ offset: 25 })
+      .setHTML(markerContent);
+
+      new mapboxgl.Marker({
+      color: 'blue',
+      draggable: false,
+    })
+      .setLngLat([Number(marker.long), Number(marker.lat)])
+      .setPopup(popUp)
+      .addTo(map.current);
     });
   }
 

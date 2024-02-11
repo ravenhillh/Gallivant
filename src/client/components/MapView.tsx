@@ -52,21 +52,21 @@ function MapView(): JSX.Element {
     // clickToCreateMarker();
   }, []);
 
-  // function clickToCreateMarker() {
-  //   map.current?.on('click', (e) => {
-  //     if (markerRef.current) {
-  //       markerRef.current.remove();
-  //       markerRef.current = undefined;
-  //     }
-  //     const coordinates = e.lngLat;
-  //     const marker = new mapboxgl.Marker()
-  //       .setLngLat(coordinates)
-  //       .addTo(map.current);
-  //     setMarkerLng(e.lngLat.lng);
-  //     setMarkerLat(e.lngLat.lat);
-  //     markerRef.current = marker;
-  //   });
-  // }
+  function clickToCreateMarker() {
+    map.current?.on('click', (e) => {
+      if (markerRef.current) {
+        markerRef.current.remove();
+        markerRef.current = undefined;
+      }
+      const coordinates = e.lngLat;
+      const marker = new mapboxgl.Marker()
+        .setLngLat(coordinates)
+        .addTo(map.current);
+      setMarkerLng(e.lngLat.lng);
+      setMarkerLat(e.lngLat.lat);
+      markerRef.current = marker;
+    });
+  }
 
   function findAllWaypoints() {
     //send axios request to db to retrieve coordinates
@@ -79,28 +79,27 @@ function MapView(): JSX.Element {
       .catch((err) => console.log(err, 'get markers failed'));
   }
 
-  function getTours() {
-    //send an axios request to get all tours containing waypoint
-    //access the waypoint id for given waypoint
-    //use response data to populate a toursArr on state
-  }
-
-  function handlePop() {
-    console.log('popup clicked');
+  function getTours(id: string | undefined) {
+    axios(`map/waypoints/${id}`)
+    .then((response) => {
+      console.log(response, 'success');
+    })
+    .catch((err) => console.log(err));
   }
 
   function showMarkers() {
-  
+
     allMarkers.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
-      // const markerContent = `<div>
-      // <div>${marker.description}<div>
-      // <div>${marker.lat}<div>
-      // <div>${marker.long}<div>
-      // </div>`;
+      const markerContent = `<div>
+      <div>${marker.description}<div>
+      <div>${marker.lat}<div>
+      <div>${marker.long}<div>
+      <button type="button" onclick={axios(map/tours/${marker.id})}>Button</button>
+      </div>`;
 
       const popUp = new mapboxgl.Popup({ offset: 25 })
-      .setHTML(`<button onclick={${ handlePop }}> Button</button>`);
+      .setHTML(markerContent);
 
       new mapboxgl.Marker({
       color: 'blue',
