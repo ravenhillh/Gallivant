@@ -28,7 +28,6 @@ function Map(props: MapProps): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [markerLng, setMarkerLng] = useState(0);
   const [markerLat, setMarkerLat] = useState(0);
-  const markerRef = useRef<mapboxgl.Marker>();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -74,13 +73,10 @@ function Map(props: MapProps): JSX.Element {
 
   function showMarkers() {
 
-    waypoints.map((marker) => {
+    return waypoints.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
       <div>${marker.description}<div>
-      <div>${marker.lat}<div>
-      <div>${marker.long}<div>
-      <button type="button" onclick={axios(map/tours/${marker.id})}>Button</button>
       </div>`;
 
       const popUp = new mapboxgl.Popup({ offset: 25 })
@@ -101,6 +97,9 @@ function Map(props: MapProps): JSX.Element {
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
+        <button type="submit" onClick={() => showMarkers()}>
+        show
+      </button>
       </div>
       <div
         style={{ height: '400px' }}
