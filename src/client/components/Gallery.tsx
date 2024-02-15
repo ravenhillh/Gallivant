@@ -17,47 +17,49 @@ const Gallery = (props) => {
   // function to send GET request to db
   // should grab photos by user id
   // should be able to eventually grab by other foreign ids
-  const getImages = () => {
-    axios.get('images/user')
-      .then(({data}) => {
-        // console.log('GET data ', data);
-        setImages(data);
-      })
-      .catch(err => console.error('Could not GET imgs ', err));
-  };
+  // const getImages = () => {
+  //   axios.get('/images/user')
+  //     .then(({data}) => {
+  //       // console.log('GET data ', data);
+  //       setImages(data);
+  //     })
+  //     .catch(err => console.error('Could not GET imgs ', err));
+  // };
 
   const getImagesWP = (waypointId) => {
-    axios.get(`images/waypoint/${waypointId}`)
-      .then((data) => {
-        console.log('data ', data);
+    // console.log('wp id ', waypointId);
+    axios.get(`/images/waypoint/${waypointId}`)
+      .then(({data}) => {
+        // console.log('data ', data);
+        setImages(data);
+
       })
       .catch(err => console.error('could not get images by waypoint Id', err));
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    // getImages();
-    getImagesWP(props.waypoint.id);
-  };
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   // getImages();
+  //   getImagesWP(props.waypoint.id);
+  // };
 
-  // if(images) {
-  //   useEffect(() => {
-  //     getImagesWP(props.waypoint.id);
-  //   }, [images]);
-  // }
+ 
+  useEffect(() => {
+      getImagesWP(props.waypoint.id);
+    }, []);
+  
 
   return (
     <div>
-      {/* <h2>Gallery</h2> */}
-      <button type="submit" onClick={handleClick}>Get Images</button>
+      {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
       <ul>
-        {/* {
+        {
           images.map((image) => (
             <li key={`${image.id}`}>
               <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
             </li>
           ))
-        } */}
+        }
       </ul>
     </div>
   );

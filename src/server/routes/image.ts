@@ -33,27 +33,26 @@ imageRouter.get('/user', (req, res) => {
       id_user: id
     }
   })
-  .then((data:string) => {
-    // console.log('GET image data ', data);
-    res.send(data).status(200);
+  .then((allImages:any) => {
+    // console.log('GET image data ', allImages);
+    res.send(allImages).status(200);
   })
   .catch((err:string) => console.error('could not GET ', err));
 });
 
 // GET waypoint image by waypoint id, user id, and image id
 imageRouter.get('/waypoint/:waypointId', (req, res) => {
-  // waypoint id would be req.params.id
   const { waypointId } = req.params;
+  // console.log('wp id ', waypointId);
   // find image id in Images_Waypoints
-  // grab image Key from Images
-  // SELECT * from Images WHERE id = (SELECT id_image FROM Images_Waypoint WHERE id_waypoint = id)
+
   db.query(
     `SELECT * from Images WHERE id = (SELECT id_image FROM Images_Waypoints WHERE id_waypoint = ${waypointId})`,
     { type: QueryTypes.SELECT }
   )
-  .then((data:any) => {
-    console.log('join data ', data);
-    res.send(data).status(200);
+  .then((imgWaypoint:any) => {
+    // console.log('join data ', imgWaypoint);
+    res.send(imgWaypoint).status(200);
   })
   .catch((err:string) => {
     console.log('err ', err);
