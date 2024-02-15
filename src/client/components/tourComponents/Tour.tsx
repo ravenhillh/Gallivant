@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 
 import Waypoint from './Waypoint';
@@ -10,11 +10,15 @@ type Tour = {
   id: number;
   tourName: string;
   description: string;
+  id_createdByUser: number;
 };
 
 const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
   const { id } = useParams();
+  // loader returning user id from session verification
+  const userId = useLoaderData();
+  const [edit, setEdit] = useState<boolean>(false);
   const [tour, setTour] = useState<Tour>();
   const [creator, setCreator] = useState<string>('');
 
@@ -35,6 +39,10 @@ const Tour = (): JSX.Element => {
     getTour(id);
     getTourWPs(id);
   }, []);
+
+  useEffect(() => {
+    setEdit(userId === tour?.id_createdByUser);
+  }, [tour]);
 
   // change event handlers for modal inputs
   const handleChange = (
@@ -149,12 +157,12 @@ const Tour = (): JSX.Element => {
         <button onClick={postWaypoint}>Save waypoint</button>
       </Modal>
 
-      <button onClick={() => setModal(true)}>Add Waypoint</button>
+      {edit && <button onClick={() => setModal(true)}>Add Waypoint</button>}
       <ol className='waypoint-container'>
         {waypoints.map((wp, i) => (
           <div
             key={i}
-            draggable
+            draggable={edit}
             onDragStart={() => setDragStart(i)}
             onDragEnter={() => setDragOver(i)}
             onDragEnd={onDragEnd}
@@ -164,6 +172,7 @@ const Tour = (): JSX.Element => {
               getTourWPs={getTourWPs}
               id_tour={id}
               waypoint={wp}
+              edit={edit}
             ></Waypoint>
           </div>
         ))}
