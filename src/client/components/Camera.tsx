@@ -3,8 +3,9 @@ import { useState, useRef } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
-function Camera():JSX.Element {
+// camera will have to accept props to access other ids like waypoint, etc
+// may need props interface 
+function Camera(props):JSX.Element {
   // image is a 'preview', before image is selected to be POSTED to database
   const [image, setImage] = useState('');
   const [resizedImg, setResizedImg] = useState('');
@@ -42,12 +43,27 @@ function Camera():JSX.Element {
   // check for env or user id
   // set id to be dynamic, either environment or user (button click)
   // after lunch fix errors
+  const postDb = (data) => {
+      axios.post('/images/post', {
+          key: data.Key,
+          joinId: props.waypoint.id
+      })
+      .catch(err => console.error('axios post err ', err));
+  };
 
   // axios post request to s3
   const postBucket = (name:string, imageData:string) => {
     axios.post('/api/images', {
       imageName: name,
       base64: imageData
+      // tour/waypoint/etc id, coming from props
+    })
+    .then(({data}) => {
+      // console.log('ax ', data);
+      postDb(data);
+    })
+    .catch((err) => {
+      console.error('Axios POST error ', err);
     });
   };
 
@@ -78,12 +94,14 @@ function Camera():JSX.Element {
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     // prevent default to stop loop
     e.preventDefault();
+    // console.log(props.id);
     sendPic(e);
   };
 
   const handleClick = () => {
     // set unique name with uuid to be used as image Key, for gallery view
     const name = uuidv4();
+    // console.log(props.waypoint.id);
     postBucket(name, resizedImg);
   };
 
