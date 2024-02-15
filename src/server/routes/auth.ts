@@ -52,7 +52,8 @@ passport.deserializeUser(function ([userInstance, created], cb) {
 // client side authentication check for protected component loaders
 authRouter.get('/auth/client', (req: Request, res: Response) => {
   const verify: boolean = req.isAuthenticated();
-  res.status(200).send(verify);
+  const authObj = { verify, user: req.user };
+  res.status(200).send(authObj);
 });
 
 // Google authentication and redirect callback
