@@ -5,8 +5,8 @@ import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3000';
+// import axios from 'axios';
+// axios.defaults.baseURL = 'http://localhost:3000';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -72,18 +72,22 @@ app.get('/api/images/:key', (req, res) => {
 
 app.post('/api/images', (req, res) => {
   const { imageName, base64 } = req.body;
-  const { id } = req.user;
+  // const { id } = req.user;
   // id throws error here
   uploadPhoto(imageName, base64)
     .then((data) => {
-      axios.post('/images/post', {
-        image: {
-          id_user: id,
-          largeImg: data.Key
-        }
-      })
-      .catch(err => console.error('axios post err ', err));
-      res.sendStatus(201);
+      // axios.post('/images/post', {
+      //   image: {
+      //     id_user: id,
+      //     largeImg: data.Key
+      //   }
+      // })
+      // .then((config) => {
+      //   // console.log(res.config.data);
+      //   res.send(config).status(201);
+      // })
+      // .catch(err => console.error('axios post err ', err));
+      res.send(data).status(201);
       // console.log('uploadData ', data);
     })
     .catch((err) => {

@@ -1,14 +1,21 @@
 import express from 'express';
-import { Image } from '../db/index';
+import { db, Image, Images_Waypoints } from '../db/index';
+import { QueryTypes } from 'sequelize';
 
 const imageRouter = express.Router();
 
 // POST image to db
 imageRouter.post('/post', (req, res) => {
-  const { image } = req.body;
+  const { key, joinId } = req.body;
+  const { id } = req.user;
 
-  Image.create(image)
-    .then(() => res.sendStatus(201))
+  Image.create({ id_user: id, largeImg: key })
+    .then((data:any) => {
+      // console.log(data.dataValues);
+      // data.dataValues has image id
+      Images_Waypoints.create({ id_waypoint: joinId, id_image: data.dataValues.id });
+      res.sendStatus(201);
+    })
     .catch((err:string) => {
       console.error(' db post error ', err);
       res.sendStatus(500);
@@ -26,11 +33,44 @@ imageRouter.get('/user', (req, res) => {
       id_user: id
     }
   })
-  .then((data:string) => {
-    // console.log('GET image data ', data);
-    res.send(data).status(200);
+  .then((allImages:any) => {
+    // console.log('GET image data ', allImages);
+    res.send(allImages).status(200);
   })
   .catch((err:string) => console.error('could not GET ', err));
+});
+
+// GET waypoint image by waypoint id, user id, and image id
+imageRouter.get('/waypoint/:waypointId', (req, res) => {
+  const { waypointId } = req.params;
+  // console.log('wp id ', waypointId);
+  // find image id in Images_Waypoints
+
+  db.query(
+    `SELECT * from Images WHERE id = (SELECT id_image FROM Images_Waypoints WHERE id_waypoint = ${waypointId})`,
+    { type: QueryTypes.SELECT }
+  )
+  .then((imgWaypoint:any) => {
+    // console.log('join data ', imgWaypoint);
+    res.send(imgWaypoint).status(200);
+  })
+  .catch((err:string) => {
+    console.log('err ', err);
+    res.sendStatus(500);
+  });
+
+});
+
+// DELETE image from images and images_waypoints
+imageRouter.delete('/waypoint/:waypointId/:imageId', (req, res) => {
+  const { waypointId, imageId } = req.params;
+
+  Images_Waypoints.destroy({ where: { id_waypoint: waypointId, id_image: imageId } })
+    .then(() => {
+      Image.destroy({ where: { id: imageId}});
+      // console.log('destoryed ', data);
+    })
+    .catch((err:string) => console.error('Could not delete image from db ', err));
 });
 
 export default imageRouter;

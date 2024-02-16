@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import Modal from './Modal';
+import Camera from '../Camera';
+import Gallery from '../Gallery';
 
 type Waypoint = {
   id: number;
@@ -70,6 +72,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   return (
     <li>
       <h3>Place: {waypoint.waypointName}</h3>
+      <Gallery waypoint={waypoint}/>
       <div>description: {waypoint.description}</div>
       <div>
         Long: {waypoint.long}, Lat: {waypoint.lat}
@@ -105,6 +108,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           placeholder='Describe the place'
           onChange={(e) => handleChange(e, setDescription)}
         />
+        <Camera waypoint={waypoint}/>
         <button onClick={() => editWaypoint(waypoint.id)}>
           Edit waypoint
         </button>
