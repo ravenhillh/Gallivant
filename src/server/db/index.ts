@@ -157,7 +157,8 @@ const Users_Waypoints = db.define('Users_Waypoints', {
             model: User,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_waypoint: {
         type: DataTypes.INTEGER,
@@ -165,7 +166,8 @@ const Users_Waypoints = db.define('Users_Waypoints', {
             model: Waypoint,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     status: DataTypes.STRING
   }, { timestamps: true });
@@ -199,7 +201,8 @@ const Waypoints_Categories = db.define('Waypoints_Categories', {
             model: Waypoint,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_category: {
         type: DataTypes.INTEGER,
@@ -207,7 +210,8 @@ const Waypoints_Categories = db.define('Waypoints_Categories', {
             model: Category,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
 });
 
@@ -219,7 +223,8 @@ const Tours_Waypoints = db.define('Tours_Waypoints', {
             model: Tour,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_waypoint: {
         type: DataTypes.INTEGER,
@@ -227,7 +232,8 @@ const Tours_Waypoints = db.define('Tours_Waypoints', {
             model: Waypoint,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     order: DataTypes.INTEGER
   });
@@ -239,7 +245,8 @@ const Completed_Tours = db.define('Completed_Tours', {
             model: Tour,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_user: {
         type: DataTypes.INTEGER,
@@ -247,7 +254,8 @@ const Completed_Tours = db.define('Completed_Tours', {
             model: User,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   }, { timestamps: true });
 
@@ -259,7 +267,8 @@ const Images_Reviews = db.define('Images_Reviews', {
             model: Review,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_image: {
         type: DataTypes.INTEGER,
@@ -267,7 +276,8 @@ const Images_Reviews = db.define('Images_Reviews', {
             model: Image,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   });
 
@@ -278,7 +288,8 @@ const Images_Tours  = db.define('Images_Tours', {
             model: Tour,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_image: {
         type: DataTypes.INTEGER,
@@ -286,7 +297,8 @@ const Images_Tours  = db.define('Images_Tours', {
             model: Image,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   });
 
@@ -298,7 +310,8 @@ const Reviews_Tours = db.define('Reviews_Tours', {
             model: Review,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_tour: {
         type: DataTypes.INTEGER,
@@ -306,7 +319,8 @@ const Reviews_Tours = db.define('Reviews_Tours', {
             model: Tour,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   });
 
@@ -317,7 +331,8 @@ const Reviews_Waypoints = db.define('Reviews_Waypoints', {
             model: Review,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_waypoint: {
         type: DataTypes.INTEGER,
@@ -325,7 +340,8 @@ const Reviews_Waypoints = db.define('Reviews_Waypoints', {
             model: Waypoint,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   });
 
@@ -337,7 +353,8 @@ const Chats_Tours = db.define('Chats_Tours', {
             model: Chat,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_tour: {
         type: DataTypes.INTEGER,
@@ -345,7 +362,8 @@ const Chats_Tours = db.define('Chats_Tours', {
             model: Tour,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
   });
 
