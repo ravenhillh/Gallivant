@@ -1,6 +1,8 @@
 import mapboxgl from 'mapbox-gl'; 
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
+import { redirect, useNavigate } from 'react-router-dom';
+
 //import { JsxE } from 'typescript';
 // import Map from './Map';
 
@@ -19,6 +21,7 @@ function MapView(): JSX.Element {
   const [tours, setTours] = useState([]);
   // const markerRef = useRef<mapboxgl.Marker>();
   // const [myLoc, setMyLoc] = useState()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -58,22 +61,6 @@ function MapView(): JSX.Element {
   useEffect(() => {
     showTours();
   }, [tours]);
-
-  // function clickToCreateMarker() {
-  //   map.current?.on('click', (e) => {
-  //     if (markerRef.current) {
-  //       markerRef.current.remove();
-  //       markerRef.current = undefined;
-  //     }
-  //     const coordinates = e.lngLat;
-  //     const marker = new mapboxgl.Marker()
-  //       .setLngLat(coordinates)
-  //       .addTo(map.current);
-  //     setMarkerLng(e.lngLat.lng);
-  //     setMarkerLat(e.lngLat.lat);
-  //     markerRef.current = marker;
-  //   });
-  // }
 
   function findAllWaypoints() {
     //send axios request to db to retrieve coordinates
@@ -121,18 +108,14 @@ function MapView(): JSX.Element {
     return tours.length? (<div>
       <div>Tour: {tours[0].tourName}</div>
       <div>Description: {tours[0].description}</div>
-      {/* <button onClick={() => getSpecificTour(tours[0].id)}>View Tour</button> */}
+      <button onClick={() => routeToTour(tours[0].id)}>View Tour</button>
       </div>): '';
   }
 
-  // function getSpecificTour(id: string | undefined) {
-  //   axios(`maps/fulltour/${id}`)
-  //   .then(({ data }) => {
-  //     // setAllMarkers(data);
-  //     console.log(data);
-  //   })
-  //   .catch((err) => console.log(err, 'get full tour failed'));
-  // }
+  function routeToTour(id: string | undefined) {
+    
+    navigate(`/tour/${id}`);
+  }
 
   function handleClick(x) {
     getTours(x);
