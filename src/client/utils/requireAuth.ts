@@ -4,8 +4,8 @@ import axios from 'axios';
 export default async function requireAuth() {
   const isLoggedIn = await axios('/auth/client');
 
-  if (!isLoggedIn.data) {
+  if (!isLoggedIn.data.verify) {
     throw redirect('/login');
   }
-  return null;
+  return isLoggedIn.data.user.id;
 }

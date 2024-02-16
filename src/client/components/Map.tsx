@@ -15,7 +15,7 @@ type Waypoint = {
 
 type MapProps = {
   passCoords: (long: number, lat: number) => void;
-  waypoints: Waypoint[];
+  waypoints: Waypoint[] | object;
 };
 
 function Map(props: MapProps): JSX.Element {

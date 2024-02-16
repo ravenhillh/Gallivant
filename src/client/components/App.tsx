@@ -13,7 +13,7 @@ import MapView from './MapView';
 import Gallery from './Gallery';
 
 // authentication checker for protected route loaders.
-// import requireAuth from '../utils/requireAuth';
+import requireAuth from '../utils/requireAuth';
 
 const App = createBrowserRouter([
   {
@@ -51,6 +51,7 @@ const App = createBrowserRouter([
       {
         path: '/tour/:id',
         element: <Tour />,
+        loader: async () => await requireAuth(),
       }
     ]
   }
