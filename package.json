@@ -21,6 +21,11 @@
   },
   "homepage": "https://github.com/Par-For-Loops/Gallivant#readme",
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
     "aws-sdk": "^2.1553.0",
     "axios": "^1.6.7",
     "connect-session-sequelize": "^7.1.7",

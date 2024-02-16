@@ -2,6 +2,9 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import Button from '@mui/material/Button';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 // camera will have to accept props to access other ids like waypoint, etc
 // may need props interface 
@@ -22,7 +25,7 @@ function Camera(props):JSX.Element {
     const img = new Image();
     img.src = image;
     img.onload = function () {
-      const canvas = document.createElement("canvas");
+      const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const width = img.width;
       const height = img.height;
@@ -113,11 +116,10 @@ function Camera(props):JSX.Element {
         accept="image/*"
         onChange={handleChange}
       />
-      <input
+      <Button
         type="button"
-        value="Take Photo"
         onClick={() => envInputRef.current!.click()}
-      />
+      ><CameraAltIcon />Take Photo</Button>
       <br />
       {/* <label htmlFor="user">Capture user:</label> */}
       <br />
@@ -137,7 +139,7 @@ function Camera(props):JSX.Element {
       />
       <br /> */}
       <img src={image} height="200"/>
-      <button onClick={handleClick}>Send</button>
+      <Button onClick={handleClick}><AddAPhotoIcon /> Save Photo</Button>
     </div>
   );
 }

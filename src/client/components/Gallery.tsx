@@ -1,5 +1,7 @@
 import React, { useState, useEffect, StrictMode } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 // import Waypoint from './tourComponents/Waypoint';
 
 
@@ -68,14 +70,16 @@ const Gallery = (props) => {
           images.map((image) => (
             <li key={`${image.id}`}>
               <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
-              {edit && <button
+              {edit && <Button
                 id="delete-image"
+                // variant="outlined"
+                size="small"
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault();
                   deleteImage(image.id);
                 }}
-              >❌</button>}
+              ><RemoveCircleIcon /></Button>}
             </li>
           ))
         }
