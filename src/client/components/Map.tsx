@@ -26,8 +26,8 @@ function Map(props: MapProps): JSX.Element {
   const [lng, setLng] = useState(-90);
   const [lat, setLat] = useState(29.9);
   const [zoom, setZoom] = useState(9);
-  const [markerLng, setMarkerLng] = useState(0);
-  const [markerLat, setMarkerLat] = useState(0);
+  const [markerLng, setMarkerLng] = useState(null);
+  const [markerLat, setMarkerLat] = useState(null);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -54,20 +54,39 @@ function Map(props: MapProps): JSX.Element {
     );
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, 'top-right');
-    clickToCreateMarker();
-    showMarkers();
+
+    map.marker = new mapboxgl.Marker({
+      color: 'red',
+      draggable: 'true',
+    })
+      .setLngLat({lng: markerLng, lat: markerLat})
+      .addTo(map.current)
+      .on('dragend', () => {
+        const lngLat = map.marker.getLngLat();
+        setMarkerLng(lngLat.lng);
+        setMarkerLat(lngLat.lat);
+        passCoords(lngLat.lng, lngLat.lat);
+      });
   }, []);
+
+  useEffect(() => {
+    showMarkers();
+  }, [waypoints]);
+
+  useEffect(() => {
+    clickToCreateMarker();
+  }, [markerLat, markerLng]);
 
   function clickToCreateMarker() {
     map.current?.on('click', (e) => {
       const coordinates = e.lngLat;
-      const marker = new mapboxgl.Marker()
+
+      map.marker
         .setLngLat(coordinates)
         .addTo(map.current);
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
       passCoords(e.lngLat.lng, e.lngLat.lat);
-      marker.remove();
     });
   }
 
@@ -97,9 +116,6 @@ function Map(props: MapProps): JSX.Element {
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
-        <button type="submit" onClick={() => showMarkers()}>
-        show
-      </button>
       </div>
       <div
         style={{ height: '400px' }}
