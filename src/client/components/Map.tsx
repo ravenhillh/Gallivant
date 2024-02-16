@@ -54,9 +54,13 @@ function Map(props: MapProps): JSX.Element {
     );
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, 'top-right');
+
     clickToCreateMarker();
-    showMarkers();
   }, []);
+
+  useEffect(() => {
+    showMarkers();
+  }, [waypoints]);
 
   function clickToCreateMarker() {
     map.current?.on('click', (e) => {
@@ -97,9 +101,6 @@ function Map(props: MapProps): JSX.Element {
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
-        <button type="submit" onClick={() => showMarkers()}>
-        show
-      </button>
       </div>
       <div
         style={{ height: '400px' }}
