@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, StrictMode } from 'react';
 import axios from 'axios';
+// import Waypoint from './tourComponents/Waypoint';
 
 
 interface ImageProperties {
@@ -12,11 +13,10 @@ interface ImageProperties {
 }
 
 const Gallery = (props) => {
-
+  const { waypoint } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
+
   // function to send GET request to db
-  // should grab photos by user id
-  // should be able to eventually grab by other foreign ids
   // const getImages = () => {
   //   axios.get('/images/user')
   //     .then(({data}) => {
@@ -43,24 +43,39 @@ const Gallery = (props) => {
   //   getImagesWP(props.waypoint.id);
   // };
 
+  const deleteImage = (waypointId, imageId) => {
+
+    axios.delete(`/images/waypoint/${waypointId}/${imageId}`)
+      .catch((err) => console.error('Delete unsuccessful ', err));
+
+  };
+
  
   useEffect(() => {
-      getImagesWP(props.waypoint.id);
+      getImagesWP(waypoint.id);
     }, []);
   
-
   return (
     <div>
+      <StrictMode>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
       <ul>
         {
           images.map((image) => (
             <li key={`${image.id}`}>
               <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
+              <button 
+                type="submit" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteImage(waypoint.id, image.id);
+                }}
+              >❌</button>
             </li>
           ))
         }
       </ul>
+      </StrictMode>
     </div>
   );
 };

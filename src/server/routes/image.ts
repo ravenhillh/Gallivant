@@ -61,4 +61,16 @@ imageRouter.get('/waypoint/:waypointId', (req, res) => {
 
 });
 
+// DELETE image from images and images_waypoints
+imageRouter.delete('/waypoint/:waypointId/:imageId', (req, res) => {
+  const { waypointId, imageId } = req.params;
+
+  Images_Waypoints.destroy({ where: { id_waypoint: waypointId, id_image: imageId } })
+    .then(() => {
+      Image.destroy({ where: { id: imageId}});
+      // console.log('destoryed ', data);
+    })
+    .catch((err:string) => console.error('Could not delete image from db ', err));
+});
+
 export default imageRouter;
