@@ -69,6 +69,7 @@ const Gallery = (props) => {
             <li key={`${image.id}`}>
               <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
               {edit && <button
+                id="delete-image"
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault();
