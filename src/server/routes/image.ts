@@ -24,21 +24,21 @@ imageRouter.post('/post', (req, res) => {
 });
 
 // GET images by foreign key/user Id
-imageRouter.get('/user', (req, res) => {
-  const { id } = req.user;
-  // console.log('id ', id);
+// imageRouter.get('/user', (req, res) => {
+//   const { id } = req.user;
+//   // console.log('id ', id);
 
-  Image.findAll({
-    where: {
-      id_user: id
-    }
-  })
-  .then((allImages:any) => {
-    // console.log('GET image data ', allImages);
-    res.send(allImages).status(200);
-  })
-  .catch((err:string) => console.error('could not GET ', err));
-});
+//   Image.findAll({
+//     where: {
+//       id_user: id
+//     }
+//   })
+//   .then((allImages:any) => {
+//     // console.log('GET image data ', allImages);
+//     res.send(allImages).status(200);
+//   })
+//   .catch((err:string) => console.error('could not GET ', err));
+// });
 
 // GET waypoint image by waypoint id, user id, and image id
 imageRouter.get('/waypoint/:waypointId', (req, res) => {
@@ -62,12 +62,13 @@ imageRouter.get('/waypoint/:waypointId', (req, res) => {
 });
 
 // DELETE image from images and images_waypoints
-imageRouter.delete('/waypoint/:waypointId/:imageId', (req, res) => {
-  const { waypointId, imageId } = req.params;
+imageRouter.delete('/:imageId', (req, res) => {
+  const { imageId } = req.params;
 
-  Images_Waypoints.destroy({ where: { id_waypoint: waypointId, id_image: imageId } })
+  // Images_Waypoints.destroy({ where: { id_waypoint: waypointId, id_image: imageId } })
+  Image.destroy({ where: { id: imageId}})
     .then(() => {
-      Image.destroy({ where: { id: imageId}});
+      // Image.destroy({ where: { id: imageId}});
       // console.log('destoryed ', data);
     })
     .catch((err:string) => console.error('Could not delete image from db ', err));
