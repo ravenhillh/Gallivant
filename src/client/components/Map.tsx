@@ -54,8 +54,7 @@ function Map(props: MapProps): JSX.Element {
     );
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, 'top-right');
-<<<<<<< HEAD
-    // clickToCreateMarker();
+
     map.marker = new mapboxgl.Marker({
       color: 'red',
       draggable: 'true',
@@ -68,39 +67,26 @@ function Map(props: MapProps): JSX.Element {
         setMarkerLat(lngLat.lat);
         passCoords(lngLat.lng, lngLat.lat);
       });
-      // showMarkers();
-=======
-
-    clickToCreateMarker();
->>>>>>> b7de4cc7ea02b0d0d3cc8392dc5d20da8a346df8
   }, []);
 
   useEffect(() => {
     showMarkers();
   }, [waypoints]);
 
-<<<<<<< HEAD
   useEffect(() => {
     clickToCreateMarker();
   }, [markerLat, markerLng]);
 
-=======
->>>>>>> b7de4cc7ea02b0d0d3cc8392dc5d20da8a346df8
   function clickToCreateMarker() {
     map.current?.on('click', (e) => {
       const coordinates = e.lngLat;
-      // console.log(coordinates);
-      // const marker = new mapboxgl.Marker({
-      //   color: 'red',
-      //   draggable: 'true',
-      // })
+
       map.marker
         .setLngLat(coordinates)
         .addTo(map.current);
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
       passCoords(e.lngLat.lng, e.lngLat.lat);
-      // marker.remove();
     });
   }
 
