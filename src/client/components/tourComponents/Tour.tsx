@@ -29,6 +29,7 @@ const Tour = (): JSX.Element => {
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
   const [modal, setModal] = useState<boolean>(false);
+  const [errorModal, setErrorModal] = useState<boolean>(false);
 
   //state for draggable sorting of waypoint list
   const [dragStart, setDragStart] = useState<number>(0);
@@ -104,42 +105,49 @@ const Tour = (): JSX.Element => {
       );
   };
 
+  const openWaypointModal = () => {
+    if (long && lat) {
+      setModal(true);
+    } else {
+      setErrorModal(true);
+    }
+  };
+
   // and post waypoint to db
   const postWaypoint = () => {
-    axios
-      .post('/db/waypoint/', {
-        waypoint: {
-          waypointName: wpName,
-          description: wpDesc,
-          long,
-          lat,
-        },
-        id_tour: id,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          setModal(false);
-          setWpName('');
-          setWpDesc('');
-          getTourWPs(id);
-        }
-      })
-      .catch((err: string) => console.error('Could not POST waypoint: ', err));
+      axios
+        .post('/db/waypoint/', {
+          waypoint: {
+            waypointName: wpName,
+            description: wpDesc,
+            long,
+            lat,
+          },
+          id_tour: id,
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            setModal(false);
+            setWpName('');
+            setWpDesc('');
+            getTourWPs(id);
+          }
+        })
+        .catch((err: string) => console.error('Could not POST waypoint: ', err));
   };
 
   return (
     <div>
-      <h1>Tours</h1>
-      <Map waypoints={waypoints} passCoords={passCoords} />
-
-      <h2>Tour Name: {tour?.tourName}</h2>
-      <p>Description: {tour?.description}</p>
+      <h2>{tour?.tourName}</h2>
+      <p>{tour?.description}</p>
       <p>Created by: {creator}</p>
 
+      <Map waypoints={waypoints} passCoords={passCoords} />
+
       <Modal openModal={modal} closeModal={() => setModal(false)}>
-        <div>
+        {/* <div>
           Long: {long}, Lat: {lat}
-        </div>
+        </div> */}
         <label>Waypoint Name:</label>
         <input
           type='text'
@@ -156,8 +164,11 @@ const Tour = (): JSX.Element => {
         <br></br>
         <button onClick={postWaypoint}>Save waypoint</button>
       </Modal>
+      <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
+        <div>Please click location on map first.</div>
+      </Modal>
 
-      {edit && <button onClick={() => setModal(true)}>Add Waypoint</button>}
+      {edit && <button onClick={openWaypointModal}>Add Waypoint</button>}
       <ol className='waypoint-container'>
         {waypoints.map((wp, i) => (
           <div
