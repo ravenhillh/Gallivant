@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import Modal from './Modal';
+import Camera from '../Camera';
+import Gallery from '../Gallery';
 
 type Waypoint = {
   id: number;
@@ -11,13 +13,14 @@ type Waypoint = {
   lat: number;
 };
 interface WaypointProps {
-  waypoint: Waypoint;
+  waypoint: object | Waypoint;
   id_tour: string | undefined;
   getTourWPs: (tourId: string | undefined) => void;
+  edit: boolean;
 }
 
 const Waypoint = (props: WaypointProps): JSX.Element => {
-  const { waypoint, id_tour, getTourWPs } = props;
+  const { waypoint, id_tour, getTourWPs, edit } = props;
   const [delModal, setDelModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
 
@@ -69,12 +72,13 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   return (
     <li>
       <h3>Place: {waypoint.waypointName}</h3>
+      <Gallery waypoint={waypoint}/>
       <div>description: {waypoint.description}</div>
       <div>
         Long: {waypoint.long}, Lat: {waypoint.lat}
       </div>
 
-      <button onClick={() => setDelModal(true)}>🗑️</button>
+      {edit && <button onClick={() => setDelModal(true)}>🗑️</button>}
       <Modal
         className='delete-waypoint-modal'
         openModal={delModal}
@@ -86,7 +90,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         </button>
       </Modal>
 
-      <button onClick={openEditModal}>Edit</button>
+      {edit && <button onClick={openEditModal}>Edit</button>}
       <Modal
         className='edit-waypoint-modal'
         openModal={editModal}
@@ -104,6 +108,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           placeholder='Describe the place'
           onChange={(e) => handleChange(e, setDescription)}
         />
+        <Camera waypoint={waypoint}/>
         <button onClick={() => editWaypoint(waypoint.id)}>
           Edit waypoint
         </button>

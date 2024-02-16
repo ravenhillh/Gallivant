@@ -3,14 +3,16 @@ import { useState, useRef } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
-function Camera():JSX.Element {
+// camera will have to accept props to access other ids like waypoint, etc
+// may need props interface 
+function Camera(props):JSX.Element {
+  const { waypoint } = props;
   // image is a 'preview', before image is selected to be POSTED to database
   const [image, setImage] = useState('');
   const [resizedImg, setResizedImg] = useState('');
   // input Ref's for cameras
   const envInputRef = useRef<HTMLInputElement>(null);
-  const selfieInputRef = useRef<HTMLInputElement>(null);
+  // const selfieInputRef = useRef<HTMLInputElement>(null);
 
   const resizePhoto = (image) => {
     const maxSizeInMB = 4;
@@ -38,16 +40,28 @@ function Camera():JSX.Element {
   };
 
 
-  // function to access photo data
-  // check for env or user id
-  // set id to be dynamic, either environment or user (button click)
-  // after lunch fix errors
+  // post resized image to db
+  const postDb = (data) => {
+      axios.post('/images/post', {
+          key: data.Key,
+          joinId: waypoint.id
+      })
+      .catch(err => console.error('axios post err ', err));
+  };
 
   // axios post request to s3
   const postBucket = (name:string, imageData:string) => {
     axios.post('/api/images', {
       imageName: name,
       base64: imageData
+      // tour/waypoint/etc id, coming from props
+    })
+    .then(({data}) => {
+      // console.log('ax ', data);
+      postDb(data);
+    })
+    .catch((err) => {
+      console.error('Axios POST error ', err);
     });
   };
 
@@ -64,14 +78,13 @@ function Camera():JSX.Element {
       reader.readAsDataURL(selectedFile);
     }
 
-    // setState and read generate dataURL
+    // setState and generate dataURL
     reader.addEventListener('load', () => {
 
       setImage(reader.result as string);
       // call resize here
       resizePhoto(reader.result);
       }, false);
-  
 
   };
 
@@ -86,8 +99,6 @@ function Camera():JSX.Element {
     const name = uuidv4();
     postBucket(name, resizedImg);
   };
-
-  // button to toggle environment or user
 
   return (
     <div>
@@ -110,7 +121,7 @@ function Camera():JSX.Element {
       <br />
       {/* <label htmlFor="user">Capture user:</label> */}
       <br />
-      <input
+      {/* <input
         type="file"
         ref={selfieInputRef}
         id="user"
@@ -124,7 +135,7 @@ function Camera():JSX.Element {
         value="Take Selfie"
         onClick={() => selfieInputRef.current!.click()}
       />
-      <br />
+      <br /> */}
       <img src={image} height="200"/>
       <button onClick={handleClick}>Send</button>
     </div>

@@ -18,11 +18,11 @@ waypointRouter.get('/db/tourWaypoints/:tourId', (req, res) => {
     `select distinct * from waypoints
     join tours_waypoints
     on tours_waypoints.id_waypoint = waypoints.id
-    and tours_waypoints.id_tour = ${tourId};`,
+    and tours_waypoints.id_tour = ${tourId}
+    order by tours_waypoints.order;`,
     { type: QueryTypes.SELECT }
   )
     .then((waypoints: Waypoint[]) => {
-      // console.log(waypoints);
       res.status(200).send(waypoints);
     })
     .catch((err: string) => {
@@ -57,6 +57,20 @@ waypointRouter.put('/db/waypoint/:id', (req, res) => {
       console.error('Failed to put edit on waypoint: ', err);
       res.sendStatus(500);
     });
+});
+
+waypointRouter.put('/db/waypointsOrder/', (req, res) => {
+  const { newOrder, tourId } = req.body; //array of waypoint objects
+  newOrder.forEach(async (wp: Waypoint, index: number) => {
+    try {
+      await Tours_Waypoints.update({ order: index }, { where: { id_waypoint: wp.id, id_tour: tourId }});
+      await Waypoint.update({ order: index }, { where: { id: wp.id }});
+    } catch (err) {
+      console.error('Failed to update waypoint order: ', err);
+      res.sendStatus(500);
+    }
+  });
+  res.sendStatus(200);
 });
 
 waypointRouter.delete('/db/waypoint/:wp/:tour', async (req, res) => {

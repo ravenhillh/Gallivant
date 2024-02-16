@@ -17,12 +17,12 @@ function NavBar() {
         <li className='map-link'>
           <Link to='mapview'>MapView</Link>
         </li>
-        <li className='camera-link'>
+        {/* <li className='camera-link'>
           <Link to='camera'>Camera</Link>
         </li>
         <li className='gallery-link'>
           <Link to='gallery'>Gallery</Link>
-        </li>
+        </li> */}
         <li className='tours-link'>
           <Link to='tours'>Tours</Link>
         </li>
