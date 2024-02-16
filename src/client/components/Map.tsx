@@ -15,11 +15,12 @@ type Waypoint = {
 
 type MapProps = {
   passCoords: (long: number, lat: number) => void;
-  waypoints: Waypoint[];
+  waypoints: Waypoint[] | object;
 };
 
 function Map(props: MapProps): JSX.Element {
   const { passCoords } = props;
+  const { waypoints } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
@@ -54,6 +55,7 @@ function Map(props: MapProps): JSX.Element {
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, 'top-right');
     clickToCreateMarker();
+    showMarkers();
   }, []);
 
   function clickToCreateMarker() {
@@ -69,11 +71,35 @@ function Map(props: MapProps): JSX.Element {
     });
   }
 
+  function showMarkers() {
+
+    return waypoints.map((marker) => {
+      //use setHTML or setDOMContent to add each tour with a click event
+      const markerContent = `<div>
+      <div>${marker.description}<div>
+      </div>`;
+
+      const popUp = new mapboxgl.Popup({ offset: 25 })
+      .setHTML(markerContent);
+
+      new mapboxgl.Marker({
+      color: 'blue',
+      draggable: false,
+    })
+      .setLngLat([Number(marker.long), Number(marker.lat)])
+      .setPopup(popUp)
+      .addTo(map.current);
+    });
+  }
+
   return (
     <div>
       <div>
         <div>Longitude: {markerLng}</div>
         <div>Latitude: {markerLat}</div>
+        <button type="submit" onClick={() => showMarkers()}>
+        show
+      </button>
       </div>
       <div
         style={{ height: '400px' }}
