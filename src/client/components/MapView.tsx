@@ -16,7 +16,8 @@ function MapView(): JSX.Element {
   const [markerLat, setMarkerLat] = useState(0);
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
-  const markerRef = useRef<mapboxgl.Marker>();
+  const [tours, setTours] = useState([]);
+  // const markerRef = useRef<mapboxgl.Marker>();
   // const [myLoc, setMyLoc] = useState()
 
   useEffect(() => {
@@ -48,25 +49,31 @@ function MapView(): JSX.Element {
     map.current.addControl(nav, 'top-right');
 
     findAllWaypoints();
-    showMarkers();
-    // clickToCreateMarker();
   }, []);
 
-  function clickToCreateMarker() {
-    map.current?.on('click', (e) => {
-      if (markerRef.current) {
-        markerRef.current.remove();
-        markerRef.current = undefined;
-      }
-      const coordinates = e.lngLat;
-      const marker = new mapboxgl.Marker()
-        .setLngLat(coordinates)
-        .addTo(map.current);
-      setMarkerLng(e.lngLat.lng);
-      setMarkerLat(e.lngLat.lat);
-      markerRef.current = marker;
-    });
-  }
+  useEffect(() => {
+    showMarkers();
+  }, [allMarkers]);
+
+  useEffect(() => {
+    showTours();
+  }, [tours]);
+
+  // function clickToCreateMarker() {
+  //   map.current?.on('click', (e) => {
+  //     if (markerRef.current) {
+  //       markerRef.current.remove();
+  //       markerRef.current = undefined;
+  //     }
+  //     const coordinates = e.lngLat;
+  //     const marker = new mapboxgl.Marker()
+  //       .setLngLat(coordinates)
+  //       .addTo(map.current);
+  //     setMarkerLng(e.lngLat.lng);
+  //     setMarkerLat(e.lngLat.lat);
+  //     markerRef.current = marker;
+  //   });
+  // }
 
   function findAllWaypoints() {
     //send axios request to db to retrieve coordinates
@@ -80,51 +87,70 @@ function MapView(): JSX.Element {
   }
 
   function getTours(id: string | undefined) {
-    axios(`map/waypoints/${id}`)
-    .then((response) => {
-      console.log(response, 'success');
+    axios(`maps/tours/${id}`)
+    .then(({ data }) => {
+      console.log('success', data);
+      setTours(data);
     })
     .catch((err) => console.log(err));
   }
 
   function showMarkers() {
-
     allMarkers.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
-      <div>${marker.description}<div>
-      <div>${marker.lat}<div>
-      <div>${marker.long}<div>
-      <button type="button" onclick={axios(map/tours/${marker.id})}>Button</button>
+      <div>${marker.waypointName}</div>
       </div>`;
 
       const popUp = new mapboxgl.Popup({ offset: 25 })
       .setHTML(markerContent);
 
-      new mapboxgl.Marker({
+      const marker1 = new mapboxgl.Marker({
       color: 'blue',
       draggable: false,
     })
       .setLngLat([Number(marker.long), Number(marker.lat)])
       .setPopup(popUp)
       .addTo(map.current);
+
+      marker1.getElement().addEventListener('click', () => handleClick(marker.id));
     });
   }
 
+  function showTours() {
+    return tours.length? (<div>
+      <div>Tour: {tours[0].tourName}</div>
+      <div>Description: {tours[0].description}</div>
+      {/* <button onClick={() => getSpecificTour(tours[0].id)}>View Tour</button> */}
+      </div>): '';
+  }
+
+  // function getSpecificTour(id: string | undefined) {
+  //   axios(`maps/fulltour/${id}`)
+  //   .then(({ data }) => {
+  //     // setAllMarkers(data);
+  //     console.log(data);
+  //   })
+  //   .catch((err) => console.log(err, 'get full tour failed'));
+  // }
+
+  function handleClick(x) {
+    getTours(x);
+  }
 
   return (
     <div>
       <h1>Map</h1>
       <div>
+        <div>
+          {showTours()}
+        </div>
         <div
           style={{ height: '400px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
       </div>
-      <button type="submit" onClick={() => showMarkers()}>
-        show
-      </button>
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
