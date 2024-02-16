@@ -13,8 +13,9 @@ interface ImageProperties {
 }
 
 const Gallery = (props) => {
-  const { waypoint } = props;
+  const { waypoint, edit } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
+  // console.log(props);
 
   // function to send GET request to db
   // const getImages = () => {
@@ -43,9 +44,9 @@ const Gallery = (props) => {
   //   getImagesWP(props.waypoint.id);
   // };
 
-  const deleteImage = (waypointId, imageId) => {
+  const deleteImage = (imageId) => {
 
-    axios.delete(`/images/waypoint/${waypointId}/${imageId}`)
+    axios.delete(`/images/${imageId}`)
       .catch((err) => console.error('Delete unsuccessful ', err));
 
   };
@@ -54,6 +55,9 @@ const Gallery = (props) => {
   useEffect(() => {
       getImagesWP(waypoint.id);
     }, []);
+
+  // useEffect(() => {
+  // }, [images]);
   
   return (
     <div>
@@ -64,13 +68,13 @@ const Gallery = (props) => {
           images.map((image) => (
             <li key={`${image.id}`}>
               <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
-              <button 
-                type="submit" 
+              {edit && <button
+                type="submit"
                 onClick={(e) => {
                   e.preventDefault();
-                  deleteImage(waypoint.id, image.id);
+                  deleteImage(image.id);
                 }}
-              >❌</button>
+              >❌</button>}
             </li>
           ))
         }

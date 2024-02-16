@@ -72,7 +72,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   return (
     <li>
       <h3>Place: {waypoint.waypointName}</h3>
-      <Gallery waypoint={waypoint}/>
+      <Gallery waypoint={waypoint} edit={edit} />
       <div>description: {waypoint.description}</div>
       <div>
         Long: {waypoint.long}, Lat: {waypoint.lat}
@@ -108,7 +108,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           placeholder='Describe the place'
           onChange={(e) => handleChange(e, setDescription)}
         />
-        <Camera waypoint={waypoint}/>
+        <Camera waypoint={waypoint} />
         <button onClick={() => editWaypoint(waypoint.id)}>
           Edit waypoint
         </button>

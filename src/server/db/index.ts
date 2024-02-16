@@ -99,7 +99,7 @@ const Image = db.define('Image', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
     },
     id_user: {
         type: DataTypes.INTEGER,
@@ -177,15 +177,17 @@ const Images_Waypoints = db.define('Images_Waypoints', {
             model: Waypoint,
             key: 'id',
             allowNull: false
-        }
+        },
+        onDelete: 'CASCADE'
     },
     id_image: {
         type: DataTypes.INTEGER,
         references: {
             model: Image,
             key: 'id',
-            allowNull: false
-        }
+            allowNull: false,
+        },
+        onDelete: 'CASCADE'
     },
   }, { timestamps: true });
 
