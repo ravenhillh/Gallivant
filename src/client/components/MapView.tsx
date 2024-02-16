@@ -14,12 +14,9 @@ function MapView(): JSX.Element {
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
   const [lat, setLat] = useState(29.9);
-  const [markerLng, setMarkerLng] = useState(0);
-  const [markerLat, setMarkerLat] = useState(0);
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
-  // const markerRef = useRef<mapboxgl.Marker>();
   // const [myLoc, setMyLoc] = useState()
   const navigate = useNavigate();
 
@@ -68,7 +65,6 @@ function MapView(): JSX.Element {
       .get('/maps/waypoints')
       .then(({ data }) => {
         setAllMarkers(data);
-        console.log(data);
       })
       .catch((err) => console.log(err, 'get markers failed'));
   }
@@ -76,7 +72,6 @@ function MapView(): JSX.Element {
   function getTours(id: string | undefined) {
     axios(`maps/tours/${id}`)
     .then(({ data }) => {
-      console.log('success', data);
       setTours(data);
     })
     .catch((err) => console.log(err));
