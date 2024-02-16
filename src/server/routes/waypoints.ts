@@ -15,11 +15,11 @@ type Waypoint = {
 waypointRouter.get('/db/tourWaypoints/:tourId', (req, res) => {
   const { tourId } = req.params;
   db.query(
-    `select distinct * from waypoints
-    join tours_waypoints
-    on tours_waypoints.id_waypoint = waypoints.id
-    and tours_waypoints.id_tour = ${tourId}
-    order by tours_waypoints.order;`,
+    `select distinct * from Waypoints
+    join Tours_Waypoints
+    on Tours_Waypoints.id_waypoint = Waypoints.id
+    and Tours_Waypoints.id_tour = ${tourId}
+    order by Tours_Waypoints.order;`,
     { type: QueryTypes.SELECT }
   )
     .then((waypoints: Waypoint[]) => {
