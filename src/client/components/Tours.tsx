@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-// import Waypoint from './tourComponents/Waypoint';
-// import Map from './Map';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import ExploreIcon from '@mui/icons-material/Explore';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 const Tours = (): JSX.Element => {
   type Tour = {
@@ -29,7 +34,8 @@ const Tours = (): JSX.Element => {
   };
 
   const createTourBtnClick = () => {
-    axios.post('/db/tours', { tour: { tourName, description }})
+    axios
+      .post('/db/tours', { tour: { tourName, description } })
       .then((res) => {
         if (res.status === 201) {
           getAllTours();
@@ -66,16 +72,29 @@ const Tours = (): JSX.Element => {
           onChange={(e) => handleChange(e, setDescription)}
         />
       </div>
-      <button onClick={createTourBtnClick}>Create Tour</button>
-      <ul>
+      <Button
+        variant='contained'
+        color='primary'
+        startIcon={<AddIcon />}
+        onClick={createTourBtnClick}
+      >
+        Create Tour
+      </Button>
+      <List>
         {tours.map((tour, i) => {
           return (
-          <li key={i}>
-            <Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>
-          </li>
+            <ListItem key={i}>
+              <ListItemIcon>
+                <ExploreIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
+                secondary={tour.description}
+              />
+            </ListItem>
           );
         })}
-      </ul>
+      </List>
     </div>
   );
 };
