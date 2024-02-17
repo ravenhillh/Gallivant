@@ -95,7 +95,7 @@ function Map(props: MapProps): JSX.Element {
     return waypoints.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
-      <div>${marker.description}<div>
+      <div>${marker.waypointName}<div>
       </div>`;
 
       const popUp = new mapboxgl.Popup({ offset: 25 })
@@ -114,17 +114,17 @@ function Map(props: MapProps): JSX.Element {
   return (
     <div>
       <div>
-        <div>Longitude: {markerLng}</div>
-        <div>Latitude: {markerLat}</div>
+        {/* <div>Longitude: {markerLng}</div>
+        <div>Latitude: {markerLat}</div> */}
       </div>
       <div
         style={{ height: '400px' }}
         ref={mapContainer}
         className='map-container'
       ></div>
-      <div className='sidebar'>
+      {/* <div className='sidebar'>
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
+      </div> */}
     </div>
   );
 }
