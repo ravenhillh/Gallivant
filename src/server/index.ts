@@ -49,7 +49,7 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 };
 
 // protected routes in this array
-app.use(['/map', '/tours', '/icon', '/images'], checkLoggedIn);
+// app.use(['/map', '/tours', '/icon', '/images'], checkLoggedIn);
 
 // ROUTES
 app.use('/', authRouter);

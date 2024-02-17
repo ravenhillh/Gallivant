@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import RouteSharpIcon from '@mui/icons-material/RouteSharp';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
@@ -36,7 +37,7 @@ function NavBar() {
       <AppBar position='sticky'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            gallivant
+            {<RouteSharpIcon />}   gallivant
           </Typography>
           <IconButton
             size='large'
@@ -49,6 +50,7 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
         </Toolbar>
+
         <Drawer
           open={drawer}
           anchor='right'
