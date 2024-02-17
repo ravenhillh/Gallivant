@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import Container from '@mui/material/Container';
 
 // import Map from './Map';
 // import Camera from './Camera';
@@ -13,6 +14,7 @@ export interface NavBarProps {
 function NavBar() {
   return (
     <div className='nav-bar'>
+      <Container>
       <ul>
         <li className='map-link'>
           <Link to='mapview'>MapView</Link>
@@ -36,6 +38,7 @@ function NavBar() {
         </li>
         <Outlet />
       </ul>
+      </Container>
     </div>
   );
 }
