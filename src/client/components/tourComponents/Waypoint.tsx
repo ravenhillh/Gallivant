@@ -87,7 +87,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         <Typography variant='h4' fontWeight='bold' gutterBottom>
           {<RoomOutlinedIcon />} {waypoint.waypointName}
         </Typography>
-        <Gallery waypoint={waypoint} edit={edit} />
         <Typography variant='subtitle1' gutterBottom>
           {waypoint.description}
         </Typography>
@@ -96,9 +95,12 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         <Grid
           container
           direction='row'
-          justifyContent='flex-end'
+          justifyContent='space-between'
           alignItems='flex-end'
         >
+          <Grid item>
+            <Gallery waypoint={waypoint} edit={edit} />
+          </Grid>
           <Grid item>
             {edit && (
               <Fab
@@ -110,8 +112,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
                 <DeleteIcon />
               </Fab>
             )}
-          </Grid>
-          <Grid item>
             {edit && (
               <Fab
                 aria-label='edit'
