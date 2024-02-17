@@ -12,6 +12,7 @@ import CardContent from '@mui/material/CardContent';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 import Modal from './Modal';
 import Camera from '../Camera';
@@ -131,7 +132,10 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         openModal={delModal}
         closeModal={() => setDelModal(false)}
       >
-        <div>Are you sure you want to delete Waypoint?</div>
+        <Typography variant='body1'>
+          Are you sure you want to delete Waypoint?
+        </Typography>
+        <br />
         <Button
           variant='contained'
           color='error'
@@ -148,22 +152,31 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         openModal={editModal}
         closeModal={() => setEditModal(false)}
       >
-        <label>Name:</label>
-        <input
-          type='text'
-          value={waypointName}
-          placeholder='Give the waypoint a name'
-          onChange={(e) => handleChange(e, setName)}
-        />
-        <br></br>
-        <label>Description:</label>
-        <input
-          type='text'
-          value={description}
-          placeholder='Describe the place'
-          onChange={(e) => handleChange(e, setDescription)}
-        />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            label='Change the name'
+            value={waypointName}
+            onChange={(e) => handleChange(e, setName)}
+            helperText='Name'
+          />
+        </div>
+        <br />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            label='Change the description'
+            value={description}
+            onChange={(e) => handleChange(e, setDescription)}
+            helperText='Description'
+          />
+        </div>
+        <br />
         <Camera waypoint={waypoint} />
+        <br />
         <Button
           size='small'
           variant='contained'
