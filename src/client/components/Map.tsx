@@ -23,9 +23,9 @@ function Map(props: MapProps): JSX.Element {
   const { waypoints } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
-  const [lng, setLng] = useState(-90);
-  const [lat, setLat] = useState(29.9);
-  const [zoom, setZoom] = useState(9);
+  const [lng, setLng] = useState(-90.09);
+  const [lat, setLat] = useState(29.96);
+  const [zoom, setZoom] = useState(11.5);
   const [markerLng, setMarkerLng] = useState(null);
   const [markerLat, setMarkerLat] = useState(null);
 
