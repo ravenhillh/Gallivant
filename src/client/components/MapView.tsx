@@ -1,9 +1,8 @@
 import mapboxgl from 'mapbox-gl'; 
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import Container from '@mui/system/Container';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
