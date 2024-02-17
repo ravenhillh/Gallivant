@@ -7,7 +7,6 @@ import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 
 import Modal from './Modal';
-import Camera from '../Camera';
 import Gallery from '../Gallery';
 
 type Waypoint = {
@@ -137,7 +136,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           placeholder='Describe the place'
           onChange={(e) => handleChange(e, setDescription)}
         />
-        <Camera waypoint={waypoint} />
         <Button
           size='small'
           variant='contained'

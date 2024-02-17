@@ -119,7 +119,7 @@ function Camera(props):JSX.Element {
       <Button
         type="button"
         onClick={() => envInputRef.current!.click()}
-      ><CameraAltIcon />Take Photo</Button>
+      ><CameraAltIcon />  Take Photo</Button>
       <br />
       {/* <label htmlFor="user">Capture user:</label> */}
       <br />
@@ -139,7 +139,7 @@ function Camera(props):JSX.Element {
       />
       <br /> */}
       <img src={image} height="200"/>
-      <Button onClick={handleClick}><AddAPhotoIcon /> Save Photo</Button>
+      <Button onClick={handleClick}><AddAPhotoIcon />  Save Photo</Button>
     </div>
   );
 }
