@@ -1,14 +1,17 @@
 import React from 'react';
 
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
 function Login() {
   return (
     <div>
-      <h1>Temporary Login Page</h1>
-      <button id='login'>
+      <Typography variant='h2'>Login to Gallivant</Typography>
+      <Button variant="contained" id='login'>
         <a className='button google' href='/auth/google'>
           Sign in with Google
         </a>
-      </button>
+      </Button>
     </div>
   );
 }
