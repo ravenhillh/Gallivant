@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ImageList from '@mui/material/ImageList';
+import Camera from './Camera';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import Waypoint from './tourComponents/Waypoint';
 
@@ -17,7 +18,7 @@ interface ImageProperties {
 }
 
 const Gallery = (props) => {
-  const { waypoint, edit, editModal } = props;
+  const { waypoint, edit } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
   // console.log(props);
 
@@ -58,12 +59,13 @@ const Gallery = (props) => {
  
   useEffect(() => {
       getImagesWP(waypoint.id);
-    }, [editModal]);
+    }, []);
 
   
   return (
     <div>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
+      {edit && (images.length ? null : <Camera waypoint={waypoint}/>)}
       <ImageList>
         {
           images.map((image) => (
