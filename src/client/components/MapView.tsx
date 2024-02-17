@@ -2,12 +2,34 @@ import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { redirect, useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Container from '@mui/system/Container';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
-//import { JsxE } from 'typescript';
-// import Map from './Map';
+import ListItemText from '@mui/material/ListItemText';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import InsightsIcon from '@mui/icons-material/Insights';
+import Avatar from '@mui/material/Avatar';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
+
+type Marker = {
+    id: number;
+    waypointName: string;
+    description: string;
+    long: number;
+    lat: number;
+};
+
+type Tours = {
+  tourName: string;
+  description: string;
+  id: number
+}
 
 function MapView(): JSX.Element {
   const mapContainer = useRef('');
@@ -78,7 +100,7 @@ function MapView(): JSX.Element {
   }
 
   function showMarkers() {
-    allMarkers.map((marker) => {
+    allMarkers.map((marker: Marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
       <div>${marker.waypointName}</div>
@@ -98,17 +120,45 @@ function MapView(): JSX.Element {
       marker1.getElement().addEventListener('click', () => handleClick(marker.id));
     });
   }
+  const style = {
+    p: 0,
+    width: '100%',
+    maxWidth: 360,
+    borderRadius: 2,
+    border: '1px solid',
+    borderColor: 'divider',
+    backgroundColor: 'background.paper',
+  };
 
   function showTours() {
     return tours.length? (<div>
-      <div>Tour: {tours[0].tourName}</div>
-      <div>Description: {tours[0].description}</div>
-      <button onClick={() => routeToTour(tours[0].id)}>View Tour</button>
+      <List sx={style} aria-label="tour details">
+        <ListItem>
+          <ListItemAvatar>
+          <Avatar>
+            <InsightsIcon />
+          </Avatar>
+          </ListItemAvatar>
+        <ListItemText primary={tours[0].tourName} />
+        </ListItem>
+      <Divider component="li" />
+        <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+          <DirectionsWalkIcon />
+          </Avatar>
+          </ListItemAvatar>
+        <ListItemText primary={tours[0].description} />
+        </ListItem>
+      <Divider component="li" />
+      <ListItem>
+         <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>View Tour</Button>
+      </ListItem>
+      </List>
       </div>): '';
   }
 
   function routeToTour(id: string | undefined) {
-    
     navigate(`/tour/${id}`);
   }
 
@@ -123,15 +173,15 @@ function MapView(): JSX.Element {
         <div>
           {showTours()}
         </div>
-        <div
+          <div
           style={{ height: '400px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
       </div>
-      <div className="sidebar">
+      {/* <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
+      </div> */}
     </div>
   );
 }
