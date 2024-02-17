@@ -26,6 +26,7 @@ function Modal(
       {children}
       <Button
         variant='outlined'
+        size='small'
         color='secondary'
         startIcon={<CancelIcon />}
         onClick={closeModal}
