@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 import Waypoint from './Waypoint';
 import Modal from './Modal';
@@ -218,20 +219,29 @@ const Tour = (): JSX.Element => {
       </Stack>
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
-        <label>Waypoint Name:</label>
-        <input
-          type='text'
-          value={wpName}
-          onChange={(e) => handleChange(e, setWpName)}
-          autoFocus
-        />
-        <label>Waypoint Description:</label>
-        <input
-          type='text'
-          value={wpDesc}
-          onChange={(e) => handleChange(e, setWpDesc)}
-        />
-        <br></br>
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            label='Give the waypoint a name'
+            value={wpName}
+            onChange={(e) => handleChange(e, setWpName)}
+            helperText='Waypoint Name'
+          />
+        </div>
+        <br />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            label='Give the waypoint a description'
+            value={wpDesc}
+            onChange={(e) => handleChange(e, setWpDesc)}
+            helperText='Waypoint Description'
+          />
+        </div>
+        <br />
         <Button
           startIcon={<AddIcon />}
           size='small'
@@ -244,7 +254,10 @@ const Tour = (): JSX.Element => {
       </Modal>
 
       <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
-        <div>Please click location on map first.</div>
+        <Typography variant='body1'>
+          Please click location on map first.
+        </Typography>
+        <br />
       </Modal>
     </div>
   );
