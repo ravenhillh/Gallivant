@@ -15,7 +15,6 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 import Modal from './Modal';
-import Camera from '../Camera';
 import Gallery from '../Gallery';
 
 type Waypoint = {
@@ -174,8 +173,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
             helperText='Description'
           />
         </div>
-        <br />
-        <Camera waypoint={waypoint} />
         <br />
         <Button
           size='small'
