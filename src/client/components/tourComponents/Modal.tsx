@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, PropsWithChildren } from 'react';
+import Button from '@mui/material/Button';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 type Modal = {
   openModal: boolean;
   closeModal: () => void;
 };
 
-function Modal(props: PropsWithChildren<Modal> & React.HTMLAttributes<HTMLDivElement>): JSX.Element {
+function Modal(
+  props: PropsWithChildren<Modal> & React.HTMLAttributes<HTMLDivElement>
+): JSX.Element {
   const { openModal, closeModal, children } = props;
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -20,7 +24,14 @@ function Modal(props: PropsWithChildren<Modal> & React.HTMLAttributes<HTMLDivEle
   return (
     <dialog ref={dialog} onCancel={closeModal}>
       {children}
-      <button onClick={closeModal}>Cancel</button>
+      <Button
+        variant='outlined'
+        color='secondary'
+        startIcon={<CancelIcon />}
+        onClick={closeModal}
+      >
+        Cancel
+      </Button>
     </dialog>
   );
 }
