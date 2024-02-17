@@ -5,6 +5,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 import Modal from './Modal';
 import Camera from '../Camera';
@@ -75,30 +82,49 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   };
 
   return (
-    <li>
-      <h3>{waypoint.waypointName}</h3>
-      <Gallery waypoint={waypoint} edit={edit} />
-      <div>{waypoint.description}</div>
-      {edit && (
-        <Fab
-          aria-label='edit'
-          color='primary'
-          size='small'
-          onClick={openEditModal}
+    <Card>
+      <CardContent>
+        <Typography variant='h4' fontWeight='bold' gutterBottom>
+          {<RoomOutlinedIcon />} {waypoint.waypointName}
+        </Typography>
+        <Gallery waypoint={waypoint} edit={edit} />
+        <Typography variant='subtitle1' gutterBottom>
+          {waypoint.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Grid
+          container
+          direction='row'
+          justifyContent='flex-end'
+          alignItems='flex-end'
         >
-          <EditIcon />
-        </Fab>
-      )}
-      {edit && (
-        <Fab
-          aria-label='delete'
-          size='small'
-          color='error'
-          onClick={() => setDelModal(true)}
-        >
-          <DeleteIcon />
-        </Fab>
-      )}
+          <Grid item>
+            {edit && (
+              <Fab
+                aria-label='delete'
+                size='small'
+                color='error'
+                onClick={() => setDelModal(true)}
+              >
+                <DeleteIcon />
+              </Fab>
+            )}
+          </Grid>
+          <Grid item>
+            {edit && (
+              <Fab
+                aria-label='edit'
+                color='primary'
+                size='small'
+                onClick={openEditModal}
+              >
+                <EditIcon />
+              </Fab>
+            )}
+          </Grid>
+        </Grid>
+      </CardActions>
 
       <Modal
         className='delete-waypoint-modal'
@@ -147,7 +173,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           Edit
         </Button>
       </Modal>
-    </li>
+    </Card>
   );
 };
 
