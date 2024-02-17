@@ -5,6 +5,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 import Modal from './Modal';
 import Gallery from '../Gallery';
@@ -74,37 +82,59 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   };
 
   return (
-    <li>
-      <h3>{waypoint.waypointName}</h3>
-      <Gallery waypoint={waypoint} edit={edit} />
-      <div>{waypoint.description}</div>
-      {edit && (
-        <Fab
-          aria-label='edit'
-          color='primary'
-          size='small'
-          onClick={openEditModal}
+    <Card>
+      <CardContent>
+        <Typography variant='h4' fontWeight='bold' gutterBottom>
+          {<RoomOutlinedIcon />} {waypoint.waypointName}
+        </Typography>
+        <Typography variant='subtitle1' gutterBottom>
+          {waypoint.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Grid
+          container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='flex-end'
         >
-          <EditIcon />
-        </Fab>
-      )}
-      {edit && (
-        <Fab
-          aria-label='delete'
-          size='small'
-          color='error'
-          onClick={() => setDelModal(true)}
-        >
-          <DeleteIcon />
-        </Fab>
-      )}
+          <Grid item>
+            <Gallery waypoint={waypoint} edit={edit} />
+          </Grid>
+          <Grid item>
+            {edit && (
+              <Fab
+                aria-label='delete'
+                size='small'
+                color='error'
+                onClick={() => setDelModal(true)}
+              >
+                <DeleteIcon />
+              </Fab>
+            )}
+            {edit && (
+              <Fab
+                aria-label='edit'
+                color='primary'
+                size='small'
+                onClick={openEditModal}
+              >
+                <EditIcon />
+              </Fab>
+            )}
+          </Grid>
+        </Grid>
+      </CardActions>
 
       <Modal
         className='delete-waypoint-modal'
         openModal={delModal}
         closeModal={() => setDelModal(false)}
       >
-        <div>Are you sure you want to delete Waypoint?</div>
+        <Typography variant='body1'>
+          Are you sure you want to delete Waypoint?
+        </Typography>
+        <br />
         <Button
           variant='contained'
           color='error'
@@ -121,21 +151,29 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         openModal={editModal}
         closeModal={() => setEditModal(false)}
       >
-        <label>Name:</label>
-        <input
-          type='text'
-          value={waypointName}
-          placeholder='Give the waypoint a name'
-          onChange={(e) => handleChange(e, setName)}
-        />
-        <br></br>
-        <label>Description:</label>
-        <input
-          type='text'
-          value={description}
-          placeholder='Describe the place'
-          onChange={(e) => handleChange(e, setDescription)}
-        />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            label='Change the name'
+            value={waypointName}
+            onChange={(e) => handleChange(e, setName)}
+            helperText='Name'
+          />
+        </div>
+        <br />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            label='Change the description'
+            value={description}
+            onChange={(e) => handleChange(e, setDescription)}
+            helperText='Description'
+          />
+        </div>
+        <br />
         <Button
           size='small'
           variant='contained'
@@ -145,7 +183,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           Edit
         </Button>
       </Modal>
-    </li>
+    </Card>
   );
 };
 

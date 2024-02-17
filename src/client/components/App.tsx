@@ -25,6 +25,11 @@ const App = createBrowserRouter([
     element: <NavBar />,
     children: [
       {
+        path: '/',
+        element: <MapView />,
+        // loader: async () => await requireAuth(),
+      },
+      {
         path: '/mapview',
         element: <MapView />,
         // loader: async () => await requireAuth(),

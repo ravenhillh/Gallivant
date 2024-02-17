@@ -4,6 +4,10 @@ import axios from 'axios';
 
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 import Waypoint from './Waypoint';
 import Modal from './Modal';
@@ -144,29 +148,100 @@ const Tour = (): JSX.Element => {
 
   return (
     <div>
-      <h2>{tour?.tourName}</h2>
-      <p>{tour?.description}</p>
-      <p>Created by: {creator}</p>
+      <Stack spacing={2}>
+        <Grid
+          container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Typography variant='h2' fontWeight='bold' gutterBottom>
+            {tour?.tourName}
+          </Typography>
+          <Typography variant='body1' gutterBottom>
+            {tour?.description}
+          </Typography>
+          <Typography variant='caption' gutterBottom>
+            Created by: {creator}
+          </Typography>
+        </Grid>
 
-      <Map waypoints={waypoints} passCoords={passCoords} />
+        <Map waypoints={waypoints} passCoords={passCoords} />
+
+        <Grid
+          container
+          direction='row'
+          justifyContent='flex-end'
+          alignItems='baseline'
+        >
+          {edit && (
+            <Button
+              startIcon={<AddIcon />}
+              variant='contained'
+              color='primary'
+              onClick={openWaypointModal}
+            >
+              Add Waypoint
+            </Button>
+          )}
+        </Grid>
+
+        <Grid
+          container
+          direction='row'
+          justifyContent='center'
+          alignItems='baseline'
+        >
+          <Typography variant='h3' gutterBottom>
+            Waypoints
+          </Typography>
+        </Grid>
+
+        <Stack spacing={1} className='waypoint-stack'>
+          {waypoints.map((wp, i) => (
+            <div
+              key={i}
+              draggable={edit}
+              onDragStart={() => setDragStart(i)}
+              onDragEnter={() => setDragOver(i)}
+              onDragEnd={onDragEnd}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              <Waypoint
+                getTourWPs={getTourWPs}
+                id_tour={id}
+                waypoint={wp}
+                edit={edit}
+              ></Waypoint>
+            </div>
+          ))}
+        </Stack>
+      </Stack>
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
-        <label>Waypoint Name:</label>
-        <input
-          type='text'
-          value={wpName}
-          onChange={(e) => handleChange(e, setWpName)}
-          autoFocus
-        />
-
-        <label>Waypoint Description:</label>
-        <input
-          type='text'
-          value={wpDesc}
-          onChange={(e) => handleChange(e, setWpDesc)}
-        />
-        <br></br>
-
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            label='Give the waypoint a name'
+            value={wpName}
+            onChange={(e) => handleChange(e, setWpName)}
+            helperText='Waypoint Name'
+          />
+        </div>
+        <br />
+        <div>
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            label='Give the waypoint a description'
+            value={wpDesc}
+            onChange={(e) => handleChange(e, setWpDesc)}
+            helperText='Waypoint Description'
+          />
+        </div>
+        <br />
         <Button
           startIcon={<AddIcon />}
           size='small'
@@ -179,38 +254,11 @@ const Tour = (): JSX.Element => {
       </Modal>
 
       <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
-        <div>Please click location on map first.</div>
+        <Typography variant='body1'>
+          Please click location on map first.
+        </Typography>
+        <br />
       </Modal>
-
-      {edit && (
-        <Button
-          startIcon={<AddIcon />}
-          variant='contained'
-          color='primary'
-          onClick={openWaypointModal}
-        >
-          Add Waypoint
-        </Button>
-      )}
-      <ol className='waypoint-container'>
-        {waypoints.map((wp, i) => (
-          <div
-            key={i}
-            draggable={edit}
-            onDragStart={() => setDragStart(i)}
-            onDragEnter={() => setDragOver(i)}
-            onDragEnd={onDragEnd}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            <Waypoint
-              getTourWPs={getTourWPs}
-              id_tour={id}
-              waypoint={wp}
-              edit={edit}
-            ></Waypoint>
-          </div>
-        ))}
-      </ol>
     </div>
   );
 };
