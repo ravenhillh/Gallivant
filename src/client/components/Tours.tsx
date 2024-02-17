@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 import Modal from './tourComponents/Modal';
 
@@ -74,7 +75,7 @@ const Tours = (): JSX.Element => {
         alignItems='flex-end'
       >
         <Grid item>
-          <Typography fontWeight="bold" variant="h2">
+          <Typography fontWeight='bold' variant='h2'>
             Tours
           </Typography>
         </Grid>
@@ -107,27 +108,37 @@ const Tours = (): JSX.Element => {
       </List>
 
       <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
-        <div>Please give tour a name and description.</div>
+        <Typography variant='body1'>
+          Please give tour a name and description.
+        </Typography>
+        <br />
       </Modal>
 
       <Modal openModal={createModal} closeModal={() => setCreateModal(false)}>
         <div>
-          <label>Tour name:</label>
-          <input
+          <TextField
             autoFocus
-            type='text'
+            fullWidth
+            label='Give your tour a name'
             value={tourName}
             onChange={(e) => handleChange(e, setName)}
+            helperText='Tour Name'
           />
         </div>
+        <br />
         <div>
-          <label>Tour description:</label>
-          <input
-            type='text'
+          <TextField
+            autoFocus
+            fullWidth
+            multiline
+            label='Give your tour a description'
             value={description}
             onChange={(e) => handleChange(e, setDescription)}
+            helperText='Tour Description'
           />
         </div>
+        <br />
+
         <Button
           variant='contained'
           size='small'
