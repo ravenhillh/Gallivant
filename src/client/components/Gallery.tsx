@@ -1,7 +1,9 @@
-import React, { useState, useEffect, StrictMode } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import ImageList from '@mui/material/ImageList';
+// import ImageListItem from '@mui/material/ImageListItem';
 // import Waypoint from './tourComponents/Waypoint';
 
 
@@ -15,7 +17,7 @@ interface ImageProperties {
 }
 
 const Gallery = (props) => {
-  const { waypoint, edit } = props;
+  const { waypoint, edit, editModal } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
   // console.log(props);
 
@@ -56,25 +58,23 @@ const Gallery = (props) => {
  
   useEffect(() => {
       getImagesWP(waypoint.id);
-    }, []);
+    }, [editModal]);
 
-  // useEffect(() => {
-  // }, [images]);
   
   return (
     <div>
-      <StrictMode>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
-      <ul>
+      <ImageList>
         {
           images.map((image) => (
             <li key={`${image.id}`}>
-              <img src={`/api/images/${image.largeImg}`} style={{ width: '100px', height: 'auto' }} />
+              <img src={`/api/images/${image.largeImg}`} style={{ width: '150px', height: 'auto' }} />
               {edit && <Button
                 id="delete-image"
                 // variant="outlined"
                 size="small"
                 type="submit"
+                fullWidth={false}
                 onClick={(e) => {
                   e.preventDefault();
                   deleteImage(image.id);
@@ -83,8 +83,7 @@ const Gallery = (props) => {
             </li>
           ))
         }
-      </ul>
-      </StrictMode>
+      </ImageList>
     </div>
   );
 };

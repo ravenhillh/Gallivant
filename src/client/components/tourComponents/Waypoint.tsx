@@ -72,7 +72,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   return (
     <li>
       <h3>Place: {waypoint.waypointName}</h3>
-      <Gallery waypoint={waypoint} edit={edit} />
+      <Gallery waypoint={waypoint} edit={edit} editModal={editModal}/>
       <div>description: {waypoint.description}</div>
       <div>
         Long: {waypoint.long}, Lat: {waypoint.lat}
