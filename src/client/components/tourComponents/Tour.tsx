@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+
 import Waypoint from './Waypoint';
 import Modal from './Modal';
 import Map from '../Map';
@@ -65,13 +68,16 @@ const Tour = (): JSX.Element => {
     const dragged = newOrder.splice(dragStart, 1); // returns the dragged item
     newOrder.splice(dragOver, 0, ...dragged); // insert the dragged item into new position in array
 
-    axios.put('/db/waypointsOrder/', { newOrder, tourId: id }) // pass the newly-ordered array (plus tourId to update join table as well)
+    axios
+      .put('/db/waypointsOrder/', { newOrder, tourId: id }) // pass the newly-ordered array (plus tourId to update join table as well)
       .then((res) => {
         if (res.status === 200) {
           getTourWPs(id); // get updated waypoints (record sorting handled by query server-side)
         }
       })
-      .catch((err: string) => console.error('Could not PUT updates on waypoints: ', err));
+      .catch((err: string) =>
+        console.error('Could not PUT updates on waypoints: ', err)
+      );
   };
 
   // axios requests to db to get tour by id
@@ -115,25 +121,25 @@ const Tour = (): JSX.Element => {
 
   // and post waypoint to db
   const postWaypoint = () => {
-      axios
-        .post('/db/waypoint/', {
-          waypoint: {
-            waypointName: wpName,
-            description: wpDesc,
-            long,
-            lat,
-          },
-          id_tour: id,
-        })
-        .then((res) => {
-          if (res.status === 201) {
-            setModal(false);
-            setWpName('');
-            setWpDesc('');
-            getTourWPs(id);
-          }
-        })
-        .catch((err: string) => console.error('Could not POST waypoint: ', err));
+    axios
+      .post('/db/waypoint/', {
+        waypoint: {
+          waypointName: wpName,
+          description: wpDesc,
+          long,
+          lat,
+        },
+        id_tour: id,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          setModal(false);
+          setWpName('');
+          setWpDesc('');
+          getTourWPs(id);
+        }
+      })
+      .catch((err: string) => console.error('Could not POST waypoint: ', err));
   };
 
   return (
@@ -145,9 +151,6 @@ const Tour = (): JSX.Element => {
       <Map waypoints={waypoints} passCoords={passCoords} />
 
       <Modal openModal={modal} closeModal={() => setModal(false)}>
-        {/* <div>
-          Long: {long}, Lat: {lat}
-        </div> */}
         <label>Waypoint Name:</label>
         <input
           type='text'
@@ -155,6 +158,7 @@ const Tour = (): JSX.Element => {
           onChange={(e) => handleChange(e, setWpName)}
           autoFocus
         />
+
         <label>Waypoint Description:</label>
         <input
           type='text'
@@ -162,13 +166,32 @@ const Tour = (): JSX.Element => {
           onChange={(e) => handleChange(e, setWpDesc)}
         />
         <br></br>
-        <button onClick={postWaypoint}>Save waypoint</button>
+
+        <Button
+          startIcon={<AddIcon />}
+          size='small'
+          variant='contained'
+          color='primary'
+          onClick={postWaypoint}
+        >
+          Save waypoint
+        </Button>
       </Modal>
+
       <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
         <div>Please click location on map first.</div>
       </Modal>
 
-      {edit && <button onClick={openWaypointModal}>Add Waypoint</button>}
+      {edit && (
+        <Button
+          startIcon={<AddIcon />}
+          variant='contained'
+          color='primary'
+          onClick={openWaypointModal}
+        >
+          Add Waypoint
+        </Button>
+      )}
       <ol className='waypoint-container'>
         {waypoints.map((wp, i) => (
           <div
