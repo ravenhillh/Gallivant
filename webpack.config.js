@@ -5,6 +5,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 require('dotenv').config();
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { NODE_ENV = 'production' } = process.env;
 
@@ -42,6 +43,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/client/index.ejs')
-    })
+    }),
+    // new BundleAnalyzerPlugin()
   ]
 };

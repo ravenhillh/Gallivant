@@ -8,7 +8,7 @@ import Login from './Login';
 import Camera from './Camera';
 import Tours from './Tours';
 import Tour from './tourComponents/Tour';
-import MyThree from './Icon';
+// import MyThree from './Icon';
 import MapView from './MapView';
 import Gallery from './Gallery';
 
@@ -49,10 +49,10 @@ const App = createBrowserRouter([
         element: <Tours />,
         // loader: async () => await requireAuth(),
       },
-      {
-        path: '/icon',
-        element: <MyThree />,
-      },
+      // {
+      //   path: '/icon',
+      //   element: <MyThree />,
+      // },
       {
         path: '/tour/:id',
         element: <Tour />,

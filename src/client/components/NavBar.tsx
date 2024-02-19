@@ -86,11 +86,11 @@ function NavBar() {
                   <Link to='tours'>Tours</Link>
                 </ListItemButton>
               </ListItem>
-              <ListItem className='icon-link'>
+              {/* <ListItem className='icon-link'>
                 <ListItemButton>
                   <Link to='icon'>Icon</Link>
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
 
               <Divider />
               <ListItem className='logout-link'>
