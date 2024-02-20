@@ -2,17 +2,17 @@ import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import InsightsIcon from '@mui/icons-material/Insights';
-import Avatar from '@mui/material/Avatar';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Typography from '@mui/material/Typography';
+import {
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  DirectionsWalkIcon,
+  InsightsIcon,
+  Avatar,
+  ListItemAvatar,
+} from '../utils/material';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
@@ -135,7 +135,7 @@ function MapView(): JSX.Element {
   function showTours() {
     return tours.length ? (
       <div>
-        <List sx={style} aria-label="tour details">
+        <List sx={style} aria-label='tour details'>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
@@ -144,7 +144,7 @@ function MapView(): JSX.Element {
             </ListItemAvatar>
             <ListItemText primary={tours[0].tourName} />
           </ListItem>
-          <Divider component="li" />
+          <Divider component='li' />
           <ListItem>
             <ListItemAvatar>
               <Avatar>
@@ -153,9 +153,9 @@ function MapView(): JSX.Element {
             </ListItemAvatar>
             <ListItemText primary={tours[0].description} />
           </ListItem>
-          <Divider component="li" />
+          <Divider component='li' />
           <ListItem>
-            <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>
+            <Button variant='outlined' onClick={() => routeToTour(tours[0].id)}>
               View Tour
             </Button>
           </ListItem>
@@ -182,9 +182,9 @@ function MapView(): JSX.Element {
       <div>
         <div>{showTours()}</div>
         <div
-          style={{ height: '500px' }}
+          style={{ height: '400px' }}
           ref={mapContainer}
-          className="map-container"
+          className='map-container'
         ></div>
       </div>
       {/* <div className="sidebar">

@@ -2,12 +2,14 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+import {
+  Button,
+  AddIcon,
+  Stack,
+  Typography,
+  Grid,
+  TextField,
+} from '../../utils/material';
 
 // import Waypoint from './Waypoint';
 const Waypoint = lazy(() => import('./Waypoint'));
