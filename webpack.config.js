@@ -4,7 +4,9 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar');
 require('dotenv').config();
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { NODE_ENV = 'production' } = process.env;
 
@@ -40,8 +42,10 @@ module.exports = {
     publicPath: '/',
   },
   plugins: [
+    new WebpackBar(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/client/index.ejs')
-    })
+    }),
+    // new BundleAnalyzerPlugin()
   ]
 };

@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 // import Home from './Home';
-import NavBar from './NavBar';
-import Login from './Login';
+const NavBar = lazy(() => import('./NavBar'));
+const Login = lazy(() => import('./Login'));
 // import Map from './Map';
-import Camera from './Camera';
-import Tours from './Tours';
-import Tour from './tourComponents/Tour';
-import MyThree from './Icon';
-import MapView from './MapView';
-import Gallery from './Gallery';
+const Camera = lazy(() => import('./Camera'));
+const Tours = lazy(() => import('./Tours'));
+const Tour = lazy(() => import('./tourComponents/Tour'));
+// import MyThree from './Icon';
+const MapView = lazy(() => import('./MapView'));
+const Gallery = lazy(() => import('./Gallery'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -18,48 +18,80 @@ import requireAuth from '../utils/requireAuth';
 const App = createBrowserRouter([
   {
     path: '/login',
-    element: <Login />
+    element: (
+      <Suspense fallback={<>Loading...</>}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: '/',
-    element: <NavBar />,
+    element: (
+      <Suspense fallback={<>Loading...</>}>
+        <NavBar />
+      </Suspense>
+    ),
     children: [
       {
         path: '/',
-        element: <MapView />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <MapView />
+          </Suspense>
+        ),
         // loader: async () => await requireAuth(),
       },
       {
         path: '/mapview',
-        element: <MapView />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <MapView />
+          </Suspense>
+        ),
         // loader: async () => await requireAuth(),
       },
       {
         path: '/camera',
-        element: <Camera />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Camera />
+          </Suspense>
+        ),
         // loader: async () => await requireAuth(),
       },
       {
         path: '/gallery',
-        element: <Gallery />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Gallery />
+          </Suspense>
+        ),
         // loader: async () => await requireAuth(),
       },
       {
         path: '/tours',
-        element: <Tours />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Tours />
+          </Suspense>
+        ),
         // loader: async () => await requireAuth(),
       },
-      {
-        path: '/icon',
-        element: <MyThree />,
-      },
+      // {
+      //   path: '/icon',
+      //   element: <MyThree />,
+      // },
       {
         path: '/tour/:id',
-        element: <Tour />,
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Tour />
+          </Suspense>
+        ),
         loader: async () => await requireAuth(),
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 
 export default App;
