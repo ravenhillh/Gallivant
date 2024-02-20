@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from '@mui/material/Button';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import ImageList from '@mui/material/ImageList';
+import { Button, RemoveCircleIcon, ImageList } from '../utils/material';
 import Camera from './Camera';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import Waypoint from './tourComponents/Waypoint';
-
 
 interface ImageProperties {
   createdAt: string;
@@ -34,13 +31,15 @@ const Gallery = (props) => {
 
   const getImagesWP = (waypointId) => {
     // console.log('wp id ', waypointId);
-    axios.get(`/images/waypoint/${waypointId}`)
-      .then(({data}) => {
+    axios
+      .get(`/images/waypoint/${waypointId}`)
+      .then(({ data }) => {
         // console.log('data ', data);
         setImages(data);
-
       })
-      .catch(err => console.error('could not get images by waypoint Id', err));
+      .catch((err) =>
+        console.error('could not get images by waypoint Id', err)
+      );
   };
 
   // const handleClick = (e) => {
@@ -50,46 +49,46 @@ const Gallery = (props) => {
   // };
 
   const deleteImage = (imageId) => {
-
-    axios.delete(`/images/${imageId}`)
+    axios
+      .delete(`/images/${imageId}`)
       .catch((err) => console.error('Delete unsuccessful ', err));
-
   };
 
- 
   useEffect(() => {
-      getImagesWP(waypoint.id);
-    }, []);
+    getImagesWP(waypoint.id);
+  }, []);
 
-  
   return (
     <div>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
-      {edit && (images.length ? null : <Camera waypoint={waypoint}/>)}
+      {edit && (images.length ? null : <Camera waypoint={waypoint} />)}
       <ImageList>
-        {
-          images.map((image) => (
-            <li key={`${image.id}`}>
-              <img src={`/api/images/${image.largeImg}`} style={{ width: '150px', height: 'auto' }} />
-              {edit && <Button
-                id="delete-image"
+        {images.map((image) => (
+          <li key={`${image.id}`}>
+            <img
+              src={`/api/images/${image.largeImg}`}
+              style={{ width: '150px', height: 'auto' }}
+            />
+            {edit && (
+              <Button
+                id='delete-image'
                 // variant="outlined"
-                size="small"
-                type="submit"
+                size='small'
+                type='submit'
                 fullWidth={false}
                 onClick={(e) => {
                   e.preventDefault();
                   deleteImage(image.id);
                 }}
-              ><RemoveCircleIcon /></Button>}
-            </li>
-          ))
-        }
+              >
+                <RemoveCircleIcon />
+              </Button>
+            )}
+          </li>
+        ))}
       </ImageList>
     </div>
   );
 };
-
-
 
 export default Gallery;

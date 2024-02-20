@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import ExploreIcon from '@mui/icons-material/Explore';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import {
+  Button,
+  AddIcon,
+  ExploreIcon,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Grid,
+  Typography,
+  TextField,
+} from '../utils/material';
 
 import Modal from './tourComponents/Modal';
 

@@ -2,13 +2,11 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '@mui/material/Button';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Button, AddAPhotoIcon, CameraAltIcon } from '../utils/material';
 
 // camera will have to accept props to access other ids like waypoint, etc
-// may need props interface 
-function Camera(props):JSX.Element {
+// may need props interface
+function Camera(props): JSX.Element {
   const { waypoint } = props;
   // image is a 'preview', before image is selected to be POSTED to database
   const [image, setImage] = useState('');
@@ -20,7 +18,7 @@ function Camera(props):JSX.Element {
   const resizePhoto = (image) => {
     const maxSizeInMB = 4;
     const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
-    let dataURL:string;
+    let dataURL: string;
 
     const img = new Image();
     img.src = image;
@@ -42,30 +40,31 @@ function Camera(props):JSX.Element {
     };
   };
 
-
   // post resized image to db
   const postDb = (data) => {
-      axios.post('/images/post', {
-          key: data.Key,
-          joinId: waypoint.id
+    axios
+      .post('/images/post', {
+        key: data.Key,
+        joinId: waypoint.id,
       })
-      .catch(err => console.error('axios post err ', err));
+      .catch((err) => console.error('axios post err ', err));
   };
 
   // axios post request to s3
-  const postBucket = (name:string, imageData:string) => {
-    axios.post('/api/images', {
-      imageName: name,
-      base64: imageData
-      // tour/waypoint/etc id, coming from props
-    })
-    .then(({data}) => {
-      // console.log('ax ', data);
-      postDb(data);
-    })
-    .catch((err) => {
-      console.error('Axios POST error ', err);
-    });
+  const postBucket = (name: string, imageData: string) => {
+    axios
+      .post('/api/images', {
+        imageName: name,
+        base64: imageData,
+        // tour/waypoint/etc id, coming from props
+      })
+      .then(({ data }) => {
+        // console.log('ax ', data);
+        postDb(data);
+      })
+      .catch((err) => {
+        console.error('Axios POST error ', err);
+      });
   };
 
   // reads image file and converts to base64
@@ -82,16 +81,18 @@ function Camera(props):JSX.Element {
     }
 
     // setState and generate dataURL
-    reader.addEventListener('load', () => {
-
-      setImage(reader.result as string);
-      // call resize here
-      resizePhoto(reader.result);
-      }, false);
-
+    reader.addEventListener(
+      'load',
+      () => {
+        setImage(reader.result as string);
+        // call resize here
+        resizePhoto(reader.result);
+      },
+      false
+    );
   };
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // prevent default to stop loop
     e.preventDefault();
     sendPic(e);
@@ -108,18 +109,17 @@ function Camera(props):JSX.Element {
       {/* <label htmlFor="environment"></label> */}
       <br />
       <input
-        type="file"
+        type='file'
         ref={envInputRef}
-        id="environment"
+        id='environment'
         style={{ display: 'none' }}
-        capture="environment"
-        accept="image/*"
+        capture='environment'
+        accept='image/*'
         onChange={handleChange}
       />
-      <Button
-        type="button"
-        onClick={() => envInputRef.current!.click()}
-      ><CameraAltIcon />  Take Photo</Button>
+      <Button type='button' onClick={() => envInputRef.current!.click()}>
+        <CameraAltIcon /> Take Photo
+      </Button>
       <br />
       {/* <label htmlFor="user">Capture user:</label> */}
       <br />
@@ -138,8 +138,10 @@ function Camera(props):JSX.Element {
         onClick={() => selfieInputRef.current!.click()}
       />
       <br /> */}
-      <img src={image} height="200"/>
-      <Button onClick={handleClick}><AddAPhotoIcon />  Save Photo</Button>
+      <img src={image} height='200' />
+      <Button onClick={handleClick}>
+        <AddAPhotoIcon /> Save Photo
+      </Button>
     </div>
   );
 }

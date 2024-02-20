@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Fab from '@mui/material/Fab';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+import {
+  EditIcon,
+  DeleteIcon,
+  Fab,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  RoomOutlinedIcon,
+  Typography,
+  Grid,
+  TextField,
+} from '../../utils/material';
+// CardMedia?
 
 import Modal from './Modal';
 import Gallery from '../Gallery';
