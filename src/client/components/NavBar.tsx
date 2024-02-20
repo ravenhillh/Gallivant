@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import RouteSharpIcon from '@mui/icons-material/RouteSharp';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Drawer,
+  MenuIcon,
+  IconButton,
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  RouteSharpIcon,
+  Divider,
+  Button,
+} from '../utils/material';
 
 // import Map from './Map';
 // import Camera from './Camera';
@@ -37,7 +39,7 @@ function NavBar() {
       <AppBar position='sticky'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            {<RouteSharpIcon />}   gallivant
+            {<RouteSharpIcon />} gallivant
           </Typography>
           <IconButton
             size='large'
