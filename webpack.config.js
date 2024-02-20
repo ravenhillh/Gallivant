@@ -4,7 +4,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackBar = require('WebpackBar');
+const WebpackBar = require('webpackbar');
 require('dotenv').config();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
