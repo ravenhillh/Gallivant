@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, PropsWithChildren } from 'react';
-import Button from '@mui/material/Button';
-import CancelIcon from '@mui/icons-material/Cancel';
+
+import { Button, CancelIcon } from '../../utils/material';
 
 type Modal = {
   openModal: boolean;
