@@ -29,6 +29,7 @@ import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
+import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -69,6 +70,7 @@ export {
   RemoveCircleIcon,
   RoomOutlinedIcon,
   RouteSharpIcon,
+  SendIcon,
   Stack,
   TextField,
   Typography,

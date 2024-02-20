@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import {
   Box,
+  Button,
   TextField,
   Rating,
+  SendIcon,
   Typography
 } from '../utils/material';
 
@@ -27,10 +30,21 @@ import {
 // a review can have only one tour
 // if a tour gets deleted, all reviews must be deleted (cascade)
 // a review could be deleted, but would not affect tours
+
+
 const CreateReview = () => {
   // rating value
   const [value, setValue] = useState<number | null>(0);
   const [reviewText, setReviewText] = useState<string>('');
+
+  const postReview = () => {
+    axios.post('/reviews/post', {
+      feedback: reviewText,
+      rating: value
+    })
+    .catch(err => console.error('Axios post error ', err));
+  };
+
   return (
     <div className="create-review">
       <Box
@@ -63,6 +77,16 @@ const CreateReview = () => {
             // console.log(event.target.value);
           }}
         />
+        <br />
+        <Button 
+          variant="contained" 
+          endIcon={<SendIcon />}
+          onClick={() => {
+            postReview();
+          }}
+        >
+          Send
+        </Button>
         </div>
       </Box>
     </div>
