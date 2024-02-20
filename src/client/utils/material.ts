@@ -25,6 +25,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
@@ -64,6 +65,7 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Rating,
   RemoveCircleIcon,
   RoomOutlinedIcon,
   RouteSharpIcon,
