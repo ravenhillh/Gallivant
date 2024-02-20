@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,9 +9,12 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
-import Waypoint from './Waypoint';
-import Modal from './Modal';
-import Map from '../Map';
+// import Waypoint from './Waypoint';
+const Waypoint = lazy(() => import('./Waypoint'));
+// import Modal from './Modal';
+const Modal = lazy(() => import('./Modal'));
+// import Map from '../Map';
+const Map = lazy(() => import('../Map'));
 
 type Tour = {
   id: number;
@@ -166,7 +169,9 @@ const Tour = (): JSX.Element => {
           </Typography>
         </Grid>
 
-        <Map waypoints={waypoints} passCoords={passCoords} />
+        <Suspense fallback={<>Loading...</>}>
+          <Map waypoints={waypoints} passCoords={passCoords} />
+        </Suspense>
 
         <Grid
           container
@@ -207,58 +212,64 @@ const Tour = (): JSX.Element => {
               onDragEnd={onDragEnd}
               onDragOver={(e) => e.preventDefault()}
             >
-              <Waypoint
-                getTourWPs={getTourWPs}
-                id_tour={id}
-                waypoint={wp}
-                edit={edit}
-              ></Waypoint>
+              <Suspense fallback={<>Loading...</>}>
+                <Waypoint
+                  getTourWPs={getTourWPs}
+                  id_tour={id}
+                  waypoint={wp}
+                  edit={edit}
+                />
+              </Suspense>
             </div>
           ))}
         </Stack>
       </Stack>
 
-      <Modal openModal={modal} closeModal={() => setModal(false)}>
-        <div>
-          <TextField
-            autoFocus
-            fullWidth
-            label='Give the waypoint a name'
-            value={wpName}
-            onChange={(e) => handleChange(e, setWpName)}
-            helperText='Waypoint Name'
-          />
-        </div>
-        <br />
-        <div>
-          <TextField
-            autoFocus
-            fullWidth
-            multiline
-            label='Give the waypoint a description'
-            value={wpDesc}
-            onChange={(e) => handleChange(e, setWpDesc)}
-            helperText='Waypoint Description'
-          />
-        </div>
-        <br />
-        <Button
-          startIcon={<AddIcon />}
-          size='small'
-          variant='contained'
-          color='primary'
-          onClick={postWaypoint}
-        >
-          Save waypoint
-        </Button>
-      </Modal>
+      <Suspense fallback={<>Loading...</>}>
+        <Modal openModal={modal} closeModal={() => setModal(false)}>
+          <div>
+            <TextField
+              autoFocus
+              fullWidth
+              label='Give the waypoint a name'
+              value={wpName}
+              onChange={(e) => handleChange(e, setWpName)}
+              helperText='Waypoint Name'
+            />
+          </div>
+          <br />
+          <div>
+            <TextField
+              autoFocus
+              fullWidth
+              multiline
+              label='Give the waypoint a description'
+              value={wpDesc}
+              onChange={(e) => handleChange(e, setWpDesc)}
+              helperText='Waypoint Description'
+            />
+          </div>
+          <br />
+          <Button
+            startIcon={<AddIcon />}
+            size='small'
+            variant='contained'
+            color='primary'
+            onClick={postWaypoint}
+          >
+            Save waypoint
+          </Button>
+        </Modal>
+      </Suspense>
 
-      <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
-        <Typography variant='body1'>
-          Please click location on map first.
-        </Typography>
-        <br />
-      </Modal>
+      <Suspense fallback={<>Loading...</>}>
+        <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
+          <Typography variant='body1'>
+            Please click location on map first.
+          </Typography>
+          <br />
+        </Modal>
+      </Suspense>
     </div>
   );
 };
