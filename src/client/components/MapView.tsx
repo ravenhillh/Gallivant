@@ -1,34 +1,35 @@
-import mapboxgl from 'mapbox-gl'; 
+import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-
 import ListItemText from '@mui/material/ListItemText';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import InsightsIcon from '@mui/icons-material/Insights';
 import Avatar from '@mui/material/Avatar';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Typography from '@mui/material/Typography';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
 
 type Marker = {
-    id: number;
-    waypointName: string;
-    description: string;
-    long: number;
-    lat: number;
+  id: number;
+  waypointName: string;
+  description: string;
+  long: number;
+  lat: number;
 };
 
-type Tours = {
+type Tour = {
   tourName: string;
   description: string;
-  id: number
-}
+  id: number;
+};
 
 function MapView(): JSX.Element {
   const mapContainer = useRef('');
@@ -92,31 +93,33 @@ function MapView(): JSX.Element {
 
   function getTours(id: string | undefined) {
     axios(`maps/tours/${id}`)
-    .then(({ data }) => {
-      setTours(data);
-    })
-    .catch((err) => console.log(err));
+      .then(({ data }) => {
+        setTours(data);
+      })
+      .catch((err) => console.log(err));
   }
 
   function showMarkers() {
     allMarkers.map((marker: Marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
-      <div>${marker.waypointName}</div>
+      <h3>${marker.waypointName}</h3>
+      <div>${marker.description}</div>
       </div>`;
 
-      const popUp = new mapboxgl.Popup({ offset: 25 })
-      .setHTML(markerContent);
+      const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
 
       const marker1 = new mapboxgl.Marker({
-      color: 'blue',
-      draggable: false,
-    })
-      .setLngLat([Number(marker.long), Number(marker.lat)])
-      .setPopup(popUp)
-      .addTo(map.current);
+        color: 'blue',
+        draggable: false,
+      })
+        .setLngLat([Number(marker.long), Number(marker.lat)])
+        .setPopup(popUp)
+        .addTo(map.current);
 
-      marker1.getElement().addEventListener('click', () => handleClick(marker.id));
+      marker1
+        .getElement()
+        .addEventListener('click', () => handleClick(marker.id));
     });
   }
   const style = {
@@ -130,31 +133,37 @@ function MapView(): JSX.Element {
   };
 
   function showTours() {
-    return tours.length? (<div>
-      <List sx={style} aria-label="tour details">
-        <ListItem>
-          <ListItemAvatar>
-          <Avatar>
-            <InsightsIcon />
-          </Avatar>
-          </ListItemAvatar>
-        <ListItemText primary={tours[0].tourName} />
-        </ListItem>
-      <Divider component="li" />
-        <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-          <DirectionsWalkIcon />
-          </Avatar>
-          </ListItemAvatar>
-        <ListItemText primary={tours[0].description} />
-        </ListItem>
-      <Divider component="li" />
-      <ListItem>
-         <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>View Tour</Button>
-      </ListItem>
-      </List>
-      </div>): '';
+    return tours.length ? (
+      <div>
+        <List sx={style} aria-label="tour details">
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <InsightsIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].tourName} />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <DirectionsWalkIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].description} />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>
+              View Tour
+            </Button>
+          </ListItem>
+        </List>
+      </div>
+    ) : (
+      ''
+    );
   }
 
   function routeToTour(id: string | undefined) {
@@ -167,13 +176,13 @@ function MapView(): JSX.Element {
 
   return (
     <div>
-      <h1>Map</h1>
+      <Typography mt={2} variant="h2" fontWeight="bold">
+        Map View
+      </Typography>
       <div>
-        <div>
-          {showTours()}
-        </div>
-          <div
-          style={{ height: '400px' }}
+        <div>{showTours()}</div>
+        <div
+          style={{ height: '500px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
