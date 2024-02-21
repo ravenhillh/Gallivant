@@ -2,13 +2,13 @@ import React, { useEffect, useRef, PropsWithChildren } from 'react';
 
 import { Button, CancelIcon } from '../../utils/material';
 
-type Modal = {
+type CustomModal = {
   openModal: boolean;
   closeModal: () => void;
 };
 
-function Modal(
-  props: PropsWithChildren<Modal> & React.HTMLAttributes<HTMLDivElement>
+function CustomModal(
+  props: PropsWithChildren<CustomModal> & React.HTMLAttributes<HTMLDivElement>
 ): JSX.Element {
   const { openModal, closeModal, children } = props;
   const dialog = useRef<HTMLDialogElement>(null);
@@ -37,4 +37,4 @@ function Modal(
   );
 }
 
-export default Modal;
+export default CustomModal;

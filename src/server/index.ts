@@ -14,6 +14,7 @@ import  { db } from './db';
 import  authRouter  from './routes/auth';
 import  mapRouter   from './routes/map';
 import imageRouter from './routes/image';
+import reviewRouter from './routes/reviews';
 import tourRouter from './routes/tours';
 import waypointRouter from './routes/waypoints';
 
@@ -55,6 +56,7 @@ const checkLoggedIn: RequestHandler = (req, res, next) => {
 app.use('/', authRouter);
 app.use('/maps', mapRouter);
 app.use('/images', imageRouter);
+app.use('/reviews', reviewRouter);
 app.use('/', tourRouter);
 app.use('/', waypointRouter);
 
