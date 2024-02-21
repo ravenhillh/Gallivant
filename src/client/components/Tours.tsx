@@ -16,6 +16,7 @@ import {
 } from '../utils/material';
 
 import Modal from './tourComponents/Modal';
+import Voice from './tourComponents/Voice';
 
 const Tours = (): JSX.Element => {
   type Tour = {
@@ -92,6 +93,8 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
+
+      <Voice />
 
       <List>
         {tours.map((tour, i) => {
