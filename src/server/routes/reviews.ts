@@ -24,5 +24,21 @@ reviewRouter.post('/post', (req, res) => {
     });
 });
 
+// GET reviews
+reviewRouter.get('/all', (req, res) => {
+  // const { id } = req.user;
+  // console.log('id ', id);
+
+  Review.findAll()
+  .then((data:any) => {
+    // console.log('GET review data ', data);
+    res.send(data).status(200);
+  })
+  .catch((err:string) => {
+    console.error('could not GET ', err);
+    res.sendStatus(500);
+  });
+});
+
 // select id_review from Reviews_Tours where id_tour = ' ' 
 export default reviewRouter;

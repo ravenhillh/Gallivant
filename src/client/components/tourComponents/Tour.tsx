@@ -199,7 +199,11 @@ const Tour = (): JSX.Element => {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-          ><CreateReview /></Modal>
+          >
+            <Suspense fallback={<>Loading...</>}>
+              <CreateReview />
+            </Suspense>
+          </Modal>
           <br />
           {edit && (
             <Button
