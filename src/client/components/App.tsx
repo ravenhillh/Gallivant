@@ -11,6 +11,7 @@ const Tour = lazy(() => import('./tourComponents/Tour'));
 // import MyThree from './Icon';
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
+const CreateReview = lazy(() => import('./CreateReview'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -89,6 +90,15 @@ const App = createBrowserRouter([
           </Suspense>
         ),
         loader: async () => await requireAuth(),
+      },
+      {
+        path: '/createreview',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <CreateReview />
+          </Suspense>
+        ),
+        // loader: async () => await requireAuth(),
       },
     ],
   },

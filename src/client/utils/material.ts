@@ -25,9 +25,12 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Modal from '@mui/material/Modal';
+import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
+import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -64,9 +67,12 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Modal,
+  Rating,
   RemoveCircleIcon,
   RoomOutlinedIcon,
   RouteSharpIcon,
+  SendIcon,
   Stack,
   TextField,
   Typography,

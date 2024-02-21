@@ -16,7 +16,7 @@ import {
 } from '../../utils/material';
 // CardMedia?
 
-import Modal from './Modal';
+import CustomModal from './Modal';
 import Gallery from '../Gallery';
 
 type Waypoint = {
@@ -128,7 +128,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         </Grid>
       </CardActions>
 
-      <Modal
+      <CustomModal
         className='delete-waypoint-modal'
         openModal={delModal}
         closeModal={() => setDelModal(false)}
@@ -146,9 +146,9 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         >
           Delete Waypoint
         </Button>
-      </Modal>
+      </CustomModal>
 
-      <Modal
+      <CustomModal
         className='edit-waypoint-modal'
         openModal={editModal}
         closeModal={() => setEditModal(false)}
@@ -184,7 +184,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         >
           Edit
         </Button>
-      </Modal>
+      </CustomModal>
     </Card>
   );
 };
