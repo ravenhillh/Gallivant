@@ -15,7 +15,7 @@ import {
 // import Waypoint from './Waypoint';
 const Waypoint = lazy(() => import('./Waypoint'));
 // import Modal from './Modal';
-const CustomModal = lazy(() => import('./CustomModal'));
+const CustomModal = lazy(() => import('./Modal'));
 // import Map from '../Map';
 const Map = lazy(() => import('../Map'));
 const CreateReview = lazy(() => import('../CreateReview'));

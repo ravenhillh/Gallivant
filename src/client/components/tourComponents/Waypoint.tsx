@@ -16,7 +16,7 @@ import {
 } from '../../utils/material';
 // CardMedia?
 
-import CustomModal from './CustomModal';
+import CustomModal from './Modal';
 import Gallery from '../Gallery';
 
 type Waypoint = {
