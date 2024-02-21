@@ -10,20 +10,8 @@ import {
   Typography
 } from '../utils/material';
 
-// will need an input field, with maximum text length
-// material text field
-// material ui rating / hover
-// will need a rating (1 to 5 at first), then star rating
-// will need user data
-// though you will only be able to leave reviews on other tours
-// add camera access
-
-// will open in a modal
-//Layout: Name of tour at top
-// X top right corner to close out of modal
-// Star rating
-// then text input box
-// post review button at bottom, send to db and close modal
+// how to render only on tours you did not create?
+// add camera access eventually
 
 
 // a Tour can have many reviews
@@ -51,14 +39,16 @@ const CreateReview = () => {
         component="form"
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
+          border: 2,
+          bgcolor: 'white'
         }}
         noValidate
         autoComplete="off"
       >
         <div>
         <Typography component="legend">Rate This Tour</Typography>
-        <Rating 
-          name="no-value" 
+        <Rating
+          name="no-value"
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);

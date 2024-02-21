@@ -8,9 +8,6 @@ reviewRouter.post('/post', (req, res) => {
   const { feedback, rating } = req.body;
   const { id } = req.user;
 
-  // console.log('fb: ', feedback);
-  // console.log('rate: ', rating);
-  // console.log('user id ', id);
   Review.create({ 
     id_user: id,
     feedback,
