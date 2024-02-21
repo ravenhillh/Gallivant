@@ -12,6 +12,7 @@ import {
   InsightsIcon,
   Avatar,
   ListItemAvatar,
+  Typography
 } from '../utils/material';
 
 mapboxgl.accessToken =

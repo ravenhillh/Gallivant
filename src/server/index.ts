@@ -5,6 +5,9 @@ import type { RequestHandler } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
+import http from 'http';
+import { Server } from 'socket.io';
+
 // import axios from 'axios';
 // axios.defaults.baseURL = 'http://localhost:3000';
 import dotenv from 'dotenv';
@@ -23,7 +26,10 @@ import {uploadPhoto, getFileStream } from './services/s3';
 const secret: string = process.env.EXPRESS_SECRET ?? 'default';
 const SequelizeStore = connectSessionSequelize(session.Store);
 
+// Connect the express server to the http server and mount the socket
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 // MIDDLEWARE
 app.use(morgan('dev')); // logger
@@ -100,6 +106,19 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.listen(3000, () => {
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+
+server.listen(3000, () => {
   console.info('Gallivant server listening on port 3000. http://localhost:3000');
 });
