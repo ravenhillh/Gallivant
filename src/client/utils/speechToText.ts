@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 const useSpeechToText = () => {
   const [isListening, setIsListening] = useState<boolean>(false);
   const [transcript, setTranscript] = useState<string>('');
-  const recognitionRef = useRef(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
     if (!('webkitSpeechRecognition' in window)) {
