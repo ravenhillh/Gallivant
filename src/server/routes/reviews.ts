@@ -5,11 +5,12 @@ const reviewRouter = express.Router();
 
 // POST to reviews
 reviewRouter.post('/post', (req, res) => {
-  const { feedback, rating } = req.body;
+  const { feedback, rating, id_tour } = req.body;
   const { id } = req.user;
 
   Review.create({ 
     id_user: id,
+    id_tour,
     feedback,
     rating
   })
@@ -17,6 +18,7 @@ reviewRouter.post('/post', (req, res) => {
       // Reviews_Tours.create
       console.log(data);
       // data.dataValues.id 
+      res.sendStatus(201);
     })
     .catch((err:any) => {
       console.error('Could not Post review: ', err);
@@ -40,5 +42,5 @@ reviewRouter.get('/all', (req, res) => {
   });
 });
 
-// select id_review from Reviews_Tours where id_tour = ' ' 
+// select id_review from Reviews_Tours where id_tour = ' '
 export default reviewRouter;
