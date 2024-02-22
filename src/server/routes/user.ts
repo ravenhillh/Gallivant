@@ -8,11 +8,11 @@ userRouter.get('/:id', (req, res) => {
   const { id } = req.params;
 
   User.findByPk(id)
-    .then((data:any) => {
+    .then((data:object) => {
       // console.log(data);
       res.send(data).status(200);
     })
-    .catch((err:any) => {
+    .catch((err:string) => {
       console.error('Could not GET user data ', err);
       res.sendStatus(500);
     });
