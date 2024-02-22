@@ -36,6 +36,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
+import MicIcon from '@mui/icons-material/Mic';
+import MicOffIcon from '@mui/icons-material/MicOff';
 
 export {
   AddIcon,
@@ -75,4 +77,6 @@ export {
   Toolbar,
   Drawer,
   MenuIcon,
+  MicIcon,
+  MicOffIcon,
 };
