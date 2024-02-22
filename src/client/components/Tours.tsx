@@ -12,7 +12,7 @@ import {
   ListItemText,
   Grid,
   Typography,
-  TextField,
+  // TextField,
 } from '../utils/material';
 
 import Modal from './tourComponents/Modal';
@@ -94,8 +94,6 @@ const Tours = (): JSX.Element => {
         </Grid>
       </Grid>
 
-      <Voice />
-
       <List>
         {tours.map((tour, i) => {
           return (
@@ -121,26 +119,39 @@ const Tours = (): JSX.Element => {
 
       <Modal openModal={createModal} closeModal={() => setCreateModal(false)}>
         <div>
-          <TextField
+          <Voice
+            type='name'
+            label='Give your tour a name'
+            helperText='Tour Description'
+            textInput={tourName}
+            setTextInput={setName}
+          />
+          {/* <TextField
             autoFocus
             fullWidth
             label='Give your tour a name'
             value={tourName}
             onChange={(e) => handleChange(e, setName)}
             helperText='Tour Name'
-          />
+          /> */}
         </div>
         <br />
         <div>
-          <TextField
-            autoFocus
+          <Voice
+            type='description'
+            label='Give your tour a description'
+            helperText='Tour Description'
+            textInput={description}
+            setTextInput={setDescription}
+          />
+          {/* <TextField
             fullWidth
             multiline
             label='Give your tour a description'
             value={description}
             onChange={(e) => handleChange(e, setDescription)}
             helperText='Tour Description'
-          />
+          /> */}
         </div>
         <br />
 
