@@ -1,28 +1,40 @@
 import express from 'express';
-import { Review, Reviews_Tours } from '../db/index';
+import { Review } from '../db/index';
 
 const reviewRouter = express.Router();
 
 // POST to reviews
 reviewRouter.post('/post', (req, res) => {
-  const { feedback, rating } = req.body;
+  const { feedback, rating, id_tour } = req.body;
   const { id } = req.user;
 
-  Review.create({ 
+  Review.create({
     id_user: id,
+    id_tour,
     feedback,
     rating
   })
-    .then((data:any) => {
-      // Reviews_Tours.create
-      console.log(data);
-      // data.dataValues.id 
+    .then(() => {
+      res.sendStatus(201);
     })
-    .catch((err:any) => {
+    .catch((err:string) => {
       console.error('Could not Post review: ', err);
       res.sendStatus(500);
     });
 });
 
-// select id_review from Reviews_Tours where id_tour = ' ' 
+// GET reviews by tour id
+reviewRouter.get('/tour/:id', (req, res) => {
+  const { id } = req.params;
+
+  Review.findAll({ where: { id_tour: id }})
+  .then((data:object) => {
+    res.send(data).status(200);
+  })
+  .catch((err:string) => {
+    console.error('could not GET ', err);
+    res.sendStatus(500);
+  });
+});
+
 export default reviewRouter;

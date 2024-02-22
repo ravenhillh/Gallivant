@@ -128,6 +128,14 @@ const Review = db.define('Review', {
             allowNull: false
         }
     },
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        }
+    },
     feedback: DataTypes.STRING,
     rating: DataTypes.INTEGER
 }, { timestamps: true });
