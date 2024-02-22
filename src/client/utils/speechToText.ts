@@ -13,7 +13,7 @@ const useSpeechToText = () => {
 
     recognitionRef.current = new window.webkitSpeechRecognition();
     const recognition = recognitionRef.current;
-    console.log(recognition);
+
     recognition.interimResults = true;
     recognition.lang = 'en-US';
     recognition.continuous = true;
