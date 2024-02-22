@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useSpeechToText from '../../utils/speechToText';
 
-const Voice = (): JSX.Element => {
-  const [textInput, setTextInput] = useState('');
+import { TextField, Fab, MicIcon, MicOffIcon } from '../../utils/material';
+
+const Voice = ({ textInput, setTextInput, type, label, helperText }): JSX.Element => {
   const { isListening, transcript, startListening, stopListening } =
     useSpeechToText();
 
@@ -21,11 +22,13 @@ const Voice = (): JSX.Element => {
 
   return (
     <div>
-      <button onClick={() => startStopListening()}>
-        {isListening ? 'Stop Listening.' : 'Speak'}
-      </button>
-      <textarea
+      <TextField
         disabled={isListening}
+        autoFocus={type === 'name'}
+        multiline={type === 'description'}
+        label={label}
+        helperText={helperText}
+        onChange={(e) => setTextInput(e.target.value)}
         value={
           isListening
             ? textInput +
@@ -34,8 +37,14 @@ const Voice = (): JSX.Element => {
                 : '')
             : textInput
         }
-        onChange={(e) => setTextInput(e.target.value)}
       />
+      <Fab
+        size='small'
+        color={isListening ? 'warning' : 'success'}
+        onClick={() => startStopListening()}
+      >
+        {isListening ? <MicOffIcon /> : <MicIcon />}
+      </Fab>
     </div>
   );
 };
