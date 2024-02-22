@@ -1,10 +1,11 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { useParams, useLoaderData } from 'react-router-dom';
+import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
   Button,
   AddIcon,
+  Modal,
   Stack,
   Typography,
   Grid,
@@ -14,9 +15,10 @@ import {
 // import Waypoint from './Waypoint';
 const Waypoint = lazy(() => import('./Waypoint'));
 // import Modal from './Modal';
-const Modal = lazy(() => import('./Modal'));
+const CustomModal = lazy(() => import('./Modal'));
 // import Map from '../Map';
 const Map = lazy(() => import('../Map'));
+const CreateReview = lazy(() => import('../CreateReview'));
 
 type Tour = {
   id: number;
@@ -24,6 +26,8 @@ type Tour = {
   description: string;
   id_createdByUser: number;
 };
+
+// Read review button, launches review page or modal
 
 const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
@@ -46,6 +50,12 @@ const Tour = (): JSX.Element => {
   //state for draggable sorting of waypoint list
   const [dragStart, setDragStart] = useState<number>(0);
   const [dragOver, setDragOver] = useState<number>(0);
+
+  // state for writing review
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   //initial useEffect, not sure how to use params hook from loader atm
   useEffect(() => {
@@ -181,6 +191,31 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
+          <Button
+            startIcon={<AddIcon />}
+            variant='contained'
+            color='primary'
+            onClick={() => {
+              navigate(`/reviews/${id}`);
+            }}
+          >Read Reviews</Button>
+          <Button
+            startIcon={<AddIcon />}
+            variant='contained'
+            color='primary'
+            onClick={handleOpen}
+          >Add Review</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Suspense fallback={<>Loading...</>}>
+              <CreateReview tourId={ tour?.id }/>
+            </Suspense>
+          </Modal>
+          <br />
           {edit && (
             <Button
               startIcon={<AddIcon />}
@@ -228,7 +263,7 @@ const Tour = (): JSX.Element => {
       </Stack>
 
       <Suspense fallback={<>Loading...</>}>
-        <Modal openModal={modal} closeModal={() => setModal(false)}>
+        <CustomModal openModal={modal} closeModal={() => setModal(false)}>
           <div>
             <TextField
               autoFocus
@@ -261,16 +296,16 @@ const Tour = (): JSX.Element => {
           >
             Save waypoint
           </Button>
-        </Modal>
+        </CustomModal>
       </Suspense>
 
       <Suspense fallback={<>Loading...</>}>
-        <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
+        <CustomModal openModal={errorModal} closeModal={() => setErrorModal(false)}>
           <Typography variant='body1'>
             Please click location on map first.
           </Typography>
           <br />
-        </Modal>
+        </CustomModal>
       </Suspense>
     </div>
   );

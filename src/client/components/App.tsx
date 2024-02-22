@@ -8,9 +8,9 @@ const Login = lazy(() => import('./Login'));
 const Camera = lazy(() => import('./Camera'));
 const Tours = lazy(() => import('./Tours'));
 const Tour = lazy(() => import('./tourComponents/Tour'));
-// import MyThree from './Icon';
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
+const Reviews = lazy(() => import('./Reviews'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -77,10 +77,6 @@ const App = createBrowserRouter([
         ),
         // loader: async () => await requireAuth(),
       },
-      // {
-      //   path: '/icon',
-      //   element: <MyThree />,
-      // },
       {
         path: '/tour/:id',
         element: (
@@ -89,6 +85,15 @@ const App = createBrowserRouter([
           </Suspense>
         ),
         loader: async () => await requireAuth(),
+      },
+      {
+        path: '/reviews/:id',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Reviews />
+          </Suspense>
+        ),
+        // loader: async () => await requireAuth(),
       },
     ],
   },
