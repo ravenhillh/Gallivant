@@ -6,7 +6,8 @@ import morgan from 'morgan';
 import passport from 'passport';
 import connectSessionSequelize from 'connect-session-sequelize';
 import http from 'http';
-import { Server } from 'socket.io';
+import cors from 'cors';
+import { Server, Socket } from 'socket.io';
 
 // import axios from 'axios';
 // axios.defaults.baseURL = 'http://localhost:3000';
@@ -30,13 +31,19 @@ const SequelizeStore = connectSessionSequelize(session.Store);
 // Connect the express server to the http server and mount the socket
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 
 // MIDDLEWARE
 app.use(morgan('dev')); // logger
 app.use(express.json({limit: '10mb'})); // body parser
 app.use(express.urlencoded({ extended: false, limit: '10mb' })); // url-encoded body parser
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
+app.use(cors());
 
 // Authentication session middleware
 app.use(session({
@@ -108,17 +115,19 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: Socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
 });
 
-io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
+io.on('connection', (socket: Socket) => {
+  socket.on('send_message', (data) => {
+    // const { message, __createdtime__ } = data;
+    io.emit('message_response', data);
+   console.log(data);
+});
 });
 
 server.listen(3000, () => {

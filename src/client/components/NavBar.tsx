@@ -88,6 +88,11 @@ function NavBar() {
                   <Link to='tours'>Tours</Link>
                 </ListItemButton>
               </ListItem>
+              <ListItem className='chat-link'>
+                <ListItemButton>
+                  <Link to='chat'>Chat</Link>
+                </ListItemButton>
+              </ListItem>
               {/* <ListItem className='icon-link'>
                 <ListItemButton>
                   <Link to='icon'>Icon</Link>

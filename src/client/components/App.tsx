@@ -12,6 +12,7 @@ const Tour = lazy(() => import('./tourComponents/Tour'));
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 const CreateReview = lazy(() => import('./CreateReview'));
+const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -100,6 +101,15 @@ const App = createBrowserRouter([
         ),
         // loader: async () => await requireAuth(),
       },
+      {
+        path: '/chat',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Chat />
+          </Suspense>
+        ),
+        // loader: async () => await requireAuth(),
+      }
     ],
   },
 ]);
