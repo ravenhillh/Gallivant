@@ -12,6 +12,7 @@ const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
 const Categories = lazy(() => import('./Categories'));
+const Category = lazy(() => import('./Category'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -101,6 +102,15 @@ const App = createBrowserRouter([
         element: (
           <Suspense fallback={<>Loading...</>}>
             <Categories />
+          </Suspense>
+        ),
+        // loader: async () => await requireAuth(),
+      },
+      {
+        path: '/categories/:name',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Category />
           </Suspense>
         ),
         // loader: async () => await requireAuth(),
