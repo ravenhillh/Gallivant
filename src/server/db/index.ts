@@ -246,6 +246,27 @@ const Tours_Waypoints = db.define('Tours_Waypoints', {
     order: DataTypes.INTEGER
   });
 
+  const Tours_Categories = db.define('Tours_Categories', {
+    id_tour: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Tour,
+            key: 'id',
+            allowNull: false
+        },
+        onDelete: 'CASCADE'
+    },
+    id_waypoint: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Category,
+            key: 'id',
+            allowNull: false
+        },
+        onDelete: 'CASCADE'
+    },
+  });
+
 const Completed_Tours = db.define('Completed_Tours', {
     id_tour: {
         type: DataTypes.INTEGER,
@@ -398,5 +419,6 @@ export {
     Images_Tours,
     Reviews_Tours,
     Reviews_Waypoints,
-    Chats_Tours
+    Chats_Tours,
+    Tours_Categories
 };
