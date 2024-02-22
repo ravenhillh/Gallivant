@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { useParams, useLoaderData } from 'react-router-dom';
+import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
@@ -27,6 +27,8 @@ type Tour = {
   id_createdByUser: number;
 };
 
+// Read review button, launches review page or modal
+
 const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
   const { id } = useParams();
@@ -53,6 +55,7 @@ const Tour = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   //initial useEffect, not sure how to use params hook from loader atm
   useEffect(() => {
@@ -192,6 +195,14 @@ const Tour = (): JSX.Element => {
             startIcon={<AddIcon />}
             variant='contained'
             color='primary'
+            onClick={() => {
+              navigate(`/reviews/${id}`);
+            }}
+          >Read Reviews</Button>
+          <Button
+            startIcon={<AddIcon />}
+            variant='contained'
+            color='primary'
             onClick={handleOpen}
           >Add Review</Button>
           <Modal
@@ -199,7 +210,11 @@ const Tour = (): JSX.Element => {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-          ><CreateReview /></Modal>
+          >
+            <Suspense fallback={<>Loading...</>}>
+              <CreateReview tourId={ tour?.id }/>
+            </Suspense>
+          </Modal>
           <br />
           {edit && (
             <Button

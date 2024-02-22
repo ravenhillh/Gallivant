@@ -15,12 +15,11 @@ import {
 
 
 // a Tour can have many reviews
-// a review can have only one tour
-// if a tour gets deleted, all reviews must be deleted (cascade)
-// a review could be deleted, but would not affect tours
+// create review will take down tour id from props
 
 
-const CreateReview = () => {
+const CreateReview = ({tourId}) => {
+  // console.log(typeof tourId);
   // rating value
   const [value, setValue] = useState<number | null>(0);
   const [reviewText, setReviewText] = useState<string>('');
@@ -28,7 +27,8 @@ const CreateReview = () => {
   const postReview = () => {
     axios.post('/reviews/post', {
       feedback: reviewText,
-      rating: value
+      rating: value,
+      id_tour: tourId
     })
     .catch(err => console.error('Axios post error ', err));
   };
