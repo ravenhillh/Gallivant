@@ -19,9 +19,10 @@ import {
   Modal,
   Select,
   Typography,
-  TextField,
+  // TextField,
 } from '../utils/material';
 
+import Voice from './tourComponents/Voice';
 
 const Tours = (): JSX.Element => {
   type Tour = {
@@ -150,19 +151,32 @@ const Tours = (): JSX.Element => {
           sx={{ border: '2px solid grey', bgcolor: 'white' }}
         >
         <div>
-          <TextField
+          <Voice
+            type='name'
+            label='Give your tour a name'
+            helperText='Tour Description'
+            textInput={tourName}
+            setTextInput={setName}
+          />
+          {/* <TextField
             autoFocus
             fullWidth
             label='Give your tour a name'
             value={tourName}
             onChange={(e) => handleChange(e, setName)}
             helperText='Tour Name'
-          />
-  
+          /> */}
+        </div>
         <br />
    
-          <TextField
-            autoFocus
+          <Voice
+            type='description'
+            label='Give your tour a description'
+            helperText='Tour Description'
+            textInput={description}
+            setTextInput={setDescription}
+          />
+          {/* <TextField
             fullWidth
             multiline
             label='Give your tour a description'
@@ -189,6 +203,8 @@ const Tours = (): JSX.Element => {
             }
             </Select>
          </FormControl>
+          /> */}
+        </div>
         <br />
 
         <Button
