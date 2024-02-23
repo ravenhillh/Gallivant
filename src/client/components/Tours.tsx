@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Categories from './Categories';
 
 import {
+  Box,
   Button,
   AddIcon,
   ExploreIcon,
+  FormControl,
+  InputLabel,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Grid,
+  MenuItem,
+  Modal,
+  Select,
   Typography,
   // TextField,
 } from '../utils/material';
 
-import Modal from './tourComponents/Modal';
 import Voice from './tourComponents/Voice';
 
 const Tours = (): JSX.Element => {
@@ -28,9 +34,21 @@ const Tours = (): JSX.Element => {
   const [tours, setTours] = useState<Tour[]>([]);
   const [description, setDescription] = useState<string>('');
   const [tourName, setName] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
 
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<boolean>(false);
+
+  const categories = [
+    'arts & culture',
+    'entertainment',
+    'food & drink',
+    'history',
+    'nightlife',
+    'history',
+    'nature & outdoors',
+    'miscellaneous',
+  ];
 
   useEffect(() => {
     getAllTours();
@@ -47,7 +65,7 @@ const Tours = (): JSX.Element => {
   const createTourBtnClick = () => {
     if (tourName && description) {
       axios
-        .post('/db/tours', { tour: { tourName, description } })
+        .post('/db/tours', { tour: { tourName, description, category } })
         .then((res) => {
           if (res.status === 201) {
             getAllTours();
@@ -67,6 +85,10 @@ const Tours = (): JSX.Element => {
     setState: React.Dispatch<string>
   ) => {
     setState(event.target.value);
+  };
+
+  const handleCatChange = (event) => {
+    setCategory(event.target.value as string);
   };
 
   return (
@@ -93,6 +115,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
+      <Categories categories={categories}/>
 
       <List>
         {tours.map((tour, i) => {
@@ -110,14 +133,23 @@ const Tours = (): JSX.Element => {
         })}
       </List>
 
-      <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
+      <Modal open={errorModal} onClose={() => setErrorModal(false)}>
         <Typography variant='body1'>
           Please give tour a name and description.
         </Typography>
-        <br />
       </Modal>
 
-      <Modal openModal={createModal} closeModal={() => setCreateModal(false)}>
+      <Modal open={createModal} onClose={() => setCreateModal(false)}>
+        <Box
+          // height={300}
+          // width={300}
+          my={4}
+          display="flex"
+          alignItems="center"
+          gap={4}
+          p={2}
+          sx={{ border: '2px solid grey', bgcolor: 'white' }}
+        >
         <div>
           <Voice
             type='name'
@@ -136,7 +168,6 @@ const Tours = (): JSX.Element => {
           /> */}
         </div>
         <br />
-        <div>
           <Voice
             type='description'
             label='Give your tour a description'
@@ -152,7 +183,26 @@ const Tours = (): JSX.Element => {
             onChange={(e) => handleChange(e, setDescription)}
             helperText='Tour Description'
           /> */}
-        </div>
+
+        <br />
+
+          <FormControl fullWidth>
+           <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={category}
+              label="Category"
+              onChange={handleCatChange}
+            >
+            {
+              categories.map((category, i) => (
+                <MenuItem key={i} value={category}>{category}</MenuItem>
+              ))
+            }
+            </Select>
+         </FormControl>
+
         <br />
 
         <Button
@@ -164,6 +214,8 @@ const Tours = (): JSX.Element => {
         >
           Create Tour
         </Button>
+
+        </Box>
       </Modal>
     </div>
   );
