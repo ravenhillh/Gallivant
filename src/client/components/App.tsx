@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 
 // import Home from './Home';
 const NavBar = lazy(() => import('./NavBar'));
@@ -8,12 +9,22 @@ const Login = lazy(() => import('./Login'));
 const Camera = lazy(() => import('./Camera'));
 const Tours = lazy(() => import('./Tours'));
 const Tour = lazy(() => import('./tourComponents/Tour'));
+const CurrentTour = lazy(() => import('./tourComponents/CurrentTour'));
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
+
+const currentTourLoader = async () => {
+  let user = await requireAuth();
+  const userData = await axios.get(`/user/${user.id}`);
+  user = userData.data;
+  const tourData = await axios.get(`/db/tour/${user.id_currentTour}`);
+  const tour = tourData.data[0];
+  return { user, tour};
+};
 
 const App = createBrowserRouter([
   {
@@ -94,6 +105,15 @@ const App = createBrowserRouter([
           </Suspense>
         ),
         // loader: async () => await requireAuth(),
+      },
+      {
+        path: '/currentTour',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <CurrentTour />
+          </Suspense>
+        ),
+        loader: currentTourLoader,
       },
     ],
   },
