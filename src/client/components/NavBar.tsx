@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -18,16 +18,12 @@ import {
   Button,
 } from '../utils/material';
 
-// import Map from './Map';
-// import Camera from './Camera';
-// import Tours from './Tours';
-// import Icon from './Icon';
-
 export interface NavBarProps {
   children: React.ReactNode;
 }
 
 function NavBar() {
+  const navigate = useNavigate();
   const [drawer, setDrawer] = useState<boolean>(false);
 
   const toggleDrawer = () => {
@@ -69,8 +65,23 @@ function NavBar() {
               <Divider />
 
               <ListItem className='map-link'>
-                <ListItemButton>
-                  <Link to='mapview'>MapView</Link>
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/currentTour');
+                    setDrawer(false);
+                  }}
+                >
+                  Current Tour
+                </ListItemButton>
+              </ListItem>
+              <ListItem className='map-link'>
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/mapview');
+                    setDrawer(false);
+                  }}
+                >
+                  MapView
                 </ListItemButton>
               </ListItem>
               {/* <ListItem className='camera-link'>
@@ -84,15 +95,15 @@ function NavBar() {
                 </ListItemButton>
               </ListItem> */}
               <ListItem className='tours-link'>
-                <ListItemButton>
-                  <Link to='tours'>Tours</Link>
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/tours');
+                    setDrawer(false);
+                  }}
+                >
+                  Tours
                 </ListItemButton>
               </ListItem>
-              {/* <ListItem className='icon-link'>
-                <ListItemButton>
-                  <Link to='icon'>Icon</Link>
-                </ListItemButton>
-              </ListItem> */}
 
               <Divider />
               <ListItem className='logout-link'>
