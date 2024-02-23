@@ -29,8 +29,8 @@ type Waypoint = {
 interface WaypointProps {
   waypoint: Waypoint;
   id_tour: string | undefined;
-  getTourWPs: (tourId: string | undefined) => void;
-  edit: boolean;
+  getTourWPs?: (tourId: string | undefined) => void;
+  edit?: boolean;
 }
 
 const Waypoint = (props: WaypointProps): JSX.Element => {
