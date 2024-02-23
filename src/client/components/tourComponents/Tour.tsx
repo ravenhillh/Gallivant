@@ -11,7 +11,7 @@ import {
   Grid,
 } from '../../utils/material';
 
-const Voice = lazy (() => import('./Voice'));
+const Voice = lazy(() => import('./Voice'));
 const Waypoint = lazy(() => import('./Waypoint'));
 const CustomModal = lazy(() => import('./Modal'));
 const Map = lazy(() => import('../Map'));
@@ -30,7 +30,7 @@ const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
   const { id } = useParams();
   // loader returning user id from session verification
-  const userId = useLoaderData();
+  const userId = useLoaderData().id;
   const [edit, setEdit] = useState<boolean>(false);
   const [tour, setTour] = useState<Tour>();
   const [creator, setCreator] = useState<string>('');
@@ -150,6 +150,20 @@ const Tour = (): JSX.Element => {
       .catch((err: string) => console.error('Could not POST waypoint: ', err));
   };
 
+  // startTour button functionality
+  const startTour = () => {
+    axios
+      .put(`/user/${userId}/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          navigate('/currentTour');
+        }
+      })
+      .catch((err) =>
+        console.error('Could not PUT update on user to start tour: ', err)
+      );
+  };
+
   return (
     <div>
       <Stack spacing={2}>
@@ -169,6 +183,15 @@ const Tour = (): JSX.Element => {
             Created by: {creator}
           </Typography>
         </Grid>
+
+        <Button
+          startIcon={<AddIcon />}
+          variant='contained'
+          color='primary'
+          onClick={startTour}
+        >
+          Start Tour
+        </Button>
 
         <Suspense fallback={<>Loading...</>}>
           <Map waypoints={waypoints} passCoords={passCoords} />
