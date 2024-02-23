@@ -32,6 +32,20 @@ tourRouter.get('/db/tourCreatedBy/:userId', (req, res) => {
     });
 });
 
+// GET tours by category
+tourRouter.get('/db/tours/:category', (req, res) => {
+  const { category } = req.params;
+  Tour.findAll({ where: { category }})
+    .then((catTour:object[]) => {
+      // console.log('Tour by cat ', catTour);
+      res.send(catTour).status(200);
+    })
+    .catch((err:string) => {
+      console.error('Could not GET Tours by category ', err);
+      res.sendStatus(500);
+    });
+});
+
 tourRouter.post('/db/tours', (req, res) => {
   const { tour } = req.body;
   Tour.create({ ...tour, id_createdByUser: req.user.id })
