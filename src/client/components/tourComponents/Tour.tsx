@@ -31,7 +31,7 @@ const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
   const { id } = useParams();
   // loader returning user id from session verification
-  const userId = useLoaderData();
+  const userId = useLoaderData().id;
   const [edit, setEdit] = useState<boolean>(false);
   const [tour, setTour] = useState<Tour>();
   const [creator, setCreator] = useState<string>('');

@@ -22,6 +22,7 @@ import reviewRouter from './routes/reviews';
 import tourRouter from './routes/tours';
 import userRouter from './routes/user';
 import waypointRouter from './routes/waypoints';
+import chatRouter from './routes/chat';
 
 import {uploadPhoto, getFileStream } from './services/s3';
 
@@ -35,8 +36,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
   },
+  path: '/chat/'
 });
 
 // MIDDLEWARE
@@ -74,6 +75,7 @@ app.use('/reviews', reviewRouter);
 app.use('/', tourRouter);
 app.use('/user', userRouter);
 app.use('/', waypointRouter);
+app.use('/chats', chatRouter);
 
 // ** API ROUTES **
 
@@ -124,12 +126,21 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
+// receive user messages and emit them back to all users
 io.on('connection', (socket: Socket) => {
   socket.on('send_message', (data) => {
-    // const { message, __createdtime__ } = data;
-    io.emit('message_response', data);
-   console.log(data);
+    // io.emit('message_response', data);
+    const { tour } = data;
+    socket.join(tour);
+    io.to(tour).emit('message_response', data);
 });
+
+//   socket.on('room_chat', (data) => {
+//     const { tour } = data;
+//     socket.join(tour);
+//     io.to(tour).emit('message_response', data);
+// });
+
 });
 
 server.listen(3000, () => {

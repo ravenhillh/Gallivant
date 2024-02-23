@@ -1,7 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import {
   Button,
   Divider,
@@ -14,6 +14,7 @@ import {
   ListItemAvatar,
   Typography
 } from '../utils/material';
+import Chat from './Chat';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
@@ -32,7 +33,7 @@ type Tour = {
   id: number;
 };
 
-function MapView(): JSX.Element {
+function MapView({ socket }): JSX.Element {
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);
@@ -42,6 +43,8 @@ function MapView(): JSX.Element {
   const [tours, setTours] = useState([]);
   // const [myLoc, setMyLoc] = useState()
   const navigate = useNavigate();
+  const user = useLoaderData();
+
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -159,6 +162,9 @@ function MapView(): JSX.Element {
             <Button variant='outlined' onClick={() => routeToTour(tours[0].id)}>
               View Tour
             </Button>
+            <Button variant='outlined' onClick={() => routeToChat(tours[0].id)}>
+              Tour Chat
+            </Button>
           </ListItem>
         </List>
       </div>
@@ -169,6 +175,10 @@ function MapView(): JSX.Element {
 
   function routeToTour(id: string | undefined) {
     navigate(`/tour/${id}`);
+  }
+
+  function routeToChat(id: string) {
+    navigate(`/chat/${id}`);
   }
 
   function handleClick(x) {
@@ -187,6 +197,9 @@ function MapView(): JSX.Element {
           ref={mapContainer}
           className='map-container'
         ></div>
+      </div>
+      <div>
+        {/* <Chat socket={socket}/> */}
       </div>
       {/* <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}

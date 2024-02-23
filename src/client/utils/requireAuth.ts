@@ -7,5 +7,5 @@ export default async function requireAuth() {
   if (!isLoggedIn.data.verify) {
     throw redirect('/login');
   }
-  return isLoggedIn.data.user.id;
+  return isLoggedIn.data.user;
 }
