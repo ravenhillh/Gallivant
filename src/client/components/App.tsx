@@ -11,7 +11,8 @@ const Tour = lazy(() => import('./tourComponents/Tour'));
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
-const Chat = lazy(() => import('./Chat'));
+const Categories = lazy(() => import('./Categories'));
+const Category = lazy(() => import('./Category'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -98,22 +99,13 @@ const App = createBrowserRouter([
         // loader: async () => await requireAuth(),
       },
       {
-        path: '/chat',
+        path: '/categories/:category',
         element: (
           <Suspense fallback={<>Loading...</>}>
-            <Chat socket={socket}/>
+            <Category />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
-      },
-      {
-        path: '/chat/:tour',
-        element: (
-          <Suspense fallback={<>Loading...</>}>
-            <Chat socket={socket}/>
-          </Suspense>
-        ),
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
     ],
   },

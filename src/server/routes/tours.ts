@@ -4,7 +4,7 @@ import { User, Tour } from '../db/index';
 const tourRouter = express.Router();
 
 tourRouter.get('/db/tours', (req, res) => {
-  Tour.findAll()
+  Tour.findAll({ order: [ ['createdAt', 'DESC'] ]})
     .then((tours: object[]) => res.status(200).send(tours))
     .catch((err: string) => {
       console.error('Failed to findAll tours: ', err);
@@ -29,6 +29,20 @@ tourRouter.get('/db/tourCreatedBy/:userId', (req, res) => {
     .catch((err: string) => {
       console.error('Failed to find user by id: ', err);
       res.status(500);
+    });
+});
+
+// GET tours by category
+tourRouter.get('/db/tours/:category', (req, res) => {
+  const { category } = req.params;
+  Tour.findAll({ where: { category }})
+    .then((catTour:object[]) => {
+      // console.log('Tour by cat ', catTour);
+      res.send(catTour).status(200);
+    })
+    .catch((err:string) => {
+      console.error('Could not GET Tours by category ', err);
+      res.sendStatus(500);
     });
 });
 
