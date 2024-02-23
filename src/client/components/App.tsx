@@ -107,7 +107,7 @@ const App = createBrowserRouter([
         // loader: async () => await requireAuth(),
       },
       {
-        path: '/categories/:name',
+        path: '/categories/:category',
         element: (
           <Suspense fallback={<>Loading...</>}>
             <Category />

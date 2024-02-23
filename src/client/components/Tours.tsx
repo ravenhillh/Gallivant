@@ -38,6 +38,17 @@ const Tours = (): JSX.Element => {
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<boolean>(false);
 
+  const categories = [
+    'arts & culture',
+    'entertainment',
+    'food & drink',
+    'history',
+    'nightlife',
+    'history',
+    'nature & outdoors',
+    'miscellaneous',
+  ];
+
   useEffect(() => {
     getAllTours();
   }, []);
@@ -103,7 +114,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-      <Categories />
+      <Categories categories={categories}/>
 
       <List>
         {tours.map((tour, i) => {
@@ -129,8 +140,8 @@ const Tours = (): JSX.Element => {
 
       <Modal open={createModal} onClose={() => setCreateModal(false)}>
         <Box
-          height={300}
-          width={300}
+          // height={300}
+          // width={300}
           my={4}
           display="flex"
           alignItems="center"
@@ -170,10 +181,12 @@ const Tours = (): JSX.Element => {
               value={category}
               label="Category"
               onChange={handleCatChange}
-            >
-              <MenuItem value={'entertainment'}>Entertainment</MenuItem>
-              <MenuItem value={'food&drink'}>Food & Drink</MenuItem>
-              <MenuItem value={'nightlife'}>Nightlife</MenuItem>
+            > 
+            {
+              categories.map((category, i) => (
+                <MenuItem key={i} value={category}>{category}</MenuItem>
+              ))
+            }
             </Select>
          </FormControl>
         <br />

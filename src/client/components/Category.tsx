@@ -10,14 +10,13 @@ const Category = () => {
     description: string;
   };
   
-  const { name } = useParams();
+  const { category } = useParams();
   const [tours, setTours] = useState<Tour[]>([]);
 
   // GET tours by category name
   const getToursByCat = () => {
-    axios.get(`/db/tours/${name}`)
+    axios.get(`/db/tours/${category}`)
       .then(({data}) => {
-        // console.log(data);
         setTours(data);
       })
       .catch(err => console.error('Failed to GET tours by category ', err));
@@ -29,7 +28,7 @@ const Category = () => {
 
   return (
     <div>
-      <h3>Tours: { name?.toUpperCase() }</h3>
+      <h3>Tours: { category?.toUpperCase() }</h3>
       <List>
         {tours.map((tour, i) => {
           return (

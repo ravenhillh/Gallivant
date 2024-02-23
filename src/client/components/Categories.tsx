@@ -7,39 +7,23 @@ import { useNavigate } from 'react-router-dom';
 // buttons will link to category page
 // findall by category name, pass down in props
 
-const Categories = () => {
+const Categories = ({categories}) => {
   const navigate = useNavigate();
 
-  const names = ['entertainment', 'nightlife', 'food & drink', 'culture & history', 'etc...'];
-  // can map over names instead
-  
+  // const names = ['entertainment', 'nightlife', 'food & drink', 'culture & history', 'etc...'];
+
   return (
     <div>
-      <Button
-        onClick={() => {
-          navigate(`/categories/${names[0]}`);
-        }}
-      >Entertainment</Button>
-      <Button
-        onClick={() => {
-          navigate(`/categories/${names[1]}`);
-        }}
-      >Nightlife</Button>
-      <Button
-        onClick={() => {
-          navigate(`/categories/${names[2]}`);
-        }}
-      >Nightlife</Button>
-      <Button
-        onClick={() => {
-          navigate(`/categories/${names[3]}`);
-        }}
-      >Culture & History</Button>
-      <Button
-        onClick={() => {
-          navigate(`/categories/${names[4]}`);
-        }}
-      >Etc...</Button>
+      {
+        categories.map((category, i) => (
+          <Button
+            key={i}
+            onClick={() => {
+              navigate(`/categories/${category}`);
+            }}
+          >{category}</Button>
+        ))
+      }
     </div>
   );
 };
