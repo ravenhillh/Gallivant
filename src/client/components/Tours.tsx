@@ -168,7 +168,6 @@ const Tours = (): JSX.Element => {
           /> */}
         </div>
         <br />
-   
           <Voice
             type='description'
             label='Give your tour a description'
@@ -183,7 +182,7 @@ const Tours = (): JSX.Element => {
             value={description}
             onChange={(e) => handleChange(e, setDescription)}
             helperText='Tour Description'
-          />
+          /> */}
 
         <br />
 
@@ -195,7 +194,7 @@ const Tours = (): JSX.Element => {
               value={category}
               label="Category"
               onChange={handleCatChange}
-            > 
+            >
             {
               categories.map((category, i) => (
                 <MenuItem key={i} value={category}>{category}</MenuItem>
@@ -203,8 +202,7 @@ const Tours = (): JSX.Element => {
             }
             </Select>
          </FormControl>
-          /> */}
-        </div>
+
         <br />
 
         <Button
@@ -216,7 +214,7 @@ const Tours = (): JSX.Element => {
         >
           Create Tour
         </Button>
-        </div>
+
         </Box>
       </Modal>
     </div>
