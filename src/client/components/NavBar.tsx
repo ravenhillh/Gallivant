@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -23,6 +23,7 @@ export interface NavBarProps {
 }
 
 function NavBar() {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [drawer, setDrawer] = useState<boolean>(false);
 
@@ -66,6 +67,7 @@ function NavBar() {
 
               <ListItem className='map-link'>
                 <ListItemButton
+                  selected={pathname === '/currentTour'}
                   onClick={() => {
                     navigate('/currentTour');
                     setDrawer(false);
@@ -76,6 +78,7 @@ function NavBar() {
               </ListItem>
               <ListItem className='map-link'>
                 <ListItemButton
+                  selected={pathname === '/mapview'}
                   onClick={() => {
                     navigate('/mapview');
                     setDrawer(false);
@@ -96,6 +99,7 @@ function NavBar() {
               </ListItem> */}
               <ListItem className='tours-link'>
                 <ListItemButton
+                  selected={pathname === '/tours'}
                   onClick={() => {
                     navigate('/tours');
                     setDrawer(false);
