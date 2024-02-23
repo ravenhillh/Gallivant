@@ -14,6 +14,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -37,12 +38,14 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
+import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
+import Select from '@mui/material/Select';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -61,14 +64,17 @@ export {
   CardActions,
   CardContent,
   DeleteIcon,
+  Dialog,
   DirectionsWalkIcon,
   Divider,
   EditIcon,
   ExploreIcon,
   Fab,
+  FormControl,
   Grid,
   IconButton,
   ImageList,
+  InputLabel,
   InsightsIcon,
   List,
   ListItem,
@@ -76,11 +82,13 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
   Modal,
   Rating,
   RemoveCircleIcon,
   RoomOutlinedIcon,
   RouteSharpIcon,
+  Select,
   SendIcon,
   Stack,
   TextField,
@@ -92,9 +100,7 @@ export {
   MenuIcon,
   MicIcon,
   MicOffIcon,
-  FormControl,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
   FormHelperText,
   ChevronLeftIcon,
