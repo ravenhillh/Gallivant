@@ -11,7 +11,7 @@ import {
 } from '../../utils/material';
 
 const Map = lazy(() => import('../Map'));
-const Waypoint = lazy(() => import('./Waypoint'));
+const CurrentWaypoint = lazy(() => import('./CurrentWaypoint'));
 
 const CurrentTour = (): JSX.Element => {
   // loader returning user and tour from custom loader in App
@@ -31,7 +31,7 @@ const CurrentTour = (): JSX.Element => {
           disabled={currentWP === 0}
           onClick={() => {
             setCurrentWP(prev => {
-              console.log(`back ${prev - 1}`);
+              // console.log(`back ${prev - 1}`);
               return prev - 1;
             });
           }}
@@ -40,13 +40,13 @@ const CurrentTour = (): JSX.Element => {
           <ChevronLeftIcon />
         </Fab>
         <Suspense fallback={<>Loading...</>}>
-          <Waypoint waypoint={waypoints[currentWP]} id_tour={tour.id} />
+          <CurrentWaypoint edit={false} waypoint={waypoints[currentWP]} id_tour={tour.id} />
         </Suspense>
         <Fab
           disabled={currentWP === waypoints.length - 1}
           onClick={() => {
             setCurrentWP((prev) => {
-              console.log(`forward ${prev + 1}`);
+              // console.log(`forward ${prev + 1}`);
               return prev + 1;
             });
           }}
