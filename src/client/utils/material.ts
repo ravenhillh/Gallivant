@@ -10,6 +10,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 // import CardMedia from '@mui/material/CardMedia';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
@@ -33,7 +34,7 @@ import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -56,6 +57,7 @@ export {
   CardActions,
   CardContent,
   DeleteIcon,
+  Dialog,
   DirectionsWalkIcon,
   Divider,
   EditIcon,
@@ -80,7 +82,6 @@ export {
   RoomOutlinedIcon,
   RouteSharpIcon,
   Select,
-  SelectChangeEvent,
   SendIcon,
   Stack,
   TextField,

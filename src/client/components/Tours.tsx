@@ -3,19 +3,24 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+  Box,
   Button,
   AddIcon,
   ExploreIcon,
+  FormControl,
+  InputLabel,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Grid,
+  MenuItem,
+  Modal,
+  Select,
   Typography,
   TextField,
 } from '../utils/material';
 
-import Modal from './tourComponents/Modal';
 
 const Tours = (): JSX.Element => {
   type Tour = {
@@ -27,6 +32,7 @@ const Tours = (): JSX.Element => {
   const [tours, setTours] = useState<Tour[]>([]);
   const [description, setDescription] = useState<string>('');
   const [tourName, setName] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
 
   const [createModal, setCreateModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<boolean>(false);
@@ -46,7 +52,7 @@ const Tours = (): JSX.Element => {
   const createTourBtnClick = () => {
     if (tourName && description) {
       axios
-        .post('/db/tours', { tour: { tourName, description } })
+        .post('/db/tours', { tour: { tourName, description, category } })
         .then((res) => {
           if (res.status === 201) {
             getAllTours();
@@ -66,6 +72,10 @@ const Tours = (): JSX.Element => {
     setState: React.Dispatch<string>
   ) => {
     setState(event.target.value);
+  };
+
+  const handleCatChange = (event) => {
+    setCategory(event.target.value as string);
   };
 
   return (
@@ -109,14 +119,23 @@ const Tours = (): JSX.Element => {
         })}
       </List>
 
-      <Modal openModal={errorModal} closeModal={() => setErrorModal(false)}>
+      <Modal open={errorModal} onClose={() => setErrorModal(false)}>
         <Typography variant='body1'>
           Please give tour a name and description.
         </Typography>
-        <br />
       </Modal>
 
-      <Modal openModal={createModal} closeModal={() => setCreateModal(false)}>
+      <Modal open={createModal} onClose={() => setCreateModal(false)}>
+        <Box
+          height={300}
+          width={300}
+          my={4}
+          display="flex"
+          alignItems="center"
+          gap={4}
+          p={2}
+          sx={{ border: '2px solid grey', bgcolor: 'white' }}
+        >
         <div>
           <TextField
             autoFocus
@@ -126,9 +145,9 @@ const Tours = (): JSX.Element => {
             onChange={(e) => handleChange(e, setName)}
             helperText='Tour Name'
           />
-        </div>
+  
         <br />
-        <div>
+   
           <TextField
             autoFocus
             fullWidth
@@ -138,7 +157,23 @@ const Tours = (): JSX.Element => {
             onChange={(e) => handleChange(e, setDescription)}
             helperText='Tour Description'
           />
-        </div>
+
+        <br />
+
+          <FormControl fullWidth>
+           <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={category}
+              label="Category"
+              onChange={handleCatChange}
+            >
+              <MenuItem value={'entertainment'}>Entertainment</MenuItem>
+              <MenuItem value={'food&drink'}>Food & Drink</MenuItem>
+              <MenuItem value={'nightlife'}>Nightlife</MenuItem>
+            </Select>
+         </FormControl>
         <br />
 
         <Button
@@ -150,6 +185,8 @@ const Tours = (): JSX.Element => {
         >
           Create Tour
         </Button>
+        </div>
+        </Box>
       </Modal>
     </div>
   );

@@ -54,7 +54,7 @@ const Tour = db.define('Tour', {
             allowNull: false
         }
     },
-    type: DataTypes.STRING,
+    category: DataTypes.STRING,
     ratingAvg: DataTypes.DECIMAL,
     tourName: DataTypes.STRING,
     description: DataTypes.TEXT,
