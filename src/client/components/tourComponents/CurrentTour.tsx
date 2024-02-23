@@ -1,62 +1,76 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import axios from 'axios';
+
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Fab,
+  Grid,
+  Typography,
+} from '../../utils/material';
 
 const Map = lazy(() => import('../Map'));
 const Waypoint = lazy(() => import('./Waypoint'));
 
-type Tour = {
-  id: number;
-  tourName: string;
-  description: string;
-  id_createdByUser: number;
-};
-
 const CurrentTour = (): JSX.Element => {
-  // useParam hook to retrieve specific Tour
-  const { tourId } = useParams();
-  // loader returning user id from session verification
-  const data = useLoaderData();
+  // loader returning user and tour from custom loader in App
+  const { tour, user, waypoints } = useLoaderData();
 
-  const [tour, setTour] = useState<Tour>();
-  const [waypoints, setWaypoints] = useState<object[]>([]);
-
-  useEffect(() => {
-    console.log(data);
-    // getTour(user.id_currentTour);
-    // getTourWPs(user.id_currentTour);
-  }, []);
-
-  // axios requests to db to get tour by id
-  const getTour = (id: string | undefined) => {
-    axios(`/db/tour/${id}`)
-      .then(({ data }) => {
-        setTour(data[0]);
-      })
-      .catch((err: string) => console.error('Could not GET tour by id: ', err));
-  };
-  // gets waypoints associated with the particular tourId
-  const getTourWPs = (tourId: string | undefined) => {
-    axios(`/db/tourWaypoints/${tourId}`)
-      .then(({ data }) => {
-        setWaypoints(data);
-      })
-      .catch((err: string) =>
-        console.error('Could not GET waypoints by tour id: ', err)
-      );
-  };
+  const [currentWP, setCurrentWP] = useState(0);
 
   return (
     <>
-      <p>Current Waypoint:</p>
-    <Suspense fallback={<>Loading...</>}>
-      <div>waypoint problem</div>
-      {/* <Waypoint waypoint={waypoints[0]} id_tour={tourId} /> */}
-    </Suspense>
-    <Suspense fallback={<>Loading...</>}>
-      {/* <Map waypoints={waypoints} /> */}
-    </Suspense>
-      <p>{tour?.tourName}: {tour?.description}</p>
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-around'
+        alignItems='center'
+      >
+        <Fab
+          disabled={currentWP === 0}
+          onClick={() => {
+            setCurrentWP(prev => {
+              console.log(`back ${prev - 1}`);
+              return prev - 1;
+            });
+          }}
+          aria-label='previous waypoint'
+        >
+          <ChevronLeftIcon />
+        </Fab>
+        <Suspense fallback={<>Loading...</>}>
+          <Waypoint waypoint={waypoints[currentWP]} id_tour={tour.id} />
+        </Suspense>
+        <Fab
+          disabled={currentWP === waypoints.length - 1}
+          onClick={() => {
+            setCurrentWP((prev) => {
+              console.log(`forward ${prev + 1}`);
+              return prev + 1;
+            });
+          }}
+          aria-label='next waypoint'
+        >
+          <ChevronRightIcon />
+        </Fab>
+      </Grid>
+
+      <Suspense fallback={<>Loading...</>}>
+        <Map waypoints={waypoints} />
+      </Suspense>
+
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-evenly'
+        alignItems='center'
+      >
+        <Typography fontWeight='bold' variant='h5'>
+          {`${tour?.tourName}: `}
+        </Typography>
+        <Typography variant='h5'>{tour?.description}</Typography>
+      </Grid>
     </>
   );
 };
