@@ -12,7 +12,6 @@ import {
   ListItemText,
   Grid,
   Typography,
-  // TextField,
 } from '../utils/material';
 
 import Modal from './tourComponents/Modal';
@@ -60,13 +59,6 @@ const Tours = (): JSX.Element => {
     } else {
       setErrorModal(true);
     }
-  };
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<string>
-  ) => {
-    setState(event.target.value);
   };
 
   return (
@@ -126,14 +118,6 @@ const Tours = (): JSX.Element => {
             textInput={tourName}
             setTextInput={setName}
           />
-          {/* <TextField
-            autoFocus
-            fullWidth
-            label='Give your tour a name'
-            value={tourName}
-            onChange={(e) => handleChange(e, setName)}
-            helperText='Tour Name'
-          /> */}
         </div>
         <br />
         <div>
@@ -144,14 +128,6 @@ const Tours = (): JSX.Element => {
             textInput={description}
             setTextInput={setDescription}
           />
-          {/* <TextField
-            fullWidth
-            multiline
-            label='Give your tour a description'
-            value={description}
-            onChange={(e) => handleChange(e, setDescription)}
-            helperText='Tour Description'
-          /> */}
         </div>
         <br />
 

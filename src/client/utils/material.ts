@@ -19,6 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Fab from '@mui/material/Fab';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import ImageList from '@mui/material/ImageList';
@@ -92,5 +93,6 @@ export {
   FormControl,
   InputAdornment,
   InputLabel,
-  OutlinedInput
+  OutlinedInput,
+  FormHelperText
 };

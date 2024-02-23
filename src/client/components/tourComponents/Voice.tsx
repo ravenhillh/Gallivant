@@ -2,9 +2,8 @@ import React from 'react';
 import useSpeechToText from '../../utils/speechToText';
 
 import {
-  TextField,
-  Fab,
   FormControl,
+  FormHelperText,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -12,7 +11,6 @@ import {
   MicIcon,
   MicOffIcon,
 } from '../../utils/material';
-import { FormHelperText } from '@mui/material';
 
 const Voice = ({
   textInput,
@@ -47,7 +45,7 @@ const Voice = ({
           disabled={isListening}
           autoFocus={type === 'name'}
           multiline={type === 'description'}
-          // helperText={helperText}
+          label={label}
           onChange={(e) => setTextInput(e.target.value)}
           value={
             isListening
@@ -70,7 +68,6 @@ const Voice = ({
               </IconButton>
             </InputAdornment>
           }
-          label={label}
         />
         <FormHelperText>
           {helperText}

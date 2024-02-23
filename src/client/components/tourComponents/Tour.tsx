@@ -9,10 +9,9 @@ import {
   Stack,
   Typography,
   Grid,
-  TextField,
 } from '../../utils/material';
 
-import Voice from './Voice';
+const Voice = lazy (() => import('./Voice'));
 const Waypoint = lazy(() => import('./Waypoint'));
 const CustomModal = lazy(() => import('./Modal'));
 const Map = lazy(() => import('../Map'));
@@ -64,14 +63,6 @@ const Tour = (): JSX.Element => {
   useEffect(() => {
     setEdit(userId === tour?.id_createdByUser);
   }, [tour]);
-
-  // change event handlers for modal inputs
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<string>
-  ) => {
-    setState(event.target.value);
-  };
 
   // function passed into Map to track gps coordinates for waypoint creation
   const passCoords = (long: number, lat: number) => {
@@ -274,14 +265,6 @@ const Tour = (): JSX.Element => {
               textInput={wpName}
               setTextInput={setWpName}
             />
-            {/* <TextField
-              autoFocus
-              fullWidth
-              label='Give the waypoint a name'
-              value={wpName}
-              onChange={(e) => handleChange(e, setWpName)}
-              helperText='Waypoint Name'
-            /> */}
           </div>
           <br />
           <div>
@@ -292,15 +275,6 @@ const Tour = (): JSX.Element => {
               textInput={wpDesc}
               setTextInput={setWpDesc}
             />
-            {/* <TextField
-              autoFocus
-              fullWidth
-              multiline
-              label='Give the waypoint a description'
-              value={wpDesc}
-              onChange={(e) => handleChange(e, setWpDesc)}
-              helperText='Waypoint Description'
-            /> */}
           </div>
           <br />
           <Button
