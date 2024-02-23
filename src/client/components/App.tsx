@@ -21,9 +21,16 @@ const currentTourLoader = async () => {
   let user = await requireAuth();
   const userData = await axios.get(`/user/${user.id}`);
   user = userData.data;
-  const tourData = await axios.get(`/db/tour/${user.id_currentTour}`);
-  const tour = tourData.data[0];
-  return { user, tour};
+
+  const data = await Promise.all([
+    axios.get(`/db/tourWaypoints/${user.id_currentTour}`),
+    axios.get(`/db/tour/${user.id_currentTour}`),
+  ]);
+
+  const waypoints = data[0].data; // array of WPs on data property of response object
+  const tour = data[1].data[0]; // first element of data property is tour object
+
+  return { user, tour, waypoints };
 };
 
 const App = createBrowserRouter([
