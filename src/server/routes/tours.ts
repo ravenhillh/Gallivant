@@ -4,7 +4,7 @@ import { User, Tour } from '../db/index';
 const tourRouter = express.Router();
 
 tourRouter.get('/db/tours', (req, res) => {
-  Tour.findAll()
+  Tour.findAll({ order: [ ['createdAt', 'DESC'] ]})
     .then((tours: object[]) => res.status(200).send(tours))
     .catch((err: string) => {
       console.error('Failed to findAll tours: ', err);
