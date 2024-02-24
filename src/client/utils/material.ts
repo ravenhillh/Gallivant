@@ -1,3 +1,5 @@
+import mapboxgl from 'mapbox-gl';
+
 import AddIcon from '@mui/icons-material/Add';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import AppBar from '@mui/material/AppBar';
@@ -53,6 +55,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 export {
+  mapboxgl,
   AddIcon,
   AddAPhotoIcon,
   AppBar,

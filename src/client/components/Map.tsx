@@ -1,4 +1,5 @@
-import mapboxgl from 'mapbox-gl';
+// import mapboxgl from 'mapbox-gl';
+import { mapboxgl } from '../utils/material';
 import React, { useRef, useEffect, useState } from 'react';
 //import { JsxE } from 'typescript';
 

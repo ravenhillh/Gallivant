@@ -1,4 +1,5 @@
-import mapboxgl from 'mapbox-gl';
+// import mapboxgl from 'mapbox-gl';
+import { mapboxgl } from '../utils/material';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate, useLoaderData } from 'react-router-dom';
