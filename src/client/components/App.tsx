@@ -15,9 +15,11 @@ const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
 const Categories = lazy(() => import('./Categories'));
 const Category = lazy(() => import('./Category'));
+const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
+import socket from '../utils/socket';
 
 const currentTourLoader = async () => {
   let user = await requireAuth();
@@ -132,6 +134,15 @@ const App = createBrowserRouter([
           </Suspense>
         ),
         loader: currentTourLoader,
+      },
+      {
+        path: '/chat/:tour',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Chat socket={socket} />
+          </Suspense>
+        ),
+        loader: async () => await requireAuth(),
       },
     ],
   },
