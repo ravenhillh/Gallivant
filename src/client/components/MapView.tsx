@@ -1,7 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import {
   Button,
   Divider,
@@ -12,7 +12,9 @@ import {
   InsightsIcon,
   Avatar,
   ListItemAvatar,
+  Typography
 } from '../utils/material';
+import Chat from './Chat';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
@@ -25,7 +27,7 @@ type Marker = {
   lat: number;
 };
 
-type Tours = {
+type Tour = {
   tourName: string;
   description: string;
   id: number;
@@ -41,6 +43,8 @@ function MapView(): JSX.Element {
   const [tours, setTours] = useState([]);
   // const [myLoc, setMyLoc] = useState()
   const navigate = useNavigate();
+  const user = useLoaderData();
+
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -103,7 +107,8 @@ function MapView(): JSX.Element {
     allMarkers.map((marker: Marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
-      <div>${marker.waypointName}</div>
+      <h3>${marker.waypointName}</h3>
+      <div>${marker.description}</div>
       </div>`;
 
       const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
@@ -157,6 +162,9 @@ function MapView(): JSX.Element {
             <Button variant='outlined' onClick={() => routeToTour(tours[0].id)}>
               View Tour
             </Button>
+            <Button variant='outlined' onClick={() => routeToChat(tours[0].id)}>
+              Tour Chat
+            </Button>
           </ListItem>
         </List>
       </div>
@@ -169,13 +177,19 @@ function MapView(): JSX.Element {
     navigate(`/tour/${id}`);
   }
 
+  function routeToChat(id: string) {
+    navigate(`/chat/${id}`);
+  }
+
   function handleClick(x) {
     getTours(x);
   }
 
   return (
     <div>
-      <h1>Map</h1>
+      <Typography mt={2} variant="h2" fontWeight="bold">
+        Map View
+      </Typography>
       <div>
         <div>{showTours()}</div>
         <div
@@ -183,6 +197,9 @@ function MapView(): JSX.Element {
           ref={mapContainer}
           className='map-container'
         ></div>
+      </div>
+      <div>
+        {/* <Chat socket={socket}/> */}
       </div>
       {/* <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
