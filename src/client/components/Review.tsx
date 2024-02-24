@@ -10,6 +10,9 @@ import {
   Rating,
   RemoveCircleIcon,
   TextField } from '../utils/material';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 const Review = ({review, edit, getReviews }) => {
   // set username on review
@@ -66,6 +69,7 @@ const Review = ({review, edit, getReviews }) => {
       />
       <p>{username}</p>
       <p>{review.feedback}</p>
+      <p>{dayjs(review.createdAt).fromNow()}</p>
       {edit && 
         <div>
         <Button
@@ -76,6 +80,7 @@ const Review = ({review, edit, getReviews }) => {
           onClick={(e) => {
             e.preventDefault();
             deleteReview();
+            getReviews();
           }}
         >
           <RemoveCircleIcon />

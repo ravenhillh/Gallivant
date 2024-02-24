@@ -74,6 +74,7 @@ const CreateReview = ({ tourId, handleClose }) => {
           endIcon={<SendIcon />}
           onClick={() => {
             postReview();
+            handleClose();
           }}
         >
           Send
