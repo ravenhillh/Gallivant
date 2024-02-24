@@ -40,9 +40,9 @@ reviewRouter.get('/tour/:id', (req, res) => {
 // Update review
 reviewRouter.put('/:id', (req, res) => {
   const { id } = req.params;
-  const { review } = req.body;
+  // const { review } = req.body;
 
-  Review.update(review, { where: { id }})
+  Review.update(req.body, { where: { id }})
     .then(() => res.sendStatus(200))
     .catch((err:string) => {
       console.error('Could not update review ', err);
