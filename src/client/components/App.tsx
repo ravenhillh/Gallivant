@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 
 // import Home from './Home';
 const NavBar = lazy(() => import('./NavBar'));
@@ -8,6 +9,7 @@ const Login = lazy(() => import('./Login'));
 const Camera = lazy(() => import('./Camera'));
 const Tours = lazy(() => import('./Tours'));
 const Tour = lazy(() => import('./tourComponents/Tour'));
+const CurrentTour = lazy(() => import('./tourComponents/CurrentTour'));
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
@@ -17,7 +19,22 @@ const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
-import socket from '../utils/socket';
+
+const currentTourLoader = async () => {
+  let user = await requireAuth();
+  const userData = await axios.get(`/user/${user.id}`);
+  user = userData.data;
+
+  const data = await Promise.all([
+    axios.get(`/db/tourWaypoints/${user.id_currentTour}`),
+    axios.get(`/db/tour/${user.id_currentTour}`),
+  ]);
+
+  const waypoints = data[0].data; // array of WPs on data property of response object
+  const tour = data[1].data[0]; // first element of data property is tour object
+
+  return { user, tour, waypoints };
+};
 
 const App = createBrowserRouter([
   {
@@ -109,22 +126,13 @@ const App = createBrowserRouter([
         // loader: async () => await requireAuth(),
       },
       {
-        path: '/chat',
+        path: '/currentTour',
         element: (
           <Suspense fallback={<>Loading...</>}>
-            <Chat socket={socket} />
+            <CurrentTour />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
-      },
-      {
-        path: '/chat/:tour',
-        element: (
-          <Suspense fallback={<>Loading...</>}>
-            <Chat socket={socket} />
-          </Suspense>
-        ),
-        loader: async () => await requireAuth(),
+        loader: currentTourLoader,
       },
     ],
   },
