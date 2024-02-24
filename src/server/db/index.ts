@@ -182,9 +182,8 @@ const Chat = db.define(
       },
     },
     message: DataTypes.STRING,
-  },
-  { timestamps: true }
-);
+    username: DataTypes.STRING
+}, { timestamps: true });
 
 const Users_Waypoints = db.define(
   'Users_Waypoints',
