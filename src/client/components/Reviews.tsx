@@ -1,5 +1,5 @@
-import React, { useState, lazy, Suspense } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, lazy, Suspense, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../utils/material';
 
@@ -7,8 +7,9 @@ const Review = lazy(() => import('./Review'));
 
 
 
-const Reviews = () => {
-  const { id } = useParams();
+const Reviews = ({ id, edit }) => {
+  // const { id } = useParams();
+  // need review id not tour id...
   const [reviews, setReviews] = useState([]);
 
   const getReviews = () => {
@@ -19,10 +20,14 @@ const Reviews = () => {
       })
       .catch((err) => console.error('Could not GET reviews ', err));
   };
-  console.log(reviews);
+  
+  useEffect(() => {
+    getReviews();
+  }, []);
+
   return (
     <div>
-      <Button
+      {/* <Button
         type="submit"
         onClick={(e) => {
           e.preventDefault();
@@ -30,13 +35,13 @@ const Reviews = () => {
         }}
       >
         Get reviews
-      </Button>
+      </Button> */}
       <ul>
-      { reviews && 
+      { reviews &&
         reviews.map((review, index) => (
-          <li>
+          <li key={index}>
             <Suspense fallback={<>Loading...</>}>
-              <Review review={review} key={index}/>
+              <Review review={review} edit={edit}/>
             </Suspense>
           </li>
         ))

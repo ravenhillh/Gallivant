@@ -16,6 +16,7 @@ const Waypoint = lazy(() => import('./Waypoint'));
 const CustomModal = lazy(() => import('./Modal'));
 const Map = lazy(() => import('../Map'));
 const CreateReview = lazy(() => import('../CreateReview'));
+const Reviews = lazy(() => import('../Reviews'));
 
 type Tour = {
   id: number;
@@ -203,7 +204,7 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          <Button
+          {/* <Button
             startIcon={<AddIcon />}
             variant='contained'
             color='primary'
@@ -212,7 +213,7 @@ const Tour = (): JSX.Element => {
             }}
           >
             Read Reviews
-          </Button>
+          </Button> */}
           <Button
             startIcon={<AddIcon />}
             variant='contained'
@@ -323,6 +324,7 @@ const Tour = (): JSX.Element => {
           <br />
         </CustomModal>
       </Suspense>
+      <Reviews id={id} edit={edit}/>
     </div>
   );
 };

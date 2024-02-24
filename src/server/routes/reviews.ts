@@ -45,7 +45,10 @@ reviewRouter.delete('/:id', (req, res) => {
     .then(() => {
       res.sendStatus(200);
     })
-    .catch((err:string) => console.error('Could not DELETE review: ', err));
+    .catch((err:string) => {
+      console.error('Could not DELETE review: ', err);
+      res.sendStatus(500);
+    });
 });
 
 export default reviewRouter;

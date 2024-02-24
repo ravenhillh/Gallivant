@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Review = ({review}) => {
+const Review = ({review, edit}) => {
   // set username on review
   const [username, setUsername] = useState('');
 
@@ -12,6 +12,13 @@ const Review = ({review}) => {
         setUsername(data.username);
       })
       .catch(err => console.error('Could not get User data ', err));
+  };
+
+  // delete review
+  const deleteReview = () => {
+    axios.delete(`/reviews/${review.id}`)
+      .then(() => console.log('deleted'))
+      .catch(err => console.error('Could not DELETE review ', err));
   };
 
   // call getUser on mount
