@@ -19,7 +19,6 @@ import {
   Modal,
   Select,
   Typography,
-  // TextField,
 } from '../utils/material';
 
 import Voice from './tourComponents/Voice';
@@ -78,13 +77,6 @@ const Tours = (): JSX.Element => {
     } else {
       setErrorModal(true);
     }
-  };
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<string>
-  ) => {
-    setState(event.target.value);
   };
 
   const handleCatChange = (event) => {
@@ -158,14 +150,6 @@ const Tours = (): JSX.Element => {
             textInput={tourName}
             setTextInput={setName}
           />
-          {/* <TextField
-            autoFocus
-            fullWidth
-            label='Give your tour a name'
-            value={tourName}
-            onChange={(e) => handleChange(e, setName)}
-            helperText='Tour Name'
-          /> */}
         </div>
         <br />
           <Voice
@@ -175,14 +159,6 @@ const Tours = (): JSX.Element => {
             textInput={description}
             setTextInput={setDescription}
           />
-          {/* <TextField
-            fullWidth
-            multiline
-            label='Give your tour a description'
-            value={description}
-            onChange={(e) => handleChange(e, setDescription)}
-            helperText='Tour Description'
-          /> */}
 
         <br />
 
