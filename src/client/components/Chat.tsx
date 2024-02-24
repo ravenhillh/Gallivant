@@ -8,6 +8,7 @@ import axios from 'axios';
 type Message = {
   message: string;
   username: string
+  name: string
 };
 type User = {
   username: string
@@ -21,15 +22,27 @@ const Chat = ({ socket }) => {
   const user: User = useLoaderData();
 
 
-
   useEffect(() => {
-    // take message received and set to state
     socket.connect();
-    socket.on('message_response', (data) => setMessages([...messages, data]));
+
+    socket.on('connect_error', (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
 
     return () => {
       socket.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    // take message received and set to state
+    const messageListener = (data) => {
+      setMessages([...messages, data]);
+    };
+
+    socket.on('message_response', messageListener);
+   
+    
   }, [socket, messages]);
 
   const sendMessage = () => {
@@ -40,23 +53,22 @@ const Chat = ({ socket }) => {
       socket.emit('send_message', { message, name, id, tour });
       setMessage('');
       // save message to db
-      axios.post('/chats/post', { chat: { message, tour } })
+      axios.post('/message/post', { chat: { message, tour, name } })
       .then(() => console.log('successful post'))
       .catch((err) => console.log(err));
     }
   };
   const getMessagesByTour = (id) => {
-    axios(`/chats/tour/${id}`)
+    axios(`/message/tour/${id}`)
     .then(({ data }) => {
-      
+      console.log(data)
       setMessages(data);
     })
     .catch(err => console.log(err));
   };
 
   const getAllMessages = () => {
-    axios('/chats/get').then(({ data }) => {
-      
+    axios('/message/get').then(({ data }) => {
       setMessages(data);
     })
     .catch((err) => console.log(err));
@@ -69,12 +81,12 @@ const Chat = ({ socket }) => {
   return (
     <div>
       {
-        tour ? <div>Chat room: {tour}</div> : <div>Chat</div>
+        name ? <div>Chat room: {name}</div> : <div>Chat</div>
       }
       <div className="message-container">
         {
           messages.map((message: Message, i) => {
-            return <div key={i}>{user.username}: {message.message}</div>;
+            return <div key={i}>{message.name ? message.name: message.username}: {message.message}</div>;
           })
         }
       </div>
