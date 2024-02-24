@@ -6,13 +6,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 require('dotenv').config();
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { NODE_ENV = 'production' } = process.env;
 
 module.exports = {
   mode: NODE_ENV,
-  devtool: NODE_ENV === 'development' ? 'inline-source-map' : 'source-map',
+  devtool: NODE_ENV === 'development' ? 'inline-source-map' : undefined,
   watch: NODE_ENV === 'development',
   entry: './src/client/index.tsx',
   module: {
