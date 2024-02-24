@@ -153,7 +153,7 @@ const Tour = (): JSX.Element => {
   // startTour button functionality
   const startTour = () => {
     axios
-      .put(`/user/${userId}/${id}`)
+      .put(`/user/startTour/${userId}/${id}`)
       .then((response) => {
         if (response.status === 200) {
           navigate('/currentTour');

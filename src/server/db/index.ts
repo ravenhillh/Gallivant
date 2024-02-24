@@ -29,6 +29,7 @@ const User = db.define('User', {
     },
     username: DataTypes.STRING,
     googleId: DataTypes.STRING,
+    currentPosition: DataTypes.INTEGER,
     id_currentTour: {
         type: DataTypes.INTEGER,
         references: {
