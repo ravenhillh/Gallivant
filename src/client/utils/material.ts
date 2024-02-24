@@ -10,6 +10,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 // import CardMedia from '@mui/material/CardMedia';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
@@ -20,9 +22,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Fab from '@mui/material/Fab';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import ImageList from '@mui/material/ImageList';
+import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import InsightsIcon from '@mui/icons-material/Insights';
 import List from '@mui/material/List';
@@ -36,6 +40,7 @@ import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
@@ -50,6 +55,7 @@ import Typography from '@mui/material/Typography';
 export {
   AddIcon,
   AddAPhotoIcon,
+  AppBar,
   Avatar,
   Box,
   Button,
@@ -58,17 +64,23 @@ export {
   Card,
   CardActions,
   CardContent,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Container,
   DeleteIcon,
   Dialog,
   DirectionsWalkIcon,
   Divider,
+  Drawer,
   EditIcon,
   ExploreIcon,
   Fab,
   FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   ImageList,
+  InputAdornment,
   InputLabel,
   InsightsIcon,
   List,
@@ -77,8 +89,12 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuIcon,
   MenuItem,
+  MicIcon,
+  MicOffIcon,
   Modal,
+  OutlinedInput,
   Rating,
   RemoveCircleIcon,
   RoomOutlinedIcon,
@@ -87,12 +103,6 @@ export {
   SendIcon,
   Stack,
   TextField,
-  Typography,
-  Container,
-  AppBar,
   Toolbar,
-  Drawer,
-  MenuIcon,
-  MicIcon,
-  MicOffIcon,
+  Typography,
 };

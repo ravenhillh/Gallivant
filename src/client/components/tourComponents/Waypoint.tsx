@@ -12,7 +12,6 @@ import {
   RoomOutlinedIcon,
   Typography,
   Grid,
-  TextField,
 } from '../../utils/material';
 // CardMedia?
 
@@ -41,13 +40,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
 
   const [waypointName, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<string>
-  ) => {
-    setState(event.target.value);
-  };
 
   const openEditModal = () => {
     setEditModal(true);
@@ -155,40 +147,23 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         closeModal={() => setEditModal(false)}
       >
         <div>
-          <Voice 
+          <Voice
             type='name'
             label='Change the name'
             helperText='Name'
             textInput={waypointName}
             setTextInput={setName}
           />
-          {/* <TextField
-            autoFocus
-            fullWidth
-            label='Change the name'
-            value={waypointName}
-            onChange={(e) => handleChange(e, setName)}
-            helperText='Name'
-          /> */}
         </div>
         <br />
         <div>
-        <Voice 
+          <Voice
             type='description'
             label='Change the description'
             helperText='Description'
             textInput={description}
             setTextInput={setDescription}
           />
-          {/* <TextField
-            autoFocus
-            fullWidth
-            multiline
-            label='Change the description'
-            value={description}
-            onChange={(e) => handleChange(e, setDescription)}
-            helperText='Description'
-          /> */}
         </div>
         <br />
         <Button
