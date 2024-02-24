@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Modal, Rating, RemoveCircleIcon, TextField } from '../utils/material';
+import {
+  Box,
+  Button,
+  CancelIcon,
+  Card,
+  CardContent,
+  Modal,
+  Rating,
+  RemoveCircleIcon,
+  TextField } from '../utils/material';
 
-const Review = ({review, edit}) => {
+const Review = ({review, edit, getReviews }) => {
   // set username on review
   const [username, setUsername] = useState('');
   const [feedback, setFeedback] = useState(review.feedback);
@@ -42,14 +51,19 @@ const Review = ({review, edit}) => {
       .catch(err => console.error('Could not DELETE review ', err));
   };
 
-  // call getUser on mount
   useEffect(() => {
     getUser();
-  }, []);
+    getReviews();
+  }, [open]);
 
   return (
-    <div>
-      <h3>Review</h3>
+    <Card>
+      <CardContent>
+      <Rating
+        name="read-only"
+        value={review.rating}
+        readOnly
+      />
       <p>{username}</p>
       <p>{review.feedback}</p>
       {edit && 
@@ -73,9 +87,7 @@ const Review = ({review, edit}) => {
           fullWidth={false}
           onClick={(e) => {
             e.preventDefault();
-            // open edit modal
             handleOpen();
-            // deleteReview();
           }}
         >
           Edit Review
@@ -124,16 +136,27 @@ const Review = ({review, edit}) => {
                   e.preventDefault();
                   // open edit modal
                   updateReview();
+                  handleClose();
                 }}
               >
                 Update Review
+              </Button>
+              <Button
+                variant='outlined'
+                size='small'
+                color='secondary'
+                startIcon={<CancelIcon />}
+                onClick={handleClose}
+              >
+                Cancel
               </Button>
             </div>
           </Box>
         </Modal>
         </div>
       }
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

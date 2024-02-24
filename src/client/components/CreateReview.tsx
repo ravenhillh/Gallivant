@@ -4,6 +4,7 @@ import axios from 'axios';
 import {
   Box,
   Button,
+  CancelIcon,
   TextField,
   Rating,
   SendIcon,
@@ -18,7 +19,7 @@ import {
 // create review will take down tour id from props
 
 
-const CreateReview = ({tourId}) => {
+const CreateReview = ({ tourId, handleClose }) => {
   // console.log(typeof tourId);
   // rating value
   const [value, setValue] = useState<number | null>(0);
@@ -76,6 +77,15 @@ const CreateReview = ({tourId}) => {
           }}
         >
           Send
+        </Button>
+        <Button
+          variant='outlined'
+          size='small'
+          color='secondary'
+          startIcon={<CancelIcon />}
+          onClick={handleClose}
+        >
+          Cancel
         </Button>
         </div>
       </Box>

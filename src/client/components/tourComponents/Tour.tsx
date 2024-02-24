@@ -229,7 +229,7 @@ const Tour = (): JSX.Element => {
             aria-describedby='modal-modal-description'
           >
             <Suspense fallback={<>Loading...</>}>
-              <CreateReview tourId={tour?.id} />
+              <CreateReview tourId={tour?.id} handleClose={handleClose}/>
             </Suspense>
           </Modal>
           <br />
