@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Button, RemoveCircleIcon } from '../utils/material'; 
 
 const Review = ({review, edit}) => {
   // set username on review
@@ -31,6 +32,20 @@ const Review = ({review, edit}) => {
       <h3>Review</h3>
       <p>{username}</p>
       <p>{review.feedback}</p>
+      {edit && 
+        <Button
+          id='delete-image'
+          size='small'
+          type='submit'
+          fullWidth={false}
+          onClick={(e) => {
+            e.preventDefault();
+            deleteReview();
+          }}
+        >
+          <RemoveCircleIcon />
+        </Button>
+      }
     </div>
   );
 };
