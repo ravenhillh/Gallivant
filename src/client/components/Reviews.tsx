@@ -19,7 +19,7 @@ const Reviews = () => {
       })
       .catch((err) => console.error('Could not GET reviews ', err));
   };
-
+  console.log(reviews);
   return (
     <div>
       <Button

@@ -37,4 +37,15 @@ reviewRouter.get('/tour/:id', (req, res) => {
   });
 });
 
+// DELETE review by id
+reviewRouter.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Review.destroy({ where: { id }})
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err:string) => console.error('Could not DELETE review: ', err));
+});
+
 export default reviewRouter;
