@@ -10,7 +10,7 @@ import {
   Typography,
 } from '../../utils/material';
 
-const Map = lazy(() => import('../Map'));
+const CurrentMap = lazy(() => import('./CurrentMap'));
 const CurrentWaypoint = lazy(() => import('./CurrentWaypoint'));
 
 const CurrentTour = (): JSX.Element => {
@@ -65,7 +65,7 @@ const CurrentTour = (): JSX.Element => {
       </Grid>
 
       <Suspense fallback={<>Loading...</>}>
-        <Map waypoints={waypoints} />
+        <CurrentMap currentWP={currentWP} waypoints={waypoints} />
       </Suspense>
 
       <Grid
