@@ -156,7 +156,8 @@ const Chat = db.define('Chat', {
             allowNull: false
         }
     },
-    message: DataTypes.STRING
+    message: DataTypes.STRING,
+    username: DataTypes.STRING
 }, { timestamps: true });
 
 const Users_Waypoints = db.define('Users_Waypoints', {
