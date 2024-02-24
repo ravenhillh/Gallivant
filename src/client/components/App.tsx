@@ -13,6 +13,7 @@ const Gallery = lazy(() => import('./Gallery'));
 const Reviews = lazy(() => import('./Reviews'));
 const Categories = lazy(() => import('./Categories'));
 const Category = lazy(() => import('./Category'));
+const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
 import requireAuth from '../utils/requireAuth';
@@ -39,19 +40,19 @@ const App = createBrowserRouter([
         path: '/',
         element: (
           <Suspense fallback={<>Loading...</>}>
-            <MapView socket={socket}/>
+            <MapView />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
       {
         path: '/mapview',
         element: (
           <Suspense fallback={<>Loading...</>}>
-            <MapView socket={socket}/>
+            <MapView />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
+        // loader: async () => await requireAuth(),
       },
       {
         path: '/camera',
@@ -106,6 +107,24 @@ const App = createBrowserRouter([
           </Suspense>
         ),
         // loader: async () => await requireAuth(),
+      },
+      {
+        path: '/chat',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Chat socket={socket} />
+          </Suspense>
+        ),
+        loader: async () => await requireAuth(),
+      },
+      {
+        path: '/chat/:tour',
+        element: (
+          <Suspense fallback={<>Loading...</>}>
+            <Chat socket={socket} />
+          </Suspense>
+        ),
+        loader: async () => await requireAuth(),
       },
     ],
   },

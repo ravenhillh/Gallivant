@@ -33,7 +33,7 @@ type Tour = {
   id: number;
 };
 
-function MapView({ socket }): JSX.Element {
+function MapView(): JSX.Element {
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
   const [lng, setLng] = useState(-90);

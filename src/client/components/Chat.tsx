@@ -17,7 +17,7 @@ type User = {
 const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const { tour } = useParams();
+  const { tour, name } = useParams();
   const user: User = useLoaderData();
 
 
@@ -41,14 +41,14 @@ const Chat = ({ socket }) => {
       setMessage('');
       // save message to db
       axios.post('/chats/post', { chat: { message, tour } })
-      .then(() => console.log('success'))
+      .then(() => console.log('successful post'))
       .catch((err) => console.log(err));
     }
   };
   const getMessagesByTour = (id) => {
     axios(`/chats/tour/${id}`)
     .then(({ data }) => {
-      console.log('successful tourchats retrieval', data);
+      
       setMessages(data);
     })
     .catch(err => console.log(err));
@@ -56,7 +56,7 @@ const Chat = ({ socket }) => {
 
   const getAllMessages = () => {
     axios('/chats/get').then(({ data }) => {
-      console.log(data);
+      
       setMessages(data);
     })
     .catch((err) => console.log(err));
