@@ -1,7 +1,7 @@
 import React, { useState, lazy, Suspense, useEffect } from 'react';
 // import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from '../utils/material';
+// import { Button } from '../utils/material';
 
 const Review = lazy(() => import('./Review'));
 
