@@ -136,7 +136,7 @@ const App = createBrowserRouter([
         loader: currentTourLoader,
       },
       {
-        path: '/chat/:tour',
+        path: '/chat/:tour/:name',
         element: (
           <Suspense fallback={<>Loading...</>}>
             <Chat socket={socket} />

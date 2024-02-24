@@ -162,7 +162,7 @@ function MapView(): JSX.Element {
             <Button variant='outlined' onClick={() => routeToTour(tours[0].id)}>
               View Tour
             </Button>
-            <Button variant='outlined' onClick={() => routeToChat(tours[0].id)}>
+            <Button variant='outlined' onClick={() => routeToChat(tours[0].id, tours[0].tourName)}>
               Tour Chat
             </Button>
           </ListItem>
@@ -177,8 +177,8 @@ function MapView(): JSX.Element {
     navigate(`/tour/${id}`);
   }
 
-  function routeToChat(id: string) {
-    navigate(`/chat/${id}`);
+  function routeToChat(id: string, name: string) {
+    navigate(`/chat/${id}/${name}`);
   }
 
   function handleClick(x) {

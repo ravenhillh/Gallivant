@@ -35,9 +35,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' ? process.env.PRODUCTION_URL : 'http://localhost:3000'
   },
-  path: '/chat/'
+  path: '/socket/',
+  transports: ['websocket', 'polling'],
 });
 
 // MIDDLEWARE
@@ -75,7 +76,7 @@ app.use('/reviews', reviewRouter);
 app.use('/', tourRouter);
 app.use('/user', userRouter);
 app.use('/', waypointRouter);
-app.use('/chats', chatRouter);
+app.use('/', chatRouter);
 
 // ** API ROUTES **
 
