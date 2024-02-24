@@ -11,17 +11,8 @@ import {
   Typography
 } from '../utils/material';
 
-// how to render only on tours you did not create?
-// add camera access eventually
-
-
-// a Tour can have many reviews
-// create review will take down tour id from props
-
 
 const CreateReview = ({ tourId, handleClose }) => {
-  // console.log(typeof tourId);
-  // rating value
   const [value, setValue] = useState<number | null>(0);
   const [reviewText, setReviewText] = useState<string>('');
 
@@ -69,7 +60,7 @@ const CreateReview = ({ tourId, handleClose }) => {
           }}
         />
         <br />
-        <Button 
+        <Button
           variant="contained" 
           endIcon={<SendIcon />}
           onClick={() => {

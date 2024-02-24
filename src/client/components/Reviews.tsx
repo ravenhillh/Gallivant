@@ -16,7 +16,6 @@ const Reviews = ({ id, edit }) => {
   const getReviews = () => {
     axios.get(`/reviews/tour/${id}`)
       .then(({data}) => {
-        // console.log('reviews ', data);
         setReviews(data);
       })
       .then(() => getAverage())
