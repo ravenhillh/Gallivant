@@ -36,43 +36,40 @@ const Voice = ({
   };
 
   return (
-      <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'>
-        <InputLabel htmlFor='outlined-adornment-label'>{label}</InputLabel>
-        <OutlinedInput
-          id={`outlined-adornment-${label}`}
-          type='text'
-          fullWidth
-          disabled={isListening}
-          autoFocus={type === 'name'}
-          multiline={type === 'description'}
-          label={label}
-          onChange={(e) => setTextInput(e.target.value)}
-          value={
-            isListening
-              ? textInput +
-                (transcript.length
-                  ? (textInput.length ? ' ' : '') + transcript
-                  : '')
-              : textInput
-          }
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton
-                aria-label='toggle speech to text'
-                color={isListening ? 'warning' : 'success'}
-                onClick={startStopListening}
-                onMouseDown={startStopListening}
-                edge='end'
-              >
-                {isListening ? <MicOffIcon /> : <MicIcon />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText>
-          {helperText}
-        </FormHelperText>
-      </FormControl>
+    <FormControl fullWidth  variant='outlined'>
+      <InputLabel htmlFor='outlined-adornment-label'>{label}</InputLabel>
+      <OutlinedInput
+        id={`outlined-adornment-${label}`}
+        type='text'
+        disabled={isListening}
+        autoFocus={type === 'name'}
+        multiline={type === 'description'}
+        label={label}
+        onChange={(e) => setTextInput(e.target.value)}
+        value={
+          isListening
+            ? textInput +
+              (transcript.length
+                ? (textInput.length ? ' ' : '') + transcript
+                : '')
+            : textInput
+        }
+        endAdornment={
+          <InputAdornment position='end'>
+            <IconButton
+              aria-label='toggle speech to text'
+              color={isListening ? 'warning' : 'success'}
+              onClick={startStopListening}
+              onMouseDown={startStopListening}
+              edge='end'
+            >
+              {isListening ? <MicOffIcon /> : <MicIcon />}
+            </IconButton>
+          </InputAdornment>
+        }
+      />
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormControl>
   );
 };
 

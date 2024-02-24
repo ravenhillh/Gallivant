@@ -9,10 +9,14 @@ type CustomModal = {
 
 const style = {
   position: 'absolute',
-  top: '50%',
+  my: '4',
+  width: '75%',
+  alignItems: 'center',
+  top: '25%',
   left: '50%',
+  gap: '4',
+  p: '2',
   transform: 'translate(-50%, -50%)',
-  width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -28,7 +32,7 @@ function CustomModal(
 
   return (
     <Modal open={openModal} onClose={closeModal}>
-      <Box sx={{...style}}>
+      <Box sx={{ ...style }}>
         {children}
         <Button
           variant='outlined'
