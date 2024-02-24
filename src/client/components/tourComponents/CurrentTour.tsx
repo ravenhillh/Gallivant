@@ -16,8 +16,16 @@ const CurrentWaypoint = lazy(() => import('./CurrentWaypoint'));
 const CurrentTour = (): JSX.Element => {
   // loader returning user and tour from custom loader in App
   const { tour, user, waypoints } = useLoaderData();
+  // state to track current index of waypoint array, i.e. user's progress thru tour
+  const [currentWP, setCurrentWP] = useState(user.currentPosition);
 
-  const [currentWP, setCurrentWP] = useState(0);
+  const updatePosition = (position) => {
+    axios
+      .put(`/user/putPosition/${user.id}/${tour.id}/${position}`)
+      .catch((err) =>
+        console.error('Could not PUT update on user to edit position: ', err)
+      );
+  };
 
   return (
     <>
@@ -30,8 +38,8 @@ const CurrentTour = (): JSX.Element => {
         <Fab
           disabled={currentWP === 0}
           onClick={() => {
-            setCurrentWP(prev => {
-              // console.log(`back ${prev - 1}`);
+            setCurrentWP((prev) => {
+              updatePosition(prev - 1);
               return prev - 1;
             });
           }}
@@ -40,13 +48,13 @@ const CurrentTour = (): JSX.Element => {
           <ChevronLeftIcon />
         </Fab>
         <Suspense fallback={<>Loading...</>}>
-          <CurrentWaypoint edit={false} waypoint={waypoints[currentWP]} id_tour={tour.id} />
+          <CurrentWaypoint edit={false} waypoint={waypoints[currentWP]} />
         </Suspense>
         <Fab
           disabled={currentWP === waypoints.length - 1}
           onClick={() => {
             setCurrentWP((prev) => {
-              // console.log(`forward ${prev + 1}`);
+              updatePosition(prev + 1);
               return prev + 1;
             });
           }}
