@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
-// import { io } from 'socket.io-client';
-// const socket = io('http://localhost:3000');
 
+import {
+  Fab,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  TextField,
+  SendIcon,
+  Typography,
+} from '../utils/material';
 
 type Message = {
   message: string;
-  username: string
-  name: string
+  username: string;
+  name: string;
+  createdAt: string;
 };
+
 type User = {
-  username: string
-  id: number
-}
+  username: string;
+  id: number;
+};
 
 const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const { tour, name } = useParams();
-  const user: User = useLoaderData();
-
+  const  user: User  = useLoaderData();
 
   useEffect(() => {
     socket.connect();
@@ -41,38 +50,39 @@ const Chat = ({ socket }) => {
     };
 
     socket.on('message_response', messageListener);
-   
-    
   }, [socket, messages]);
 
   const sendMessage = () => {
     if (message !== '') {
-      const name = user.username;
+      const username = user.username;
       const id = user.id;
       // Send message to socket server
-      socket.emit('send_message', { message, name, id, tour });
+      socket.emit('send_message', { message, username, id, tour });
       setMessage('');
       // save message to db
-      axios.post('/message/post', { chat: { message, tour, name } })
-      .then(() => console.log('successful post'))
-      .catch((err) => console.log(err));
+      axios
+        .post('/message/post', { chat: { message, tour, username } })
+        .then(() => console.log('successful post'))
+        .catch((err) => console.log(err));
     }
   };
+
   const getMessagesByTour = (id) => {
     axios(`/message/tour/${id}`)
-    .then(({ data }) => {
-      console.log(data)
-      setMessages(data);
-    })
-    .catch(err => console.log(err));
+      .then(({ data }) => {
+        console.log(data);
+        setMessages(data);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const getAllMessages = () => {
-    axios('/message/get').then(({ data }) => {
-      setMessages(data);
-    })
-    .catch((err) => console.log(err));
-  };
+  // const getAllMessages = () => {
+  //   axios('/message/get')
+  //     .then(({ data }) => {
+  //       setMessages(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   useEffect(() => {
     getMessagesByTour(tour);
@@ -80,24 +90,56 @@ const Chat = ({ socket }) => {
 
   return (
     <div>
-      {
-        name ? <div>Chat room: {name}</div> : <div>Chat</div>
-      }
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h4" className="header-message">
+            {name ? <div>Chat room: {name}</div> : <div>Chat</div>}
+          </Typography>
+        </Grid>
+      </Grid>
       <div className="message-container">
-        {
-          messages.map((message: Message, i) => {
-            return <div key={i}>{message.name ? message.name: message.username}: {message.message}</div>;
-          })
-        }
+        <Grid item xs={9}>
+          <List>
+            {messages.map((message: Message, i) => {
+              // return <div key={i}>{message.username}: {message.message}</div>;
+              return (
+                <ListItem key={i}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={message.username === user.username ? 'right' : 'left'}
+                        primary={message.message}
+                      ></ListItemText>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={message.username === user.username ? 'right' : 'left'}
+                        secondary={message.username}
+                      ></ListItemText>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Grid>
       </div>
-    <input
-        placeholder='Message...'
-        onChange={(e) => setMessage(e.target.value)}
-        value={message}
-      />
-      <button className='btn btn-primary' onClick={sendMessage}>
-        Send Message
-      </button>
+      <Grid container style={{ padding: '20px' }}>
+        <Grid item xs={11}>
+          <TextField
+            id="message-field"
+            label="Type Something"
+            fullWidth
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={1} align="right">
+          <Fab color="primary" aria-label="add" onClick={sendMessage}>
+            <SendIcon />
+          </Fab>
+        </Grid>
+      </Grid>
     </div>
   );
 };

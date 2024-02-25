@@ -14,7 +14,7 @@ import {
   ListItemAvatar,
   Typography
 } from '../utils/material';
-import Chat from './Chat';
+// import Chat from './Chat';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmF2ZW5oaWxsaCIsImEiOiJjbHMwbmVlZTgwMnNwMm5zMWExMzVkZnQyIn0.o7IPHZMO4ENtijDSvTEsjQ';
