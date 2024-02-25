@@ -4,7 +4,6 @@ import axios from 'axios';
 import Categories from './Categories';
 
 import {
-  Box,
   Button,
   AddIcon,
   ExploreIcon,
@@ -16,12 +15,13 @@ import {
   ListItemText,
   Grid,
   MenuItem,
-  Modal,
+  // Modal,
   Select,
   Typography,
 } from '../utils/material';
 
 import Voice from './tourComponents/Voice';
+import CustomModal from './tourComponents/Modal';
 
 const Tours = (): JSX.Element => {
   type Tour = {
@@ -106,7 +106,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-      <Categories categories={categories}/>
+      <Categories categories={categories} />
 
       <List>
         {tours.map((tour, i) => {
@@ -124,23 +124,19 @@ const Tours = (): JSX.Element => {
         })}
       </List>
 
-      <Modal open={errorModal} onClose={() => setErrorModal(false)}>
+      <CustomModal
+        openModal={errorModal}
+        closeModal={() => setErrorModal(false)}
+      >
         <Typography variant='body1'>
           Please give tour a name and description.
         </Typography>
-      </Modal>
+      </CustomModal>
 
-      <Modal open={createModal} onClose={() => setCreateModal(false)}>
-        <Box
-          // height={300}
-          // width={300}
-          my={4}
-          display="flex"
-          alignItems="center"
-          gap={4}
-          p={2}
-          sx={{ border: '2px solid grey', bgcolor: 'white' }}
-        >
+      <CustomModal
+        openModal={createModal}
+        closeModal={() => setCreateModal(false)}
+      >
         <div>
           <Voice
             type='name'
@@ -151,33 +147,34 @@ const Tours = (): JSX.Element => {
           />
         </div>
         <br />
-          <Voice
-            type='description'
-            label='Give your tour a description'
-            helperText='Tour Description'
-            textInput={description}
-            setTextInput={setDescription}
-          />
 
+        <Voice
+          type='description'
+          label='Give your tour a description'
+          helperText='Tour Description'
+          textInput={description}
+          setTextInput={setDescription}
+        />
+        <br />
         <br />
 
-          <FormControl fullWidth>
-           <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={category}
-              label="Category"
-              onChange={handleCatChange}
-            >
-            {
-              categories.map((category, i) => (
-                <MenuItem key={i} value={category}>{category}</MenuItem>
-              ))
-            }
-            </Select>
-         </FormControl>
-
+        <FormControl fullWidth>
+          <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={category}
+            label='Category'
+            onChange={handleCatChange}
+          >
+            {categories.map((category, i) => (
+              <MenuItem key={i} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <br />
         <br />
 
         <Button
@@ -189,9 +186,7 @@ const Tours = (): JSX.Element => {
         >
           Create Tour
         </Button>
-
-        </Box>
-      </Modal>
+      </CustomModal>
     </div>
   );
 };

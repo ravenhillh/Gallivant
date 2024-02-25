@@ -1,4 +1,5 @@
-import mapboxgl from 'mapbox-gl';
+// import mapboxgl from 'mapbox-gl';
+import { mapboxgl } from '../utils/material';
 import React, { useRef, useEffect, useState } from 'react';
 //import { JsxE } from 'typescript';
 
@@ -59,7 +60,7 @@ function Map(props: MapProps): JSX.Element {
       color: 'red',
       draggable: 'true',
     })
-      .setLngLat({lng: markerLng, lat: markerLat})
+      .setLngLat({ lng: markerLng, lat: markerLat })
       .addTo(map.current)
       .on('dragend', () => {
         const lngLat = map.marker.getLngLat();
@@ -81,9 +82,7 @@ function Map(props: MapProps): JSX.Element {
     map.current?.on('click', (e) => {
       const coordinates = e.lngLat;
 
-      map.marker
-        .setLngLat(coordinates)
-        .addTo(map.current);
+      map.marker.setLngLat(coordinates).addTo(map.current);
       setMarkerLng(e.lngLat.lng);
       setMarkerLat(e.lngLat.lat);
       passCoords(e.lngLat.lng, e.lngLat.lat);
@@ -91,40 +90,36 @@ function Map(props: MapProps): JSX.Element {
   }
 
   function showMarkers() {
-
     return waypoints.map((marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
-      const markerContent = `<div>
-      <div>${marker.waypointName}<div>
-      </div>`;
+      const markerContent = `
+        <div>
+          <h3>${marker.waypointName}</h3>
+          <div>${marker.description}</div>
+        </div>
+      `;
 
-      const popUp = new mapboxgl.Popup({ offset: 25 })
-      .setHTML(markerContent);
+      const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
 
-      new mapboxgl.Marker({
-      color: 'blue',
-      draggable: false,
-    })
-      .setLngLat([Number(marker.long), Number(marker.lat)])
-      .setPopup(popUp)
-      .addTo(map.current);
+      const marker1 = new mapboxgl.Marker({
+        color: 'blue',
+        draggable: false,
+      })
+        .setLngLat([Number(marker.long), Number(marker.lat)])
+        .setPopup(popUp)
+        .addTo(map.current);
+
+      marker1.getElement();
     });
   }
 
   return (
     <div>
-      <div>
-        {/* <div>Longitude: {markerLng}</div>
-        <div>Latitude: {markerLat}</div> */}
-      </div>
       <div
         style={{ height: '400px' }}
         ref={mapContainer}
         className='map-container'
       ></div>
-      {/* <div className='sidebar'>
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div> */}
     </div>
   );
 }

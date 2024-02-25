@@ -5,13 +5,16 @@ import axios from 'axios';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  Button,
+  DirectionsWalkIcon,
   Fab,
   Grid,
   Typography,
 } from '../../utils/material';
 
-const Map = lazy(() => import('../Map'));
+const CurrentMap = lazy(() => import('./CurrentMap'));
 const CurrentWaypoint = lazy(() => import('./CurrentWaypoint'));
+const CustomModal = lazy(() => import('./Modal'));
 
 const CurrentTour = (): JSX.Element => {
   // loader returning user and tour from custom loader in App
@@ -19,12 +22,19 @@ const CurrentTour = (): JSX.Element => {
   // state to track current index of waypoint array, i.e. user's progress thru tour
   const [currentWP, setCurrentWP] = useState(user.currentPosition);
 
+  const [instructions, setInstructions] = useState<JSX.Element | null>(null);
+  const [instructionModal, setInstructionModal] = useState(false);
+
   const updatePosition = (position) => {
     axios
       .put(`/user/putPosition/${user.id}/${tour.id}/${position}`)
       .catch((err) =>
         console.error('Could not PUT update on user to edit position: ', err)
       );
+  };
+
+  const passInstructions = (instructions: JSX.Element | null) => {
+    setInstructions(instructions);
   };
 
   return (
@@ -65,7 +75,11 @@ const CurrentTour = (): JSX.Element => {
       </Grid>
 
       <Suspense fallback={<>Loading...</>}>
-        <Map waypoints={waypoints} />
+        <CurrentMap
+          setInstructions={passInstructions}
+          currentWP={currentWP}
+          waypoints={waypoints}
+        />
       </Suspense>
 
       <Grid
@@ -78,7 +92,22 @@ const CurrentTour = (): JSX.Element => {
           {`${tour?.tourName}: `}
         </Typography>
         <Typography variant='h5'>{tour?.description}</Typography>
+        <Button
+          variant='contained'
+          startIcon={<DirectionsWalkIcon />}
+          disabled={instructions === null}
+          onClick={() => setInstructionModal(true)}
+        >
+          Directions
+        </Button>
       </Grid>
+
+      <CustomModal
+        openModal={instructionModal}
+        closeModal={() => setInstructionModal(false)}
+      >
+        {instructions}
+      </CustomModal>
     </>
   );
 };
