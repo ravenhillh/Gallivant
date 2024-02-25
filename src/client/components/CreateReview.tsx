@@ -4,23 +4,15 @@ import axios from 'axios';
 import {
   Box,
   Button,
+  CancelIcon,
   TextField,
   Rating,
   SendIcon,
   Typography
 } from '../utils/material';
 
-// how to render only on tours you did not create?
-// add camera access eventually
 
-
-// a Tour can have many reviews
-// create review will take down tour id from props
-
-
-const CreateReview = ({tourId}) => {
-  // console.log(typeof tourId);
-  // rating value
+const CreateReview = ({ tourId, handleClose }) => {
   const [value, setValue] = useState<number | null>(0);
   const [reviewText, setReviewText] = useState<string>('');
 
@@ -68,14 +60,24 @@ const CreateReview = ({tourId}) => {
           }}
         />
         <br />
-        <Button 
+        <Button
           variant="contained" 
           endIcon={<SendIcon />}
           onClick={() => {
             postReview();
+            handleClose();
           }}
         >
           Send
+        </Button>
+        <Button
+          variant='outlined'
+          size='small'
+          color='secondary'
+          startIcon={<CancelIcon />}
+          onClick={handleClose}
+        >
+          Cancel
         </Button>
         </div>
       </Box>
