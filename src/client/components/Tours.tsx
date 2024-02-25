@@ -44,7 +44,6 @@ const Tours = (): JSX.Element => {
     'food & drink',
     'history',
     'nightlife',
-    'history',
     'nature & outdoors',
     'miscellaneous',
   ];

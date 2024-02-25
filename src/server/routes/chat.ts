@@ -34,7 +34,7 @@ chatRouter.get('/message/tour/:id', (req, res) => {
 chatRouter.post('/message/post', (req, res) => {
   const { chat } = req.body;
   //save chat to chat table
-  Chat.create({ message: chat.message, id_user: req.user?.id, username: chat.name })
+  Chat.create({ message: chat.message, id_user: req.user?.id, username: chat.username })
   .then( async (message: Message) => {
     //create chat on tour-chat join table using tour-id
     await Chats_Tours.create({ id_chat: message.id, id_tour: chat.tour }).catch((err: string) => console.log(err));
