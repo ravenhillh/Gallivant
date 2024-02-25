@@ -208,14 +208,18 @@ function CurrentMap(props: MapProps): JSX.Element {
     }
 
     const steps = data.legs[0].steps;
-    const tripInstructions = steps.map((step, i) => <ListItem key={i}>{step.maneuver.instruction}</ListItem>);
+    const tripInstructions = steps.map((step, i) => (
+      <ListItem sx={{ display: 'list-item' }} key={i}>
+        {step.maneuver.instruction}
+      </ListItem>
+    ));
 
     setInstructions(
       <>
         <Typography variant='body1' fontWeight='bold'>
-            Trip duration: {Math.floor(data.duration / 60)} min 🚴{' '}
+          Trip duration: {Math.floor(data.duration / 60)} min 🚴{' '}
         </Typography>
-        <List>{tripInstructions}</List>
+        <List sx={{ listStyle: 'decimal' }}>{tripInstructions}</List>
       </>
     );
   }
