@@ -142,15 +142,24 @@ function Camera(props): JSX.Element {
         accept='image/*'
         onChange={handleChange}
       />
-      <Button type='button' onClick={() => envInputRef.current!.click()}>
+      {
+        image ?
+        <Button onClick={handleClick}>
+          <AddAPhotoIcon /> Save Photo
+        </Button> :
+        <Button type='button' onClick={() => envInputRef.current!.click()}>
+          <CameraAltIcon /> Take Photo
+        </Button>
+      }
+      {/* <Button type='button' onClick={() => envInputRef.current!.click()}>
         <CameraAltIcon /> Take Photo
-      </Button>
+      </Button> */}
       <br />
       <img src={image} style={{ width: '250px', height: 'auto' }} />
-      <Button onClick={handleClick}>
+      {/* <Button onClick={handleClick}>
         <AddAPhotoIcon /> Save Photo
-      </Button>
-      <Snackbar 
+      </Button> */}
+      <Snackbar
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}

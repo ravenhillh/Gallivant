@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Button, 
   RemoveCircleIcon, 
@@ -6,9 +6,7 @@ import { Button,
   IconButton,
   Snackbar,
   ImageList } from '../utils/material';
-import Camera from './Camera';
-// import ImageListItem from '@mui/material/ImageListItem';
-// import Waypoint from './tourComponents/Waypoint';
+const Camera = lazy(() => import('./Camera'));
 
 interface ImageProperties {
   createdAt: string;
@@ -62,7 +60,7 @@ const Gallery = (props) => {
 
   useEffect(() => {
     getImagesWP(waypoint.id);
-  }, []);
+  }, [waypoint.id]);
 
   const handleClick = () => {
     setOpen(true);
