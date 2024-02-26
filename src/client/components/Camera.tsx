@@ -113,7 +113,7 @@ function Camera(props): JSX.Element {
         ref={envInputRef}
         id='environment'
         style={{ display: 'none' }}
-        capture='environment'
+        // capture='environment'
         accept='image/*'
         onChange={handleChange}
       />
