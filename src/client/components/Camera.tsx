@@ -146,7 +146,7 @@ function Camera(props): JSX.Element {
         <CameraAltIcon /> Take Photo
       </Button>
       <br />
-      <img src={image} height='200' />
+      <img src={image} style={{ width: '250px', height: 'auto' }} />
       <Button onClick={handleClick}>
         <AddAPhotoIcon /> Save Photo
       </Button>

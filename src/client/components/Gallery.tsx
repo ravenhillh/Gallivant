@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-import { Button, RemoveCircleIcon, ImageList } from '../utils/material';
+import { Button, 
+  RemoveCircleIcon, 
+  CloseIcon,
+  IconButton,
+  Snackbar,
+  ImageList } from '../utils/material';
 import Camera from './Camera';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import Waypoint from './tourComponents/Waypoint';
@@ -17,6 +22,7 @@ interface ImageProperties {
 const Gallery = (props) => {
   const { waypoint, edit } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
+  const [open, setOpen] = useState(false);
   // console.log(props);
 
   // function to send GET request to db
@@ -58,6 +64,28 @@ const Gallery = (props) => {
     getImagesWP(waypoint.id);
   }, []);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    getImagesWP(waypoint.id);
+  };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
+
   return (
     <div>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
@@ -67,7 +95,7 @@ const Gallery = (props) => {
           <li key={`${image.id}`}>
             <img
               src={`/api/images/${image.largeImg}`}
-              style={{ width: '150px', height: 'auto' }}
+              style={{ width: '250px', height: 'auto' }}
             />
             {edit && (
               <Button
@@ -79,6 +107,7 @@ const Gallery = (props) => {
                 onClick={(e) => {
                   e.preventDefault();
                   deleteImage(image.id);
+                  handleClick();
                 }}
               >
                 <RemoveCircleIcon />
@@ -87,6 +116,13 @@ const Gallery = (props) => {
           </li>
         ))}
       </ImageList>
+      <Snackbar 
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        message="Image deleted"
+        action={action}
+      />
     </div>
   );
 };
