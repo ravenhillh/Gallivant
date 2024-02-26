@@ -61,7 +61,7 @@ const Gallery = (props) => {
   return (
     <div>
       {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
-      {edit && (images.length ? null : <Camera waypoint={waypoint} />)}
+      {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
       <ImageList>
         {images.map((image) => (
           <li key={`${image.id}`}>

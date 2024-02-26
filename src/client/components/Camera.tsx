@@ -1,16 +1,23 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, Fragment } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, AddAPhotoIcon, CameraAltIcon } from '../utils/material';
+import { Button, 
+  AddAPhotoIcon, 
+  CameraAltIcon,
+  CloseIcon,
+  IconButton,
+  Snackbar
+ } from '../utils/material';
 
 // camera will have to accept props to access other ids like waypoint, etc
 // may need props interface
 function Camera(props): JSX.Element {
-  const { waypoint } = props;
+  const { waypoint, getImagesWP } = props;
   // image is a 'preview', before image is selected to be POSTED to database
   const [image, setImage] = useState('');
   const [resizedImg, setResizedImg] = useState('');
+  const [open, setOpen] = useState(false);
   // input Ref's for cameras
   const envInputRef = useRef<HTMLInputElement>(null);
   // const selfieInputRef = useRef<HTMLInputElement>(null);
@@ -102,11 +109,29 @@ function Camera(props): JSX.Element {
     // set unique name with uuid to be used as image Key, for gallery view
     const name = uuidv4();
     postBucket(name, resizedImg);
+    setOpen(true);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+    getImagesWP(waypoint.id);
+  };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
 
   return (
     <div>
-      {/* <label htmlFor="environment"></label> */}
       <br />
       <input
         type='file'
@@ -121,27 +146,17 @@ function Camera(props): JSX.Element {
         <CameraAltIcon /> Take Photo
       </Button>
       <br />
-      {/* <label htmlFor="user">Capture user:</label> */}
-      <br />
-      {/* <input
-        type="file"
-        ref={selfieInputRef}
-        id="user"
-        style={{ display: 'none' }}
-        capture="user"
-        accept="image/*"
-        onChange={handleChange}
-      />
-      <input
-        type="button"
-        value="Take Selfie"
-        onClick={() => selfieInputRef.current!.click()}
-      />
-      <br /> */}
       <img src={image} height='200' />
       <Button onClick={handleClick}>
         <AddAPhotoIcon /> Save Photo
       </Button>
+      <Snackbar 
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        message="Image saved"
+        action={action}
+      />
     </div>
   );
 }
