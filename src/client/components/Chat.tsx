@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 import {
   Fab,
@@ -30,6 +33,7 @@ const Chat = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const { tour, name } = useParams();
   const  user: User  = useLoaderData();
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
     socket.connect();
@@ -70,7 +74,6 @@ const Chat = ({ socket }) => {
   const getMessagesByTour = (id) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
-        console.log(data);
         setMessages(data);
       })
       .catch((err) => console.log(err));
@@ -87,6 +90,10 @@ const Chat = ({ socket }) => {
   useEffect(() => {
     getMessagesByTour(tour);
   }, []);
+  useEffect(() => {
+    // scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <div>
@@ -117,13 +124,19 @@ const Chat = ({ socket }) => {
                         secondary={message.username}
                       ></ListItemText>
                     </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={message.username === user.username ? 'right' : 'left'}
+                        secondary={dayjs(message.createdAt).fromNow()}
+                      ></ListItemText>
+                    </Grid>
                   </Grid>
                 </ListItem>
               );
             })}
           </List>
         </Grid>
-      </div>
+      <div ref={lastMessageRef} />
       <Grid container style={{ padding: '20px' }}>
         <Grid item xs={11}>
           <TextField

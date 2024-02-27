@@ -125,6 +125,9 @@ function MapView(): JSX.Element {
       marker1
         .getElement()
         .addEventListener('click', () => handleClick(marker.id));
+
+      marker1.getElement().addEventListener('mouseenter', () => marker1.togglePopup());
+      marker1.getElement().addEventListener('mouseleave', () => marker1.togglePopup());
     });
   }
   const style = {
