@@ -1,5 +1,6 @@
 import express from 'express';
-import { Review } from '../db/index';
+import { Review, db } from '../db/index';
+import { QueryTypes } from 'sequelize';
 
 const reviewRouter = express.Router();
 
@@ -35,6 +36,16 @@ reviewRouter.get('/tour/:id', (req, res) => {
     console.error('could not GET ', err);
     res.sendStatus(500);
   });
+});
+
+// GET review avg by id_tour
+reviewRouter.get('/rating/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query(`select AVG(rating) from reviews WHERE id_tour = ${id}`,
+  { type: QueryTypes.SELECT }
+  ).then((data:any) => console.log('average ', data))
+  .catch((err:string) => console.error('could not get average ', err));
 });
 
 // Update review
