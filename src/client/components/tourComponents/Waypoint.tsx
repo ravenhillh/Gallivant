@@ -27,6 +27,7 @@ type Waypoint = {
   lat: number;
 };
 interface WaypointProps {
+  updateOrder: () => void;
   waypoint: Waypoint;
   id_tour: string | undefined;
   getTourWPs: (tourId: string | undefined) => void;
@@ -34,7 +35,7 @@ interface WaypointProps {
 }
 
 const Waypoint = (props: WaypointProps): JSX.Element => {
-  const { waypoint, id_tour, getTourWPs, edit } = props;
+  const { waypoint, id_tour, getTourWPs, edit, updateOrder } = props;
   const [delModal, setDelModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
 
@@ -68,6 +69,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
       .then((res) => {
         if (res.status === 200) {
           setDelModal(false);
+          updateOrder();
           getTourWPs(id_tour);
         }
       })

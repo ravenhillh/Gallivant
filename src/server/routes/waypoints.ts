@@ -34,10 +34,11 @@ waypointRouter.get('/db/tourWaypoints/:tourId', (req, res) => {
 waypointRouter.post('/db/waypoint/', async (req, res) => {
   const { waypoint, id_tour } = req.body;
   // const userId = req.user?.id;
+  const { count } = await Tours_Waypoints.findAndCountAll({ where: {id_tour}});
 
   Waypoint.create(waypoint)
     .then(async (newWaypoint: Waypoint) => {
-      await Tours_Waypoints.create({ id_tour, id_waypoint: newWaypoint.id });
+      await Tours_Waypoints.create({ id_tour, id_waypoint: newWaypoint.id, order: count });
       res.status(201).send(newWaypoint);
     })
     .catch((err: string) => {

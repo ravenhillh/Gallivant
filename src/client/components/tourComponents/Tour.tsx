@@ -72,7 +72,7 @@ const Tour = (): JSX.Element => {
   };
 
   // onDragEnd handler that sorts waypoints array into new order
-  const onDragEnd = () => {
+  const onDragEndOrDel = () => {
     const newOrder = [...waypoints]; // spread state into new array to not mutate
     const dragged = newOrder.splice(dragStart, 1); // returns the dragged item
     newOrder.splice(dragOver, 0, ...dragged); // insert the dragged item into new position in array
@@ -263,12 +263,13 @@ const Tour = (): JSX.Element => {
               draggable={edit}
               onDragStart={() => setDragStart(i)}
               onDragEnter={() => setDragOver(i)}
-              onDragEnd={onDragEnd}
+              onDragEnd={onDragEndOrDel}
               onDragOver={(e) => e.preventDefault()}
             >
               <Suspense fallback={<>Loading...</>}>
                 <Waypoint
                   getTourWPs={getTourWPs}
+                  updateOrder={onDragEndOrDel}
                   id_tour={id}
                   waypoint={wp}
                   edit={edit}
