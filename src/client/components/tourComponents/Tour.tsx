@@ -204,17 +204,7 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          {/* <Button
-            startIcon={<AddIcon />}
-            variant='contained'
-            color='primary'
-            onClick={() => {
-              navigate(`/reviews/${id}`);
-            }}
-          >
-            Read Reviews
-          </Button> */}
-          <Button
+          {edit ? null : <Button
             startIcon={<AddIcon />}
             variant='contained'
             color='primary'
@@ -222,6 +212,7 @@ const Tour = (): JSX.Element => {
           >
             Add Review
           </Button>
+          }
           <Modal
             open={open}
             onClose={handleClose}
@@ -232,7 +223,7 @@ const Tour = (): JSX.Element => {
               <CreateReview tourId={tour?.id} handleClose={handleClose}/>
             </Suspense>
           </Modal>
-          <br />
+          {/* <br /> */}
           {edit && (
             <Button
               startIcon={<AddIcon />}
