@@ -42,9 +42,8 @@ function MapView(): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
-  // const [myLoc, setMyLoc] = useState()
   const navigate = useNavigate();
-  const user = useLoaderData();
+  // const user = useLoaderData();
 
 
   useEffect(() => {
