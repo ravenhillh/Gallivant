@@ -12,8 +12,8 @@ const Tour = lazy(() => import('./tourComponents/Tour'));
 const CurrentTour = lazy(() => import('./tourComponents/CurrentTour'));
 const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
-const Reviews = lazy(() => import('./Reviews'));
-const Categories = lazy(() => import('./Categories'));
+// const Reviews = lazy(() => import('./Reviews'));
+// const Categories = lazy(() => import('./Categories'));
 const Category = lazy(() => import('./Category'));
 const Chat = lazy(() => import('./Chat'));
 

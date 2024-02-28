@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import requireAuth from './../utils/requireAuth';
 import {
   Box,
   Button,
@@ -14,18 +15,24 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
-const Review = ({review, edit, getReviews }) => {
+const Review = ({review, getReviews }) => {
   // set username on review
   const [username, setUsername] = useState('');
   const [feedback, setFeedback] = useState(review.feedback);
   const [rating, setRating] = useState(review.rating);
   const [open, setOpen] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<number | null>();
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const getCurrentUser = async () => {
+    const user = await requireAuth();
+    setCurrentUserId(user.id);
   };
 
   // get user data to set username
@@ -57,7 +64,9 @@ const Review = ({review, edit, getReviews }) => {
   useEffect(() => {
     getUser();
     getReviews();
+    getCurrentUser();
   }, [open]);
+
 
   return (
     <Card>
@@ -70,7 +79,7 @@ const Review = ({review, edit, getReviews }) => {
       <p>{username}</p>
       <p>{review.feedback}</p>
       <p>{dayjs(review.createdAt).fromNow()}</p>
-      {edit && 
+      {currentUserId === review.id_user? 
         <div>
         <Button
           id='delete-review'
@@ -159,6 +168,7 @@ const Review = ({review, edit, getReviews }) => {
           </Box>
         </Modal>
         </div>
+        : null
       }
       </CardContent>
     </Card>

@@ -7,7 +7,7 @@ const Review = lazy(() => import('./Review'));
 
 
 
-const Reviews = ({ id, edit }) => {
+const Reviews = ({ id }) => {
   // const { id } = useParams();
   // need review id not tour id...
   const [reviews, setReviews] = useState([]);
@@ -61,7 +61,7 @@ const Reviews = ({ id, edit }) => {
         reviews.map((review, index) => (
           <li key={index}>
             <Suspense fallback={<>Loading...</>}>
-              <Review review={review} edit={edit} getReviews={getReviews}/>
+              <Review review={review} getReviews={getReviews}/>
             </Suspense>
           </li>
         ))
