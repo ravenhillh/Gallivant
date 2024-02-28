@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -74,6 +74,7 @@ const Chat = ({ socket }) => {
   const getMessagesByTour = (id) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
+        console.log(data);
         setMessages(data);
       })
       .catch((err) => console.log(err));
@@ -136,7 +137,8 @@ const Chat = ({ socket }) => {
             })}
           </List>
         </Grid>
-      <div ref={lastMessageRef} />
+        <div ref={lastMessageRef}  />
+      </div>
       <Grid container style={{ padding: '20px' }}>
         <Grid item xs={11}>
           <TextField

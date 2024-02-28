@@ -1,7 +1,9 @@
 import express from 'express';
 import { QueryTypes } from 'sequelize';
 import { Chat, Chats_Tours, db } from '../db/index';
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 interface Message {
   id: number
 }
@@ -16,7 +18,18 @@ chatRouter.get('/message/get', (req, res) => {
 
 chatRouter.get('/message/tour/:id', (req, res) => {
   const { id } = req.params;
-  // Chats_Tours.findAll({ where: { id_tour: id }})
+  
+  //Delete from chats-tours join
+  db.query('DELETE FROM Chats_Tours WHERE `createdAt` < (NOW() - INTERVAL 60 MINUTE)',
+  { type: QueryTypes.DELETE }
+  )
+  .catch((err: string) => console.log(err, 'Chats tour delete failed'));
+  //delete from chats table
+  db.query('DELETE FROM Chats WHERE `createdAt` < (NOW() - INTERVAL 60 MINUTE)',
+  { type: QueryTypes.DELETE }
+  )
+  .catch((err: string) => console.log(err, 'Chats delete failed'));
+  //get all chats by tour id
   db.query(
     `select distinct * from Chats
     join Chats_Tours
