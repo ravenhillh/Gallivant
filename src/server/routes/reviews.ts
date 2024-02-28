@@ -4,6 +4,10 @@ import { QueryTypes } from 'sequelize';
 
 const reviewRouter = express.Router();
 
+type AvgRating = {
+  'AVG(rating)': number;
+};
+
 // POST to reviews
 reviewRouter.post('/post', (req, res) => {
   const { feedback, rating, id_tour } = req.body;
@@ -44,8 +48,13 @@ reviewRouter.get('/rating/:id', (req, res) => {
 
   db.query(`select AVG(rating) from reviews WHERE id_tour = ${id}`,
   { type: QueryTypes.SELECT }
-  ).then((data:any) => console.log('average ', data))
-  .catch((err:string) => console.error('could not get average ', err));
+  ).then((avgRating: AvgRating[]) => {
+    res.send(avgRating[0]['AVG(rating)']).status(200);
+  })
+  .catch((err:string) => {
+    console.error('Could Not GET average rating: ', err);
+    res.sendStatus(500);
+  });
 });
 
 // Update review
