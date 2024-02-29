@@ -1,31 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
+import requireAuth from './../utils/requireAuth';
 import {
   Box,
   Button,
   CancelIcon,
   Card,
   CardContent,
+  CloseIcon,
+  IconButton,
   Modal,
   Rating,
   RemoveCircleIcon,
+  Snackbar,
   TextField } from '../utils/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
-const Review = ({review, edit, getReviews }) => {
+const Review = ({review, getReviews }) => {
   // set username on review
   const [username, setUsername] = useState('');
   const [feedback, setFeedback] = useState(review.feedback);
   const [rating, setRating] = useState(review.rating);
   const [open, setOpen] = useState(false);
+  const [openSB, setOpenSB] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<number | null>();
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleOpenSB = () => {
+    setOpenSB(true);
+  };
+
+  const handleCloseSB = () => {
+    setOpenSB(false);
+    getReviews();
+  };
+
+  const getCurrentUser = async () => {
+    const user = await requireAuth();
+    setCurrentUserId(user.id);
   };
 
   // get user data to set username
@@ -50,16 +70,31 @@ const Review = ({review, edit, getReviews }) => {
   // delete review
   const deleteReview = () => {
     axios.delete(`/reviews/${review.id}`)
-      .then(() => console.log('deleted'))
       .catch(err => console.error('Could not DELETE review ', err));
   };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSB}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
 
   useEffect(() => {
     getUser();
     getReviews();
+    getCurrentUser();
   }, [open]);
 
+
   return (
+    <div>
     <Card>
       <CardContent>
       <Rating
@@ -70,7 +105,7 @@ const Review = ({review, edit, getReviews }) => {
       <p>{username}</p>
       <p>{review.feedback}</p>
       <p>{dayjs(review.createdAt).fromNow()}</p>
-      {edit && 
+      {currentUserId === review.id_user? 
         <div>
         <Button
           id='delete-review'
@@ -80,7 +115,7 @@ const Review = ({review, edit, getReviews }) => {
           onClick={(e) => {
             e.preventDefault();
             deleteReview();
-            getReviews();
+            handleOpenSB();
           }}
         >
           <RemoveCircleIcon />
@@ -159,9 +194,19 @@ const Review = ({review, edit, getReviews }) => {
           </Box>
         </Modal>
         </div>
+        : null
       }
       </CardContent>
     </Card>
+      <Snackbar 
+        open={openSB}
+        autoHideDuration={5000}
+        onClose={handleCloseSB}
+        message="Review deleted"
+        action={action}
+      />
+    </div>
+
   );
 };
 

@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
   Grid,
+  Rating,
 } from '../../utils/material';
 
 const Voice = lazy(() => import('./Voice'));
@@ -35,6 +36,7 @@ const Tour = (): JSX.Element => {
   const [edit, setEdit] = useState<boolean>(false);
   const [tour, setTour] = useState<Tour>();
   const [creator, setCreator] = useState<string>('');
+  const [rating, setRating] = useState<number>(0);
 
   //state for Waypoints array, modal pop-up dialog
   const [waypoints, setWaypoints] = useState<object[]>([]);
@@ -59,6 +61,7 @@ const Tour = (): JSX.Element => {
   useEffect(() => {
     getTour(id);
     getTourWPs(id);
+    getTourRating(id);
   }, []);
 
   useEffect(() => {
@@ -165,6 +168,14 @@ const Tour = (): JSX.Element => {
       );
   };
 
+    const getTourRating = (id) => {
+    axios.get(`/reviews/rating/${id}`)
+      .then(({data}) => {
+        setRating(data);
+      })
+      .catch(err => console.error('Could not Get AVG rating ', err));
+  };
+
   return (
     <div>
       <Stack spacing={2}>
@@ -184,6 +195,13 @@ const Tour = (): JSX.Element => {
             Created by: {creator}
           </Typography>
         </Grid>
+        {
+          rating && <Rating
+          name="read-only"
+          value={rating}
+          precision={0.25}
+          readOnly
+        />}
 
         <Button
           startIcon={<AddIcon />}
@@ -204,17 +222,7 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          {/* <Button
-            startIcon={<AddIcon />}
-            variant='contained'
-            color='primary'
-            onClick={() => {
-              navigate(`/reviews/${id}`);
-            }}
-          >
-            Read Reviews
-          </Button> */}
-          <Button
+          {edit ? null : <Button
             startIcon={<AddIcon />}
             variant='contained'
             color='primary'
@@ -222,6 +230,7 @@ const Tour = (): JSX.Element => {
           >
             Add Review
           </Button>
+          }
           <Modal
             open={open}
             onClose={handleClose}
@@ -232,7 +241,7 @@ const Tour = (): JSX.Element => {
               <CreateReview tourId={tour?.id} handleClose={handleClose}/>
             </Suspense>
           </Modal>
-          <br />
+          {/* <br /> */}
           {edit && (
             <Button
               startIcon={<AddIcon />}
@@ -325,7 +334,7 @@ const Tour = (): JSX.Element => {
           <br />
         </CustomModal>
       </Suspense>
-      <Reviews id={id} edit={edit}/>
+      <Reviews id={id} />
     </div>
   );
 };

@@ -2,10 +2,12 @@
 import { mapboxgl } from '../utils/material';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
-import { useNavigate, useLoaderData } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
+  BubbleChartIcon,
   Button,
   Divider,
+  Grid,
   List,
   ListItem,
   ListItemText,
@@ -42,9 +44,10 @@ function MapView(): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
-  // const [myLoc, setMyLoc] = useState()
+  const [image, setImage] = useState([]);
   const navigate = useNavigate();
-  const user = useLoaderData();
+  
+  // const user = useLoaderData();
 
 
   useEffect(() => {
@@ -86,25 +89,33 @@ function MapView(): JSX.Element {
     showTours();
   }, [tours]);
 
-  function findAllWaypoints() {
-    //send axios request to db to retrieve coordinates
+  const findAllWaypoints = () => {
+    //send axios request to db to retrieve all waypoints
     axios
       .get('/maps/waypoints')
       .then(({ data }) => {
         setAllMarkers(data);
       })
       .catch((err) => console.log(err, 'get markers failed'));
-  }
-
-  function getTours(id: string | undefined) {
+  };
+  //get tours by waypoint id
+  const getTours = (id: string | undefined) => {
     axios(`maps/tours/${id}`)
       .then(({ data }) => {
+        console.log(data);
         setTours(data);
       })
       .catch((err) => console.log(err));
-  }
+  };
+  //get images for one tour/waypoint
+  const getTourImage = (waypointId) => {
+    axios(`/images/waypoint/${waypointId}`)
+    .then(({ data }) => {
+      setImage(data);
+    }).catch((err: string) => console.log(err, 'image get failed'));
+  };
 
-  function showMarkers() {
+  const showMarkers = () => {
     allMarkers.map((marker: Marker) => {
       //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
@@ -125,8 +136,12 @@ function MapView(): JSX.Element {
       marker1
         .getElement()
         .addEventListener('click', () => handleClick(marker.id));
+
+      marker1.getElement().addEventListener('mouseenter', () => marker1.togglePopup());
+      marker1.getElement().addEventListener('mouseleave', () => marker1.togglePopup());
     });
-  }
+  };
+ 
   const style = {
     p: 0,
     width: '100%',
@@ -137,9 +152,11 @@ function MapView(): JSX.Element {
     backgroundColor: 'background.paper',
   };
 
-  function showTours() {
+  const showTours = () => {
     return tours.length ? (
       <div>
+        <Grid container>
+        <Grid item xs={9}>
         <List sx={style} aria-label='tour details'>
           <ListItem>
             <ListItemAvatar>
@@ -148,6 +165,15 @@ function MapView(): JSX.Element {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={tours[0].tourName} />
+          </ListItem>
+          <Divider component='li' />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <BubbleChartIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].category} />
           </ListItem>
           <Divider component='li' />
           <ListItem>
@@ -168,23 +194,39 @@ function MapView(): JSX.Element {
             </Button>
           </ListItem>
         </List>
+        </Grid>
+        <Grid item xs={3}>
+          <List sx={style} aria-label='tour image'>
+            <ListItem>
+        {
+          image.length === 0 ? '' :
+          <img
+          src={`/api/images/${image[0].largeImg}`}
+          style={{ width: 'auto', height: '225px' }}
+        />
+       }
+            </ListItem>
+          </List>
+        </Grid>
+        </Grid>
       </div>
     ) : (
       ''
     );
-  }
+  };
 
-  function routeToTour(id: string | undefined) {
+  const routeToTour = (id: string | undefined) => {
     navigate(`/tour/${id}`);
-  }
+  };
 
-  function routeToChat(id: string, name: string) {
+  const routeToChat = (id: string, name: string) => {
     navigate(`/chat/${id}/${name}`);
-  }
+  };
 
-  function handleClick(x) {
-    getTours(x);
-  }
+  const handleClick = (id) => {
+    getTours(id);
+    getTourImage(id);
+  };
 
   return (
     <div>
