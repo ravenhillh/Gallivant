@@ -15,7 +15,7 @@ import {
   InsightsIcon,
   Avatar,
   ListItemAvatar,
-  Typography
+  Typography,
 } from '../utils/material';
 // import Chat from './Chat';
 
@@ -46,9 +46,8 @@ function MapView(): JSX.Element {
   const [tours, setTours] = useState([]);
   const [image, setImage] = useState([]);
   const navigate = useNavigate();
-  
-  // const user = useLoaderData();
 
+  // const user = useLoaderData();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -102,7 +101,6 @@ function MapView(): JSX.Element {
   const getTours = (id: string | undefined) => {
     axios(`maps/tours/${id}`)
       .then(({ data }) => {
-        console.log(data);
         setTours(data);
       })
       .catch((err) => console.log(err));
@@ -110,9 +108,10 @@ function MapView(): JSX.Element {
   //get images for one tour/waypoint
   const getTourImage = (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
-    .then(({ data }) => {
-      setImage(data);
-    }).catch((err: string) => console.log(err, 'image get failed'));
+      .then(({ data }) => {
+        setImage(data);
+      })
+      .catch((err: string) => console.log(err, 'image get failed'));
   };
 
   const showMarkers = () => {
@@ -137,15 +136,19 @@ function MapView(): JSX.Element {
         .getElement()
         .addEventListener('click', () => handleClick(marker.id));
 
-      marker1.getElement().addEventListener('mouseenter', () => marker1.togglePopup());
-      marker1.getElement().addEventListener('mouseleave', () => marker1.togglePopup());
+      marker1
+        .getElement()
+        .addEventListener('mouseenter', () => marker1.togglePopup());
+      marker1
+        .getElement()
+        .addEventListener('mouseleave', () => marker1.togglePopup());
     });
   };
- 
+
   const style = {
     p: 0,
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 400,
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
@@ -155,60 +158,49 @@ function MapView(): JSX.Element {
   const showTours = () => {
     return tours.length ? (
       <div>
-        <Grid container>
-        <Grid item xs={9}>
-        <List sx={style} aria-label='tour details'>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <InsightsIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].tourName} />
-          </ListItem>
-          <Divider component='li' />
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <BubbleChartIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].category} />
-          </ListItem>
-          <Divider component='li' />
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <DirectionsWalkIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].description} />
-          </ListItem>
-          <Divider component='li' />
-          <ListItem>
-            <Button variant='outlined' onClick={() => routeToTour(tours[0].id)}>
-              View Tour
-            </Button>
-            <Button variant='outlined' onClick={() => routeToChat(tours[0].id, tours[0].tourName)}>
-              Tour Chat
-            </Button>
-          </ListItem>
-        </List>
-        </Grid>
-        <Grid item xs={3}>
-          <List sx={style} aria-label='tour image'>
-            <ListItem>
-        {
-          image.length === 0 ? '' :
-          <img
-          src={`/api/images/${image[0].largeImg}`}
-          style={{ width: 'auto', height: '225px' }}
-        />
-       }
-            </ListItem>
-          </List>
-        </Grid>
-        </Grid>
+            <List sx={style} aria-label="tour details">
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <InsightsIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].tourName} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <BubbleChartIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].category} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <DirectionsWalkIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].description} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <Button
+                  variant="outlined"
+                  onClick={() => routeToTour(tours[0].id)}
+                >
+                  View Tour
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
+                >
+                  Tour Chat
+                </Button>
+              </ListItem>
+            </List>
       </div>
     ) : (
       ''
@@ -236,17 +228,28 @@ function MapView(): JSX.Element {
       <div>
         <div>{showTours()}</div>
         <div
-          style={{ height: '400px' }}
+          style={{ height: '300px' }}
           ref={mapContainer}
-          className='map-container'
+          className="map-container"
         ></div>
       </div>
-      <div>
-        {/* <Chat socket={socket}/> */}
-      </div>
-      {/* <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div> */}
+      <div>{/* <Chat socket={socket}/> */}</div>
+      <Grid container>
+      {image.length === 0 ? (
+            ''
+          ) : (
+            <Grid item xs={4}>
+              <List aria-label="tour image">
+                <ListItem>
+                  <img
+                    src={`/api/images/${image[0].largeImg}`}
+                    style={{ width: 'auto', height: '180px' }}
+                  />
+                </ListItem>
+              </List>
+            </Grid>
+          )}
+      </Grid>
     </div>
   );
 }
