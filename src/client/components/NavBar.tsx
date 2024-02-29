@@ -32,7 +32,7 @@ function NavBar() {
   };
 
   return (
-    <Container className='nav-bar'>
+    <Container maxWidth={false} disableGutters className='nav-bar'>
       <AppBar position='sticky'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
