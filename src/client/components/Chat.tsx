@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 import {
   Fab,
@@ -30,6 +33,7 @@ const Chat = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const { tour, name } = useParams();
   const  user: User  = useLoaderData();
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
     socket.connect();
@@ -51,6 +55,15 @@ const Chat = ({ socket }) => {
 
     socket.on('message_response', messageListener);
   }, [socket, messages]);
+
+  useEffect(() => {
+    getMessagesByTour(tour);
+  }, []);
+
+  useEffect(() => {
+    // scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const sendMessage = () => {
     if (message !== '') {
@@ -76,6 +89,12 @@ const Chat = ({ socket }) => {
       .catch((err) => console.log(err));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   // const getAllMessages = () => {
   //   axios('/message/get')
   //     .then(({ data }) => {
@@ -84,9 +103,7 @@ const Chat = ({ socket }) => {
   //     .catch((err) => console.log(err));
   // };
 
-  useEffect(() => {
-    getMessagesByTour(tour);
-  }, []);
+ 
 
   return (
     <div>
@@ -101,7 +118,6 @@ const Chat = ({ socket }) => {
         <Grid item xs={9}>
           <List>
             {messages.map((message: Message, i) => {
-              // return <div key={i}>{message.username}: {message.message}</div>;
               return (
                 <ListItem key={i}>
                   <Grid container>
@@ -117,12 +133,19 @@ const Chat = ({ socket }) => {
                         secondary={message.username}
                       ></ListItemText>
                     </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={message.username === user.username ? 'right' : 'left'}
+                        secondary={dayjs(message.createdAt).fromNow()}
+                      ></ListItemText>
+                    </Grid>
                   </Grid>
                 </ListItem>
               );
             })}
           </List>
         </Grid>
+        <div ref={lastMessageRef}  />
       </div>
       <Grid container style={{ padding: '20px' }}>
         <Grid item xs={11}>
@@ -132,6 +155,7 @@ const Chat = ({ socket }) => {
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
         </Grid>
         <Grid item xs={1} align="right">

@@ -1,22 +1,36 @@
 import express from 'express';
 import { QueryTypes } from 'sequelize';
 import { Chat, Chats_Tours, db } from '../db/index';
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 interface Message {
   id: number
 }
 
 const chatRouter = express.Router();
 
+// GET ALL CHATS
 chatRouter.get('/message/get', (req, res) => {
   Chat.findAll()
   .then((messages: object) => res.status(200).send(messages))
   .catch((err: string) => console.log(err));
 });
 
+// GET CHATS BY TOUR ID
 chatRouter.get('/message/tour/:id', (req, res) => {
   const { id } = req.params;
-  // Chats_Tours.findAll({ where: { id_tour: id }})
+  //Delete from chats-tours join
+  db.query('DELETE FROM Chats_Tours WHERE `createdAt` < (NOW() - INTERVAL 60 MINUTE)',
+  { type: QueryTypes.DELETE }
+  )
+  .catch((err: string) => console.log(err, 'Chats tour delete failed'));
+  //delete from chats table
+  db.query('DELETE FROM Chats WHERE `createdAt` < (NOW() - INTERVAL 60 MINUTE)',
+  { type: QueryTypes.DELETE }
+  )
+  .catch((err: string) => console.log(err, 'Chats delete failed'));
+  //get all chats by tour id
   db.query(
     `select distinct * from Chats
     join Chats_Tours
@@ -30,7 +44,7 @@ chatRouter.get('/message/tour/:id', (req, res) => {
   })
   .catch((err: string) => console.log(err));
 });
-
+//POST CHATS TO DB
 chatRouter.post('/message/post', (req, res) => {
   const { chat } = req.body;
   //save chat to chat table
