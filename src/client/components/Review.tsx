@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import requireAuth from './../utils/requireAuth';
 import {
@@ -7,9 +7,12 @@ import {
   CancelIcon,
   Card,
   CardContent,
+  CloseIcon,
+  IconButton,
   Modal,
   Rating,
   RemoveCircleIcon,
+  Snackbar,
   TextField } from '../utils/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -21,6 +24,7 @@ const Review = ({review, getReviews }) => {
   const [feedback, setFeedback] = useState(review.feedback);
   const [rating, setRating] = useState(review.rating);
   const [open, setOpen] = useState(false);
+  const [openSB, setOpenSB] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<number | null>();
 
   const handleOpen = () => {
@@ -28,6 +32,15 @@ const Review = ({review, getReviews }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleOpenSB = () => {
+    setOpenSB(true);
+  };
+
+  const handleCloseSB = () => {
+    setOpenSB(false);
+    getReviews();
   };
 
   const getCurrentUser = async () => {
@@ -57,9 +70,21 @@ const Review = ({review, getReviews }) => {
   // delete review
   const deleteReview = () => {
     axios.delete(`/reviews/${review.id}`)
-      .then(() => console.log('deleted'))
       .catch(err => console.error('Could not DELETE review ', err));
   };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSB}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
 
   useEffect(() => {
     getUser();
@@ -69,6 +94,7 @@ const Review = ({review, getReviews }) => {
 
 
   return (
+    <div>
     <Card>
       <CardContent>
       <Rating
@@ -89,7 +115,7 @@ const Review = ({review, getReviews }) => {
           onClick={(e) => {
             e.preventDefault();
             deleteReview();
-            getReviews();
+            handleOpenSB();
           }}
         >
           <RemoveCircleIcon />
@@ -172,6 +198,15 @@ const Review = ({review, getReviews }) => {
       }
       </CardContent>
     </Card>
+      <Snackbar 
+        open={openSB}
+        autoHideDuration={5000}
+        onClose={handleCloseSB}
+        message="Review deleted"
+        action={action}
+      />
+    </div>
+
   );
 };
 

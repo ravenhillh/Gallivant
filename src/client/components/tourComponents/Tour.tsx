@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
   Grid,
+  Rating,
 } from '../../utils/material';
 
 const Voice = lazy(() => import('./Voice'));
@@ -35,6 +36,7 @@ const Tour = (): JSX.Element => {
   const [edit, setEdit] = useState<boolean>(false);
   const [tour, setTour] = useState<Tour>();
   const [creator, setCreator] = useState<string>('');
+  const [rating, setRating] = useState<number>(0);
 
   //state for Waypoints array, modal pop-up dialog
   const [waypoints, setWaypoints] = useState<object[]>([]);
@@ -59,6 +61,7 @@ const Tour = (): JSX.Element => {
   useEffect(() => {
     getTour(id);
     getTourWPs(id);
+    getTourRating(id);
   }, []);
 
   useEffect(() => {
@@ -165,6 +168,14 @@ const Tour = (): JSX.Element => {
       );
   };
 
+    const getTourRating = (id) => {
+    axios.get(`/reviews/rating/${id}`)
+      .then(({data}) => {
+        setRating(data);
+      })
+      .catch(err => console.error('Could not Get AVG rating ', err));
+  };
+
   return (
     <div>
       <Stack spacing={2}>
@@ -184,6 +195,13 @@ const Tour = (): JSX.Element => {
             Created by: {creator}
           </Typography>
         </Grid>
+        {
+          rating && <Rating
+          name="read-only"
+          value={rating}
+          precision={0.25}
+          readOnly
+        />}
 
         <Button
           startIcon={<AddIcon />}
