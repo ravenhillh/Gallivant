@@ -26,10 +26,21 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-typescript', '@babel/preset-env'],
+            presets: [
+              '@babel/preset-react',
+              '@babel/preset-typescript',
+              '@babel/preset-env',
+            ],
           },
         },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(svg|png|gif|jpg|ico)$/,
+        include: path.resolve(__dirname, './favicon.ico'),
+        use: {
+          loader: 'file-loader',
+        },
       },
     ],
   },
@@ -44,8 +55,9 @@ module.exports = {
   plugins: [
     new WebpackBar(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/client/index.ejs')
+      favicon: path.resolve(__dirname, './favicon.ico'),
+      template: path.resolve(__dirname, './src/client/index.ejs'),
     }),
     // new BundleAnalyzerPlugin()
-  ]
+  ],
 };
