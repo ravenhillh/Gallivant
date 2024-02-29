@@ -110,7 +110,12 @@
   },
   "files": [
     "types/custom.d.ts"
-  ]
+  ],
+  // "exclude": [
+  //   "./tests/",
+  //   "./node_modules/",
+  //   "./dist/"
+  // ],
   // "include": [
   //   "src/server/*", "types/*"
   // ]
