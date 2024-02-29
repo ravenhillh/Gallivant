@@ -56,6 +56,15 @@ const Chat = ({ socket }) => {
     socket.on('message_response', messageListener);
   }, [socket, messages]);
 
+  useEffect(() => {
+    getMessagesByTour(tour);
+  }, []);
+
+  useEffect(() => {
+    // scroll to bottom every time messages change
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   const sendMessage = () => {
     if (message !== '') {
       const username = user.username;
@@ -80,6 +89,12 @@ const Chat = ({ socket }) => {
       .catch((err) => console.log(err));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   // const getAllMessages = () => {
   //   axios('/message/get')
   //     .then(({ data }) => {
@@ -88,13 +103,7 @@ const Chat = ({ socket }) => {
   //     .catch((err) => console.log(err));
   // };
 
-  useEffect(() => {
-    getMessagesByTour(tour);
-  }, []);
-  useEffect(() => {
-    // scroll to bottom every time messages change
-    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+ 
 
   return (
     <div>
@@ -109,7 +118,6 @@ const Chat = ({ socket }) => {
         <Grid item xs={9}>
           <List>
             {messages.map((message: Message, i) => {
-              // return <div key={i}>{message.username}: {message.message}</div>;
               return (
                 <ListItem key={i}>
                   <Grid container>
@@ -147,6 +155,7 @@ const Chat = ({ socket }) => {
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
         </Grid>
         <Grid item xs={1} align="right">

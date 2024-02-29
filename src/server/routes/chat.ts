@@ -10,15 +10,16 @@ interface Message {
 
 const chatRouter = express.Router();
 
+// GET ALL CHATS
 chatRouter.get('/message/get', (req, res) => {
   Chat.findAll()
   .then((messages: object) => res.status(200).send(messages))
   .catch((err: string) => console.log(err));
 });
 
+// GET CHATS BY TOUR ID
 chatRouter.get('/message/tour/:id', (req, res) => {
   const { id } = req.params;
-  
   //Delete from chats-tours join
   db.query('DELETE FROM Chats_Tours WHERE `createdAt` < (NOW() - INTERVAL 60 MINUTE)',
   { type: QueryTypes.DELETE }
@@ -43,7 +44,7 @@ chatRouter.get('/message/tour/:id', (req, res) => {
   })
   .catch((err: string) => console.log(err));
 });
-
+//POST CHATS TO DB
 chatRouter.post('/message/post', (req, res) => {
   const { chat } = req.body;
   //save chat to chat table
