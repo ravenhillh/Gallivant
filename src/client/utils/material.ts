@@ -13,6 +13,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 // import CardMedia from '@mui/material/CardMedia';
+import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
@@ -39,6 +40,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MapIcon from '@mui/icons-material/Map';
 import MenuIcon from '@mui/icons-material/Menu';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
@@ -73,6 +76,7 @@ export {
   Card,
   CardActions,
   CardContent,
+  CenterFocusWeakIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
@@ -99,6 +103,8 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  LogoutIcon,
+  MapIcon,
   MenuIcon,
   MenuItem,
   MicIcon,

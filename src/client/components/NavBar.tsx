@@ -8,21 +8,25 @@ import {
 import axios from 'axios';
 
 import {
-  Container,
   AppBar,
-  Toolbar,
-  Drawer,
-  MenuIcon,
-  IconButton,
-  Typography,
   Box,
+  Button,
+  CenterFocusWeakIcon,
+  Container,
+  Divider,
+  Drawer,
+  ExploreIcon,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
+  LogoutIcon,
+  MapIcon,
+  MenuIcon,
   RouteOutlinedIcon,
   // RouteSharpIcon,
-  Divider,
-  Button,
+  Toolbar,
+  Typography,
 } from '../utils/material';
 
 export interface NavBarProps {
@@ -96,6 +100,7 @@ function NavBar() {
                     setDrawer(false);
                   }}
                 >
+                  <MapIcon />
                   Map
                 </ListItemButton>
               </ListItem>
@@ -117,6 +122,7 @@ function NavBar() {
                     setDrawer(false);
                   }}
                 >
+                  <ExploreIcon />
                   Tours
                 </ListItemButton>
               </ListItem>
@@ -129,6 +135,7 @@ function NavBar() {
                       setDrawer(false);
                     }}
                   >
+                    <CenterFocusWeakIcon />
                     Current Tour
                   </ListItemButton>
                 </ListItem>
@@ -139,7 +146,7 @@ function NavBar() {
               <Divider />
               <ListItem className='logout-link'>
                 <form action='/logout' method='post'>
-                  <Button variant='outlined' type='submit'>
+                  <Button startIcon={<LogoutIcon />} variant='outlined' type='submit'>
                     Sign out
                   </Button>
                 </form>
