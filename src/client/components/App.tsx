@@ -18,13 +18,19 @@ const Category = lazy(() => import('./Category'));
 const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
-import requireAuth from '../utils/requireAuth';
+import { requireAuth, nonRedirectUser } from '../utils/requireAuth';
 import socket from '../utils/socket';
 
-const currentTourLoader = async () => {
-  let user = await requireAuth();
+//user returned from requireAuth is just user property on session object,
+//which is only updated when user logs in. for up to date user info, use this function
+const getAuthorizedUser = async () => {
+  const user = await requireAuth();
   const userData = await axios.get(`/user/${user.id}`);
-  user = userData.data;
+  return userData.data;
+};
+
+const currentTourLoader = async () => {
+  const user = await getAuthorizedUser();
 
   const data = await Promise.all([
     axios.get(`/db/tourWaypoints/${user.id_currentTour}`),
@@ -97,7 +103,7 @@ const App = createBrowserRouter([
             <Tours />
           </Suspense>
         ),
-        // loader: async () => await requireAuth(),
+        loader: async () => await requireAuth(),
       },
       {
         path: '/tour/:id',
@@ -106,7 +112,7 @@ const App = createBrowserRouter([
             <Tour />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
+        loader: async () => await getAuthorizedUser(),
       },
       {
         path: '/categories/:category',
