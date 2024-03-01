@@ -61,7 +61,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/client/index.ejs'),
     }),
-    new FaviconsWebpackPlugin('./public/placeholderLogo.svg'),
+    new FaviconsWebpackPlugin({
+      logo: './public/placeholderLogo.svg',
+      mode: 'webapp',
+    }),
     // new BundleAnalyzerPlugin()
   ],
 };
