@@ -1,14 +1,15 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { lazy, Suspense, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+  Button,
   ChevronLeftIcon,
   ChevronRightIcon,
-  Button,
   DirectionsWalkIcon,
   Fab,
   Grid,
+  TransitEnterexitIcon,
   Typography,
 } from '../../utils/material';
 
@@ -24,6 +25,9 @@ const CurrentTour = (): JSX.Element => {
 
   const [instructions, setInstructions] = useState<JSX.Element | null>(null);
   const [instructionModal, setInstructionModal] = useState(false);
+  const [leaveModal, setLeaveModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const updatePosition = (position) => {
     axios
@@ -35,6 +39,20 @@ const CurrentTour = (): JSX.Element => {
 
   const passInstructions = (instructions: JSX.Element | null) => {
     setInstructions(instructions);
+  };
+
+  const onLeave = () => {
+    axios
+      .put(`/user/leaveTour/${user.id}/`)
+      .then((res) => {
+        if (res.status === 200) {
+          navigate('/tours');
+          setLeaveModal(false);
+        }
+      })
+      .catch((err) =>
+        console.error('Could not PUT update on user to edit position: ', err)
+      );
   };
 
   return (
@@ -101,12 +119,39 @@ const CurrentTour = (): JSX.Element => {
           Directions
         </Button>
       </Grid>
+      <Button
+        variant='contained'
+        startIcon={<TransitEnterexitIcon />}
+        color='inherit'
+        onClick={() => setLeaveModal(true)}
+      >
+        Leave Tour
+      </Button>
 
       <CustomModal
         openModal={instructionModal}
         closeModal={() => setInstructionModal(false)}
       >
         {instructions}
+      </CustomModal>
+      <CustomModal
+        openModal={leaveModal}
+        closeModal={() => setLeaveModal(false)}
+      >
+        Are you sure you want to leave this tour?
+        <br />
+        Your progress will be lost.
+        <br />
+        <br />
+        <Button
+          variant='contained'
+          startIcon={<TransitEnterexitIcon />}
+          color='warning'
+          size='small'
+          onClick={onLeave}
+        >
+          Leave Tour
+        </Button>
       </CustomModal>
     </>
   );

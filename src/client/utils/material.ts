@@ -56,6 +56,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
+import TransitEnterexitIcon from '@mui/icons-material/TransitEnterexit';
 import Typography from '@mui/material/Typography';
 
 export {
@@ -115,5 +116,6 @@ export {
   Stack,
   TextField,
   Toolbar,
+  TransitEnterexitIcon,
   Typography,
 };

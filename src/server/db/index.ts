@@ -40,7 +40,7 @@ const User = db.define(
       references: {
         model: 'Tours',
         key: 'id',
-        allowNull: false,
+        allowNull: true,
       },
     },
   },
