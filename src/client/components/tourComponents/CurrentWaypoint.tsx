@@ -30,7 +30,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   const { waypoint, edit } = props;
 
   return (
-    <Card>
+    <Card sx={{maxWidth: '70%'}}>
       <CardContent>
         <Typography variant='h4' fontWeight='bold' gutterBottom>
           {<RoomOutlinedIcon />} {waypoint.waypointName}
