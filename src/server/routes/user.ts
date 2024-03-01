@@ -19,6 +19,7 @@ userRouter.get('/:id', (req, res) => {
     });
 });
 
+// used in Tour component to set id_currentTour to whatever tour they are starting
 userRouter.put('/startTour/:userId/:tourId', (req, res) => {
   const { userId, tourId } = req.params;
   User.update(
@@ -32,6 +33,7 @@ userRouter.put('/startTour/:userId/:tourId', (req, res) => {
     });
 });
 
+// used in CurrentTour component to update user's position as they progress through tour
 userRouter.put('/putPosition/:userId/:tourId/:position', (req, res) => {
   const { userId, tourId, position } = req.params;
   User.update(
@@ -45,6 +47,7 @@ userRouter.put('/putPosition/:userId/:tourId/:position', (req, res) => {
     });
 });
 
+// also used in CurrentTour to allow user to reset their id_currentTour and currentPosition to null
 userRouter.put('/leaveTour/:userId/', (req, res) => {
   const { userId } = req.params;
   User.update(
