@@ -48,6 +48,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Rating from '@mui/material/Rating';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined';
 import RouteSharpIcon from '@mui/icons-material/RouteSharp';
 import Select from '@mui/material/Select';
 import SendIcon from '@mui/icons-material/Send';
@@ -106,6 +107,7 @@ export {
   Rating,
   RemoveCircleIcon,
   RoomOutlinedIcon,
+  RouteOutlinedIcon,
   RouteSharpIcon,
   Select,
   SendIcon,

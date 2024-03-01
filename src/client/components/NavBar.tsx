@@ -13,7 +13,8 @@ import {
   List,
   ListItem,
   ListItemButton,
-  RouteSharpIcon,
+  RouteOutlinedIcon,
+  // RouteSharpIcon,
   Divider,
   Button,
 } from '../utils/material';
@@ -35,8 +36,8 @@ function NavBar() {
     <Container maxWidth={false} disableGutters className='nav-bar'>
       <AppBar position='sticky'>
         <Toolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            {<RouteSharpIcon />} gallivant
+          <Typography onClick={() => navigate('/')} variant='h6' component='div' sx={{ cursor: 'pointer', flexGrow: 1 }}>
+            {<RouteOutlinedIcon />} gallivant
           </Typography>
           <IconButton
             size='large'
