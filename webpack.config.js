@@ -4,6 +4,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackBar = require('webpackbar');
 require('dotenv').config();
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -36,10 +37,13 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(svg|png|gif|jpg|ico)$/,
+        test: /\.(svg|png|gif|jpg|ico)$/i,
         include: path.resolve(__dirname, './favicon.ico'),
         use: {
           loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
         },
       },
     ],
@@ -55,9 +59,9 @@ module.exports = {
   plugins: [
     new WebpackBar(),
     new HtmlWebpackPlugin({
-      favicon: path.resolve(__dirname, './favicon.ico'),
       template: path.resolve(__dirname, './src/client/index.ejs'),
     }),
+    new FaviconsWebpackPlugin('./public/placeholderLogo.svg'),
     // new BundleAnalyzerPlugin()
   ],
 };
