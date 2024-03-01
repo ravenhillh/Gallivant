@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   Button,
   AddIcon,
+  CancelIcon,
   Modal,
   Stack,
   Typography,
@@ -204,12 +205,13 @@ const Tour = (): JSX.Element => {
         />}
 
         <Button
-          startIcon={<AddIcon />}
+          disabled={waypoints.length === 0}
+          startIcon={waypoints.length ? <AddIcon /> : <CancelIcon />}
           variant='contained'
           color='primary'
           onClick={startTour}
         >
-          Start Tour
+          {waypoints.length ? 'Start Tour' : 'Tour has no waypoints'}
         </Button>
 
         <Suspense fallback={<>Loading...</>}>
