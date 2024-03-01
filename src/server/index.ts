@@ -129,13 +129,15 @@ io.on('connection', (socket: Socket) => {
 
 // receive user messages and emit them back to all users
 io.on('connection', (socket: Socket) => {
+  //receive messages and send to other users
   socket.on('send_message', (data) => {
-    // io.emit('message_response', data);
     const { tour } = data;
     socket.join(tour);
     io.to(tour).emit('message_response', data);
 });
+  socket.on('chat_users', () => {
 
+  });
 //   socket.on('room_chat', (data) => {
 //     const { tour } = data;
 //     socket.join(tour);

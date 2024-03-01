@@ -31,6 +31,7 @@ type User = {
 const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [roomUsers, setRoomUsers] = useState([]);
   const { tour, name } = useParams();
   const  user: User  = useLoaderData();
   const lastMessageRef = useRef(null);
@@ -55,6 +56,16 @@ const Chat = ({ socket }) => {
 
     socket.on('message_response', messageListener);
   }, [socket, messages]);
+
+  useEffect(() => {
+    // receives usernames to set state
+    const username = user.username;
+    const chatListener = (data) => {
+      setRoomUsers([...roomUsers, data]);
+    };
+    socket.emit('send_users', {username, name});
+    socket.on('chat_users', chatListener);
+  }, [socket]);
 
   useEffect(() => {
     getMessagesByTour(tour);
@@ -102,8 +113,6 @@ const Chat = ({ socket }) => {
   //     })
   //     .catch((err) => console.log(err));
   // };
-
- 
 
   return (
     <div>
