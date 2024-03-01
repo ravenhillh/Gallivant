@@ -12,7 +12,10 @@ const requireAuth = async () => {
 
 const nonRedirectUser = async () => {
   const isLoggedIn = await axios('/auth/client');
-  return isLoggedIn.data.user;
-}
+  if (isLoggedIn.data.user) {
+    return isLoggedIn.data.user;
+  }
+  return null;
+};
 
 export { requireAuth, nonRedirectUser };

@@ -21,6 +21,16 @@ const Chat = lazy(() => import('./Chat'));
 import { requireAuth, nonRedirectUser } from '../utils/requireAuth';
 import socket from '../utils/socket';
 
+//NavBar user info, nonRedirectUser so that non-privileged components will still load without redirecto to login
+const getUser = async () => {
+  const user = await nonRedirectUser();
+  if (user) {
+    const userData = await axios.get(`/user/${user.id}`);
+    return userData.data;
+  }
+  return null;
+};
+
 //user returned from requireAuth is just user property on session object,
 //which is only updated when user logs in. for up to date user info, use this function
 const getAuthorizedUser = async () => {
@@ -59,6 +69,7 @@ const App = createBrowserRouter([
         <NavBar />
       </Suspense>
     ),
+    loader: () => getUser(),
     children: [
       {
         path: '/',

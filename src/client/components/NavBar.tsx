@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, Outlet, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  useLocation,
+  useLoaderData,
+  Outlet,
+  useNavigate,
+} from 'react-router-dom';
+import axios from 'axios';
 
 import {
   Container,
@@ -24,11 +30,22 @@ export interface NavBarProps {
 }
 
 function NavBar() {
+  const loadUser = useLoaderData();
+  const [user, setUser] = useState(loadUser);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [drawer, setDrawer] = useState<boolean>(false);
 
+  const updateUserState = async () => {
+    if (user) {
+      const userData = await axios.get(`/user/${user.id}`);
+      setUser(userData.data);
+    }
+    return null;
+  };
+
   const toggleDrawer = () => {
+    updateUserState();
     setDrawer((prevState) => !prevState);
   };
 
@@ -36,7 +53,12 @@ function NavBar() {
     <Container maxWidth={false} disableGutters className='nav-bar'>
       <AppBar position='sticky'>
         <Toolbar>
-          <Typography onClick={() => navigate('/')} variant='h6' component='div' sx={{ cursor: 'pointer', flexGrow: 1 }}>
+          <Typography
+            onClick={() => navigate('/')}
+            variant='h6'
+            component='div'
+            sx={{ cursor: 'pointer', flexGrow: 1 }}
+          >
             {<RouteOutlinedIcon />} gallivant
           </Typography>
           <IconButton
@@ -68,24 +90,13 @@ function NavBar() {
 
               <ListItem className='map-link'>
                 <ListItemButton
-                  selected={pathname === '/currentTour'}
-                  onClick={() => {
-                    navigate('/currentTour');
-                    setDrawer(false);
-                  }}
-                >
-                  Current Tour
-                </ListItemButton>
-              </ListItem>
-              <ListItem className='map-link'>
-                <ListItemButton
                   selected={pathname === '/mapview'}
                   onClick={() => {
                     navigate('/mapview');
                     setDrawer(false);
                   }}
                 >
-                  MapView
+                  Map
                 </ListItemButton>
               </ListItem>
               {/* <ListItem className='camera-link'>
@@ -109,6 +120,21 @@ function NavBar() {
                   Tours
                 </ListItemButton>
               </ListItem>
+              {user && user?.id_currentTour ? (
+                <ListItem className='current-tour-link'>
+                  <ListItemButton
+                    selected={pathname === '/currentTour'}
+                    onClick={() => {
+                      navigate('/currentTour');
+                      setDrawer(false);
+                    }}
+                  >
+                    Current Tour
+                  </ListItemButton>
+                </ListItem>
+              ) : (
+                <></>
+              )}
 
               <Divider />
               <ListItem className='logout-link'>
