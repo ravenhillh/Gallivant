@@ -46,7 +46,7 @@ reviewRouter.get('/tour/:id', (req, res) => {
 reviewRouter.get('/rating/:id', (req, res) => {
   const { id } = req.params;
 
-  db.query(`select AVG(rating) from reviews WHERE id_tour = ${id}`,
+  db.query(`select AVG(rating) from Reviews WHERE id_tour = ${id}`,
   { type: QueryTypes.SELECT }
   ).then((avgRating: AvgRating[]) => {
     res.send(avgRating[0]['AVG(rating)']).status(200);
