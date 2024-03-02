@@ -1,16 +1,21 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
+import { useParams, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
   Button,
   AddIcon,
   CancelIcon,
+  EditIcon,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Modal,
   Stack,
   Typography,
   Grid,
   Rating,
+  Select,
 } from '../../utils/material';
 
 const Voice = lazy(() => import('./Voice'));
@@ -24,7 +29,14 @@ type Tour = {
   id: number;
   tourName: string;
   description: string;
+  category: string;
   id_createdByUser: number;
+};
+
+type User = {
+  username: string;
+  id: number;
+  id_currentTour: number;
 };
 
 // Read review button, launches review page or modal
@@ -33,9 +45,17 @@ const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
   const { id } = useParams();
   // loader returning user id from session verification
-  const userId = useLoaderData().id;
+  const user = useLoaderData() as User;
+  const userId = user.id;
   const [edit, setEdit] = useState<boolean>(false);
+
   const [tour, setTour] = useState<Tour>();
+  const [tourName, setTourName] = useState('');
+  const [tourDesc, setTourDesc] = useState('');
+  const [category, setTourCat] = useState('');
+  const [updateTourModal, setUpdateTourModal] = useState(false);
+  const [errorUpdateModal, setErrorUpdateModal] = useState(false);
+
   const [creator, setCreator] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
 
@@ -57,6 +77,16 @@ const Tour = (): JSX.Element => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+
+  const categories = [
+    'arts & culture',
+    'entertainment',
+    'food & drink',
+    'history',
+    'nightlife',
+    'nature & outdoors',
+    'miscellaneous',
+  ];
 
   //initial useEffect, not sure how to use params hook from loader atm
   useEffect(() => {
@@ -98,10 +128,29 @@ const Tour = (): JSX.Element => {
     axios(`/db/tour/${id}`)
       .then(({ data }) => {
         setTour(data[0]);
+        setTourName(data[0].tourName);
+        setTourDesc(data[0].description);
+        setTourCat(data[0].category);
         const userId = data[0].id_createdByUser;
         getCreator(userId);
       })
       .catch((err: string) => console.error('Could not GET tour by id: ', err));
+  };
+
+  const updateTour = () => {
+    if (tourName && tourDesc && category) {
+      axios
+        .put(`/db/tourUpdate/${id}`, { tour: { tourName, tourDesc, category } })
+        .then((res) => {
+          if (res.status === 200) {
+            getTour(id);
+            setUpdateTourModal(false);
+          }
+        })
+        .catch((err: string) => console.error('Could not POST tour: ', err));
+    } else {
+      setErrorUpdateModal(true);
+    }
   };
 
   // gets username of tour creator
@@ -169,12 +218,13 @@ const Tour = (): JSX.Element => {
       );
   };
 
-    const getTourRating = (id) => {
-    axios.get(`/reviews/rating/${id}`)
-      .then(({data}) => {
+  const getTourRating = (id) => {
+    axios
+      .get(`/reviews/rating/${id}`)
+      .then(({ data }) => {
         setRating(data);
       })
-      .catch(err => console.error('Could not Get AVG rating ', err));
+      .catch((err) => console.error('Could not Get AVG rating ', err));
   };
 
   return (
@@ -192,17 +242,42 @@ const Tour = (): JSX.Element => {
           <Typography variant='body1' gutterBottom>
             {tour?.description}
           </Typography>
-          <Typography variant='caption' gutterBottom>
-            Created by: {creator}
-          </Typography>
+          {user.username === creator ? (
+            <Button
+              startIcon={<EditIcon />}
+              onClick={() => setUpdateTourModal(true)}
+              variant='contained'
+            >
+              Edit Tour
+            </Button>
+          ) : (
+            <Typography variant='caption' gutterBottom>
+              Created by: {creator}
+            </Typography>
+          )}
         </Grid>
-        {
-          rating && <Rating
-          name="read-only"
-          value={rating}
-          precision={0.25}
-          readOnly
-        />}
+        <Grid
+          container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Grid item>
+            {rating && (
+              <Rating
+                name='read-only'
+                value={rating}
+                precision={0.25}
+                readOnly
+              />
+            )}
+          </Grid>
+          <Grid item>
+            <Typography variant='h5' fontWeight='bold' gutterBottom>
+              <Link to={`/categories/${tour?.category}`}>{tour?.category}</Link>
+            </Typography>
+          </Grid>
+        </Grid>
 
         <Button
           disabled={waypoints.length === 0}
@@ -224,15 +299,16 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          {edit ? null : <Button
-            startIcon={<AddIcon />}
-            variant='contained'
-            color='primary'
-            onClick={handleOpen}
-          >
-            Add Review
-          </Button>
-          }
+          {edit ? null : (
+            <Button
+              startIcon={<AddIcon />}
+              variant='contained'
+              color='primary'
+              onClick={handleOpen}
+            >
+              Add Review
+            </Button>
+          )}
           <Modal
             open={open}
             onClose={handleClose}
@@ -240,7 +316,7 @@ const Tour = (): JSX.Element => {
             aria-describedby='modal-modal-description'
           >
             <Suspense fallback={<>Loading...</>}>
-              <CreateReview tourId={tour?.id} handleClose={handleClose}/>
+              <CreateReview tourId={tour?.id} handleClose={handleClose} />
             </Suspense>
           </Modal>
           {/* <br /> */}
@@ -290,6 +366,71 @@ const Tour = (): JSX.Element => {
           ))}
         </Stack>
       </Stack>
+
+      <Suspense fallback={<>Loading...</>}>
+        <CustomModal
+          openModal={updateTourModal}
+          closeModal={() => setUpdateTourModal(false)}
+        >
+          <div>
+            <Voice
+              type='name'
+              label='Update your tour name'
+              helperText='Tour Name'
+              textInput={tourName}
+              setTextInput={setTourName}
+            />
+          </div>
+          <br />
+          <Voice
+            type='description'
+            label='Update your tour description'
+            helperText='Tour Description'
+            textInput={tourDesc}
+            setTextInput={setTourDesc}
+          />
+          <br />
+          <br />
+          <FormControl fullWidth>
+            <InputLabel id='demo-simple-select-label'>Category</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={category}
+              label='Category'
+              onChange={(e) => setTourCat(e.target.value)}
+            >
+              {categories.map((category, i) => (
+                <MenuItem key={i} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <br />
+          <br />
+          <Button
+            variant='contained'
+            size='small'
+            color='primary'
+            startIcon={<AddIcon />}
+            onClick={updateTour}
+          >
+            Update Tour
+          </Button>
+        </CustomModal>
+      </Suspense>
+
+      <Suspense fallback={<>Loading...</>}>
+        <CustomModal
+          openModal={errorUpdateModal}
+          closeModal={() => setErrorUpdateModal(false)}
+        >
+          <Typography variant='body1'>
+            Please give tour a name, description, and select a category.
+          </Typography>
+        </CustomModal>
+      </Suspense>
 
       <Suspense fallback={<>Loading...</>}>
         <CustomModal openModal={modal} closeModal={() => setModal(false)}>
