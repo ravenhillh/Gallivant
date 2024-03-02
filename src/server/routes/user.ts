@@ -19,9 +19,13 @@ userRouter.get('/:id', (req, res) => {
     });
 });
 
+// used in Tour component to set id_currentTour to whatever tour they are starting
 userRouter.put('/startTour/:userId/:tourId', (req, res) => {
   const { userId, tourId } = req.params;
-  User.update({ id_currentTour: tourId, currentPosition: 0 }, { where: { id: userId } })
+  User.update(
+    { id_currentTour: tourId, currentPosition: 0 },
+    { where: { id: userId } }
+  )
     .then(() => res.sendStatus(200))
     .catch((err: string) => {
       console.error('Failed to Update id_currentTour of User: ', err);
@@ -29,12 +33,30 @@ userRouter.put('/startTour/:userId/:tourId', (req, res) => {
     });
 });
 
+// used in CurrentTour component to update user's position as they progress through tour
 userRouter.put('/putPosition/:userId/:tourId/:position', (req, res) => {
   const { userId, tourId, position } = req.params;
-  User.update({ id_currentTour: tourId, currentPosition: position }, { where: { id: userId } })
+  User.update(
+    { id_currentTour: tourId, currentPosition: position },
+    { where: { id: userId } }
+  )
     .then(() => res.sendStatus(200))
     .catch((err: string) => {
       console.error('Failed to Update position of User: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// also used in CurrentTour to allow user to reset their id_currentTour and currentPosition to null
+userRouter.put('/leaveTour/:userId/', (req, res) => {
+  const { userId } = req.params;
+  User.update(
+    { id_currentTour: null, currentPosition: null },
+    { where: { id: userId } }
+  )
+    .then(() => res.sendStatus(200))
+    .catch((err: string) => {
+      console.error('Failed to Update user leaving tour: ', err);
       res.sendStatus(500);
     });
 });

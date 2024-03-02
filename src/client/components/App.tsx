@@ -14,21 +14,43 @@ const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 // const Reviews = lazy(() => import('./Reviews'));
 // const Categories = lazy(() => import('./Categories'));
-const Category = lazy(() => import('./Category'));
+// const Category = lazy(() => import('./Category'));
 const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
-import requireAuth from '../utils/requireAuth';
+import { requireAuth, nonRedirectUser } from '../utils/requireAuth';
 import socket from '../utils/socket';
 
-const currentTourLoader = async () => {
-  let user = await requireAuth();
+type User = {
+  username: string;
+  id: number;
+  id_currentTour: number;
+};
+
+//NavBar user info, nonRedirectUser so that non-privileged components will still load without redirecto to login
+const getUser = async (): Promise<User | null> => {
+  const user = await nonRedirectUser();
+  if (user) {
+    const userData = await axios.get(`/user/${user.id}`);
+    return userData.data;
+  }
+  return null;
+};
+
+//user returned from requireAuth is just user property on session object,
+//which is only updated when user logs in. for up to date user info, use this function
+const getAuthorizedUser = async (): Promise<User | null> => {
+  const user = await requireAuth();
   const userData = await axios.get(`/user/${user.id}`);
-  user = userData.data;
+  return userData.data;
+};
+
+const currentTourLoader = async () => {
+  const user = await getAuthorizedUser();
 
   const data = await Promise.all([
-    axios.get(`/db/tourWaypoints/${user.id_currentTour}`),
-    axios.get(`/db/tour/${user.id_currentTour}`),
+    axios.get(`/db/tourWaypoints/${user?.id_currentTour}`),
+    axios.get(`/db/tour/${user?.id_currentTour}`),
   ]);
 
   const waypoints = data[0].data; // array of WPs on data property of response object
@@ -53,6 +75,7 @@ const App = createBrowserRouter([
         <NavBar />
       </Suspense>
     ),
+    loader: () => getUser(),
     children: [
       {
         path: '/',
@@ -97,7 +120,7 @@ const App = createBrowserRouter([
             <Tours />
           </Suspense>
         ),
-        // loader: async () => await requireAuth(),
+        loader: async () => await requireAuth(),
       },
       {
         path: '/tour/:id',
@@ -106,17 +129,17 @@ const App = createBrowserRouter([
             <Tour />
           </Suspense>
         ),
-        loader: async () => await requireAuth(),
+        loader: async () => await getAuthorizedUser(),
       },
-      {
-        path: '/categories/:category',
-        element: (
-          <Suspense fallback={<>Loading...</>}>
-            <Category />
-          </Suspense>
-        ),
-        // loader: async () => await requireAuth(),
-      },
+      // {
+      //   path: '/categories/:category',
+      //   element: (
+      //     <Suspense fallback={<>Loading...</>}>
+      //       <Category />
+      //     </Suspense>
+      //   ),
+      //   // loader: async () => await requireAuth(),
+      // },
       {
         path: '/currentTour',
         element: (

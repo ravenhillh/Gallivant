@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Categories from './Categories';
 
 import {
   Button,
@@ -20,6 +19,7 @@ import {
   Typography,
 } from '../utils/material';
 
+import Categories from './Categories';
 import Voice from './tourComponents/Voice';
 import CustomModal from './tourComponents/Modal';
 
@@ -61,7 +61,7 @@ const Tours = (): JSX.Element => {
   };
 
   const createTourBtnClick = () => {
-    if (tourName && description) {
+    if (tourName && description && category) {
       axios
         .post('/db/tours', { tour: { tourName, description, category } })
         .then((res) => {
@@ -106,7 +106,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-      <Categories categories={categories} />
+      <Categories categories={categories} setTours={setTours}/>
 
       <List>
         {tours.map((tour, i) => {
@@ -129,7 +129,7 @@ const Tours = (): JSX.Element => {
         closeModal={() => setErrorModal(false)}
       >
         <Typography variant='body1'>
-          Please give tour a name and description.
+          Please give tour a name, description, and select a category.
         </Typography>
       </CustomModal>
 

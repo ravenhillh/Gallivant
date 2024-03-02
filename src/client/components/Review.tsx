@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
-import requireAuth from './../utils/requireAuth';
+import { requireAuth } from './../utils/requireAuth';
 import {
   Box,
   Button,
