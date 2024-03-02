@@ -97,6 +97,29 @@ const CurrentTour = (): JSX.Element => {
         </Fab>
       </Grid>
 
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-between'
+        alignItems='center'
+      >
+        <Button
+          variant='contained'
+          startIcon={<DirectionsWalkIcon />}
+          disabled={instructions === null}
+          onClick={() => setInstructionModal(true)}
+        >
+          Directions
+        </Button>
+        <Button
+          variant='contained'
+          startIcon={<SendIcon />}
+          onClick={() => routeToChat(tour?.id, tour?.tourName)}
+        >
+          Chat
+        </Button>
+      </Grid>
+
       <Suspense fallback={<>Loading...</>}>
         <CurrentMap
           setInstructions={passInstructions}
@@ -115,22 +138,8 @@ const CurrentTour = (): JSX.Element => {
           {`${tour?.tourName}: `}
         </Typography>
         <Typography variant='h5'>{tour?.description}</Typography>
-        <Button
-          variant='contained'
-          startIcon={<DirectionsWalkIcon />}
-          disabled={instructions === null}
-          onClick={() => setInstructionModal(true)}
-        >
-          Directions
-        </Button>
-        <Button
-          variant='contained'
-          startIcon={<SendIcon />}
-          onClick={() => routeToChat(tour?.id, tour?.tourName)}
-        >
-          Chat
-        </Button>
       </Grid>
+
       <Button
         variant='contained'
         startIcon={<TransitEnterexitIcon />}
