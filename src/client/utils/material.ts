@@ -2,6 +2,7 @@ import mapboxgl from 'mapbox-gl';
 
 import AddIcon from '@mui/icons-material/Add';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import Alert from '@mui/material/Alert';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -30,7 +31,9 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import ImageIcon from '@mui/icons-material/Image';
 import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import InsightsIcon from '@mui/icons-material/Insights';
@@ -42,6 +45,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MapIcon from '@mui/icons-material/Map';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
@@ -66,6 +70,7 @@ export {
   mapboxgl,
   AddIcon,
   AddAPhotoIcon,
+  Alert,
   AppBar,
   Avatar,
   Box,
@@ -93,7 +98,9 @@ export {
   FormHelperText,
   Grid,
   IconButton,
+  ImageIcon,
   ImageList,
+  ImageListItem,
   InputAdornment,
   InputLabel,
   InsightsIcon,
@@ -105,6 +112,7 @@ export {
   ListItemText,
   LogoutIcon,
   MapIcon,
+  MeetingRoomIcon,
   MenuIcon,
   MenuItem,
   MicIcon,
