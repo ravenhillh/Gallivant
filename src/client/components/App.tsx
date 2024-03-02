@@ -21,8 +21,14 @@ const Chat = lazy(() => import('./Chat'));
 import { requireAuth, nonRedirectUser } from '../utils/requireAuth';
 import socket from '../utils/socket';
 
+type User = {
+  username: string;
+  id: number;
+  id_currentTour: number;
+};
+
 //NavBar user info, nonRedirectUser so that non-privileged components will still load without redirecto to login
-const getUser = async () => {
+const getUser = async (): Promise<User | null> => {
   const user = await nonRedirectUser();
   if (user) {
     const userData = await axios.get(`/user/${user.id}`);
@@ -33,7 +39,7 @@ const getUser = async () => {
 
 //user returned from requireAuth is just user property on session object,
 //which is only updated when user logs in. for up to date user info, use this function
-const getAuthorizedUser = async () => {
+const getAuthorizedUser = async (): Promise<User | null> => {
   const user = await requireAuth();
   const userData = await axios.get(`/user/${user.id}`);
   return userData.data;
@@ -43,8 +49,8 @@ const currentTourLoader = async () => {
   const user = await getAuthorizedUser();
 
   const data = await Promise.all([
-    axios.get(`/db/tourWaypoints/${user.id_currentTour}`),
-    axios.get(`/db/tour/${user.id_currentTour}`),
+    axios.get(`/db/tourWaypoints/${user?.id_currentTour}`),
+    axios.get(`/db/tour/${user?.id_currentTour}`),
   ]);
 
   const waypoints = data[0].data; // array of WPs on data property of response object
