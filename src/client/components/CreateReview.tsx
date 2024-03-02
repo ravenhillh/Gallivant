@@ -62,7 +62,7 @@ const CreateReview = ({ tourId, handleClose }) => {
         <br />
         <Button
           type="submit"
-          variant="contained" 
+          variant="contained"
           endIcon={<SendIcon />}
           onClick={(e) => {
             e.preventDefault();

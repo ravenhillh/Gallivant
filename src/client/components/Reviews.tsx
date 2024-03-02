@@ -7,7 +7,7 @@ const Review = lazy(() => import('./Review'));
 
 
 
-const Reviews = ({ id }) => {
+const Reviews = ({ id, open }) => {
   // const { id } = useParams();
   // need review id not tour id...
   const [reviews, setReviews] = useState([]);
@@ -23,7 +23,7 @@ const Reviews = ({ id }) => {
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [open]);
 
   // console.log(average);
   return (

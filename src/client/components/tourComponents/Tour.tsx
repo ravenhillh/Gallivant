@@ -488,7 +488,7 @@ const Tour = (): JSX.Element => {
           <br />
         </CustomModal>
       </Suspense>
-      <Reviews id={id} />
+      <Reviews id={id} open={open}/>
     </div>
   );
 };
