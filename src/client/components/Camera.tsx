@@ -10,8 +10,7 @@ import { Button,
   Snackbar
  } from '../utils/material';
 
-// camera will have to accept props to access other ids like waypoint, etc
-// may need props interface
+
 function Camera(props): JSX.Element {
   const { waypoint, getImagesWP } = props;
   // image is a 'preview', before image is selected to be POSTED to database
@@ -20,7 +19,6 @@ function Camera(props): JSX.Element {
   const [open, setOpen] = useState(false);
   // input Ref's for cameras
   const envInputRef = useRef<HTMLInputElement>(null);
-  // const selfieInputRef = useRef<HTMLInputElement>(null);
 
   const resizePhoto = (image) => {
     const maxSizeInMB = 4;
@@ -66,7 +64,6 @@ function Camera(props): JSX.Element {
         // tour/waypoint/etc id, coming from props
       })
       .then(({ data }) => {
-        // console.log('ax ', data);
         postDb(data);
       })
       .catch((err) => {
@@ -144,21 +141,21 @@ function Camera(props): JSX.Element {
       />
       {
         image ?
+        <div>
         <Button onClick={handleClick}>
-          <AddAPhotoIcon /> Save Photo
-        </Button> :
+          <AddAPhotoIcon /> Post Photo
+        </Button>
         <Button type='button' onClick={() => envInputRef.current!.click()}>
-          <CameraAltIcon /> Take Photo
+          <CameraAltIcon /> Change Photo
+        </Button>
+        </div>
+        :
+        <Button type='button' onClick={() => envInputRef.current!.click()}>
+          <CameraAltIcon /> Add Photo
         </Button>
       }
-      {/* <Button type='button' onClick={() => envInputRef.current!.click()}>
-        <CameraAltIcon /> Take Photo
-      </Button> */}
       <br />
       <img src={image} style={{ width: '250px', height: 'auto' }} />
-      {/* <Button onClick={handleClick}>
-        <AddAPhotoIcon /> Save Photo
-      </Button> */}
       <Snackbar
         open={open}
         autoHideDuration={5000}
