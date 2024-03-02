@@ -61,11 +61,12 @@ const Chat = ({ socket }) => {
     // receives usernames to set state
     const username = user.username;
     const chatListener = (data) => {
-      setRoomUsers([...roomUsers, data]);
+    //  setRoomUsers([...roomUsers, data]);
     };
+
     socket.emit('send_users', {username, name});
     socket.on('chat_users', chatListener);
-  }, [socket]);
+  }, []);
 
   useEffect(() => {
     getMessagesByTour(tour);
@@ -106,25 +107,16 @@ const Chat = ({ socket }) => {
     }
   };
 
-  // const getAllMessages = () => {
-  //   axios('/message/get')
-  //     .then(({ data }) => {
-  //       setMessages(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   return (
     <div>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h4" className="header-message">
-            {name ? <div>Chat room: {name}</div> : <div>Chat</div>}
+          <Typography variant="h5" className="header-message" align="center">
+            room: {name}
           </Typography>
         </Grid>
       </Grid>
       <div className="message-container">
-        <Grid item xs={9}>
           <List>
             {messages.map((message: Message, i) => {
               return (
@@ -153,7 +145,6 @@ const Chat = ({ socket }) => {
               );
             })}
           </List>
-        </Grid>
         <div ref={lastMessageRef}  />
       </div>
       <Grid container style={{ padding: '20px' }}>

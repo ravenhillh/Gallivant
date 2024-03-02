@@ -228,7 +228,7 @@ function MapView(): JSX.Element {
       <div>
         <div>{showTours()}</div>
         <div
-          style={{ height: '300px' }}
+          style={{ height: '400px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
