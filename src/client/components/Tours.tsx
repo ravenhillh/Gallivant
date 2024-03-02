@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import {
@@ -23,21 +23,24 @@ import Categories from './Categories';
 import Voice from './tourComponents/Voice';
 import CustomModal from './tourComponents/Modal';
 
-const Tours = (): JSX.Element => {
-  type Tour = {
-    id: number;
-    tourName: string;
-    description: string;
-  };
+type Tour = {
+  id: number;
+  tourName: string;
+  description: string;
+};
 
+const Tours = (): JSX.Element => {
+  const { cat } = useParams();
   const [tours, setTours] = useState<Tour[]>([]);
+
+  // state for creating a new Tour
+  const [createModal, setCreateModal] = useState<boolean>(false);
   const [description, setDescription] = useState<string>('');
   const [tourName, setName] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-
-  const [createModal, setCreateModal] = useState<boolean>(false);
   const [errorModal, setErrorModal] = useState<boolean>(false);
 
+  //array of categories for create modal
   const categories = [
     'arts & culture',
     'entertainment',
@@ -48,12 +51,15 @@ const Tours = (): JSX.Element => {
     'miscellaneous',
   ];
 
+  //getTours now checks parameters to determine which endpoint to send request to
   useEffect(() => {
-    getAllTours();
+    getTours();
   }, []);
 
-  const getAllTours = () => {
-    axios('/db/tours')
+  //if cat is all, queries for all tours, else getToursByCat basically
+  const getTours = () => {
+    axios
+      .get(cat === 'all' ? '/db/tours/' : `/db/tours/${cat}`)
       .then(({ data }) => {
         setTours(data);
       })
@@ -66,7 +72,7 @@ const Tours = (): JSX.Element => {
         .post('/db/tours', { tour: { tourName, description, category } })
         .then((res) => {
           if (res.status === 201) {
-            getAllTours();
+            getTours();
             setName('');
             setDescription('');
             setCreateModal(false);
@@ -78,6 +84,7 @@ const Tours = (): JSX.Element => {
     }
   };
 
+  // createTourModal category drop down handler
   const handleCatChange = (event) => {
     setCategory(event.target.value as string);
   };
@@ -106,7 +113,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-      <Categories categories={categories} setTours={setTours}/>
+      <Categories categories={categories} category={cat} getTours={getTours} />
 
       <List>
         {tours.map((tour, i) => {
