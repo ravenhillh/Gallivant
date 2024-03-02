@@ -14,7 +14,7 @@ const MapView = lazy(() => import('./MapView'));
 const Gallery = lazy(() => import('./Gallery'));
 // const Reviews = lazy(() => import('./Reviews'));
 // const Categories = lazy(() => import('./Categories'));
-const Category = lazy(() => import('./Category'));
+// const Category = lazy(() => import('./Category'));
 const Chat = lazy(() => import('./Chat'));
 
 // authentication checker for protected route loaders.
@@ -131,15 +131,15 @@ const App = createBrowserRouter([
         ),
         loader: async () => await getAuthorizedUser(),
       },
-      {
-        path: '/categories/:category',
-        element: (
-          <Suspense fallback={<>Loading...</>}>
-            <Category />
-          </Suspense>
-        ),
-        // loader: async () => await requireAuth(),
-      },
+      // {
+      //   path: '/categories/:category',
+      //   element: (
+      //     <Suspense fallback={<>Loading...</>}>
+      //       <Category />
+      //     </Suspense>
+      //   ),
+      //   // loader: async () => await requireAuth(),
+      // },
       {
         path: '/currentTour',
         element: (

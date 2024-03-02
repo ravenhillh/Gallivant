@@ -61,6 +61,7 @@ const CreateReview = ({ tourId, handleClose }) => {
         />
         <br />
         <Button
+          type="submit"
           variant="contained" 
           endIcon={<SendIcon />}
           onClick={() => {

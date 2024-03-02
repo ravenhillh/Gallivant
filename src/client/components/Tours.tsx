@@ -106,7 +106,7 @@ const Tours = (): JSX.Element => {
           </Button>
         </Grid>
       </Grid>
-      <Categories categories={categories} />
+      <Categories categories={categories} setTours={setTours}/>
 
       <List>
         {tours.map((tour, i) => {
