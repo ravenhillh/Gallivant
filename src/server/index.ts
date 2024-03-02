@@ -127,20 +127,24 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
+
 // receive user messages and emit them back to all users
 io.on('connection', (socket: Socket) => {
+  //receive messages and send to other users
   socket.on('send_message', (data) => {
-    // io.emit('message_response', data);
     const { tour } = data;
     socket.join(tour);
     io.to(tour).emit('message_response', data);
 });
-
-//   socket.on('room_chat', (data) => {
-//     const { tour } = data;
-//     socket.join(tour);
-//     io.to(tour).emit('message_response', data);
-// });
+  // socket.on('send_users', (data) => {
+  //   //send back a message when user has entered room
+  //   const { username, tour } = data;
+  //   const bot = 'ChatBot';
+  //   data.message = `${username} has entered the room`;
+  //   data.username = bot;
+  //   socket.join(tour);
+  //   io.to(tour).emit('message_response', data);
+  // });
 
 });
 

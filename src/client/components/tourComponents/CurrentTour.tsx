@@ -10,6 +10,7 @@ import {
   Fab,
   Grid,
   TransitEnterexitIcon,
+  SendIcon,
   Typography,
 } from '../../utils/material';
 
@@ -53,6 +54,10 @@ const CurrentTour = (): JSX.Element => {
       .catch((err) =>
         console.error('Could not PUT update on user to edit position: ', err)
       );
+  };
+
+  const routeToChat = (id: string, name: string) => {
+    navigate(`/chat/${id}/${name}`);
   };
 
   return (
@@ -117,6 +122,13 @@ const CurrentTour = (): JSX.Element => {
           onClick={() => setInstructionModal(true)}
         >
           Directions
+        </Button>
+        <Button
+          variant='contained'
+          startIcon={<SendIcon />}
+          onClick={() => routeToChat(tour?.id, tour?.tourName)}
+        >
+          Chat
         </Button>
       </Grid>
       <Button
