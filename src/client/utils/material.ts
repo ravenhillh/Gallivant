@@ -13,7 +13,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
+import CardMedia from '@mui/material/CardMedia';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -81,6 +81,7 @@ export {
   Card,
   CardActions,
   CardContent,
+  CardMedia,
   CenterFocusWeakIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
