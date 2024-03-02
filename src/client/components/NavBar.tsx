@@ -122,9 +122,9 @@ function NavBar() {
               </ListItem> */}
               <ListItem className='tours-link'>
                 <ListItemButton
-                  selected={pathname === '/tours'}
+                  selected={pathname === '/tours/all'}
                   onClick={() => {
-                    navigate('/tours');
+                    navigate('/tours/all');
                     setDrawer(false);
                   }}
                 >

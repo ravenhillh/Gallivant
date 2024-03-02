@@ -37,6 +37,7 @@ type User = {
   username: string;
   id: number;
   id_currentTour: number;
+  currentPosition: number;
 };
 
 // Read review button, launches review page or modal
@@ -206,16 +207,20 @@ const Tour = (): JSX.Element => {
 
   // startTour button functionality
   const startTour = () => {
-    axios
-      .put(`/user/startTour/${userId}/${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          navigate('/currentTour');
-        }
-      })
-      .catch((err) =>
-        console.error('Could not PUT update on user to start tour: ', err)
-      );
+    if (user.id_currentTour?.toString() === id) {
+      navigate('/currentTour/');
+    } else {
+      axios
+        .put(`/user/startTour/${userId}/${id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            navigate('/currentTour');
+          }
+        })
+        .catch((err) =>
+          console.error('Could not PUT update on user to start tour: ', err)
+        );
+    }
   };
 
   const getTourRating = (id) => {
@@ -274,9 +279,9 @@ const Tour = (): JSX.Element => {
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold' gutterBottom>
-              {/* <Link to={`/categories/${tour?.category}`}> */}
-                {tour?.category}
-              {/* </Link> */}
+              <Link to={`/tours/${tour?.category}`}>
+                {tour?.category?.toUpperCase()}
+              </Link>
             </Typography>
           </Grid>
         </Grid>
@@ -288,7 +293,11 @@ const Tour = (): JSX.Element => {
           color='primary'
           onClick={startTour}
         >
-          {waypoints.length ? 'Start Tour' : 'Tour has no waypoints'}
+          {waypoints.length
+            ? user.id_currentTour?.toString() === id
+              ? 'Continue Tour'
+              : 'Start Tour'
+            : 'Tour has no waypoints'}
         </Button>
 
         <Suspense fallback={<>Loading...</>}>
