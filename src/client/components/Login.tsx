@@ -9,9 +9,9 @@ import {
 
 function Login() {
   return (
-    <div>
-      <Card className="login" sx={{ maxWidth: 345, mx: 'auto', textAlign: 'center' }}>
-        <CardContent>
+    <div className="log">
+      {/* <Card className="login" sx={{ maxWidth: 400, mx: 'auto', textAlign: 'center' }}>
+        <CardContent> */}
           {/* <img
             src="/api/images/napoli.jpg"
             width="300"
@@ -22,8 +22,8 @@ function Login() {
             Sign in with Google
              </a>
           </Button>
-        </CardContent>
-      </Card>
+        {/* </CardContent>
+      </Card> */}
     </div>
   );
 }
