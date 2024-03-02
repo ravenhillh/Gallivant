@@ -33,8 +33,14 @@ export interface NavBarProps {
   children: React.ReactNode;
 }
 
+type User = {
+  username: string;
+  id: number;
+  id_currentTour: number;
+};
+
 function NavBar() {
-  const loadUser = useLoaderData();
+  const loadUser = useLoaderData() as User | null;
   const [user, setUser] = useState(loadUser);
   const { pathname } = useLocation();
   const navigate = useNavigate();
