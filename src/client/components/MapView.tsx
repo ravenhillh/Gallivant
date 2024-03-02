@@ -4,16 +4,19 @@ import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  Avatar,
   BubbleChartIcon,
   Button,
+  Card,
+  CardContent,
   Divider,
+  DirectionsWalkIcon,
   Grid,
+  ImageIcon,
+  InsightsIcon,
   List,
   ListItem,
   ListItemText,
-  DirectionsWalkIcon,
-  InsightsIcon,
-  Avatar,
   ListItemAvatar,
   Typography,
 } from '../utils/material';
@@ -109,6 +112,7 @@ function MapView(): JSX.Element {
   const getTourImage = (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
+        console.log(data);
         setImage(data);
       })
       .catch((err: string) => console.log(err, 'image get failed'));
@@ -158,49 +162,46 @@ function MapView(): JSX.Element {
   const showTours = () => {
     return tours.length ? (
       <div>
-            <List sx={style} aria-label="tour details">
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <InsightsIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={tours[0].tourName} />
-              </ListItem>
-              <Divider component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <BubbleChartIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={tours[0].category} />
-              </ListItem>
-              <Divider component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <DirectionsWalkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={tours[0].description} />
-              </ListItem>
-              <Divider component="li" />
-              <ListItem>
-                <Button
-                  variant="outlined"
-                  onClick={() => routeToTour(tours[0].id)}
-                >
-                  View Tour
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
-                >
-                  Tour Chat
-                </Button>
-              </ListItem>
-            </List>
+        <List sx={style} aria-label="tour details">
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <InsightsIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].tourName} />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <BubbleChartIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].category} />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <DirectionsWalkIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={tours[0].description} />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>
+              View Tour
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
+            >
+              Tour Chat
+            </Button>
+          </ListItem>
+        </List>
       </div>
     ) : (
       ''
@@ -222,9 +223,25 @@ function MapView(): JSX.Element {
 
   return (
     <div>
-      <Typography mt={2} variant="h2" fontWeight="bold">
+      <Typography mt={2} variant="h3" fontWeight="bold" align="center">
         Map View
       </Typography>
+      {tours.length === 0 ? (
+         <List>
+           <Divider component="li" />
+           <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <DirectionsWalkIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="explore the different tours in your area!" />
+          </ListItem>
+          <Divider component="li" />
+         </List>
+      ) : (
+        ''
+      )}
       <div>
         <div>{showTours()}</div>
         <div
@@ -233,23 +250,42 @@ function MapView(): JSX.Element {
           className="map-container"
         ></div>
       </div>
-      <div>{/* <Chat socket={socket}/> */}</div>
-      <Grid container>
-      {image.length === 0 ? (
+      <List>
+        {image.length === 0 ? (
+          ''
+        ) : (
+          <div>
+            <Divider component="li" />
+            <ListItem>
+              <Grid container>
+                <Grid item xs={3}>
+                  <Typography variant="h6" fontWeight="bold">
+                    Images
+                  </Typography>
+                </Grid>
+                <Grid item xs={9} align="right">
+                  <ImageIcon />
+                </Grid>
+              </Grid>
+            </ListItem>
+            <Divider component="li" />
+          </div>
+        )}
+        <ListItem>
+          {image.length === 0 ? (
             ''
           ) : (
-            <Grid item xs={4}>
-              <List aria-label="tour image">
-                <ListItem>
-                  <img
-                    src={`/api/images/${image[0].largeImg}`}
-                    style={{ width: 'auto', height: '180px' }}
-                  />
-                </ListItem>
-              </List>
-            </Grid>
+            <Card>
+              <CardContent>
+                <img
+                  src={`/api/images/${image[0].largeImg}`}
+                  style={{ width: 'auto', height: '180px' }}
+                />
+              </CardContent>
+            </Card>
           )}
-      </Grid>
+        </ListItem>
+      </List>
     </div>
   );
 }

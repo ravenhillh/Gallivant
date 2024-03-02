@@ -6,11 +6,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 import {
+  Alert,
   Fab,
   List,
   ListItem,
   ListItemText,
   Grid,
+  MeetingRoomIcon,
   TextField,
   SendIcon,
   Typography,
@@ -31,7 +33,8 @@ type User = {
 const Chat = ({ socket }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [roomUsers, setRoomUsers] = useState([]);
+  const [newUser, setNewUser] = useState([]);
+  const [open, setOpen] = useState(true);
   const { tour, name } = useParams();
   const  user: User  = useLoaderData();
   const lastMessageRef = useRef(null);
@@ -61,10 +64,11 @@ const Chat = ({ socket }) => {
     // receives usernames to set state
     const username = user.username;
     const chatListener = (data) => {
-    //  setRoomUsers([...roomUsers, data]);
+      setNewUser(data);
+      setOpen(true);
     };
 
-    socket.emit('send_users', {username, name});
+    socket.emit('send_users', {username, tour});
     socket.on('chat_users', chatListener);
   }, []);
 
@@ -95,7 +99,7 @@ const Chat = ({ socket }) => {
   const getMessagesByTour = (id) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         setMessages(data);
       })
       .catch((err) => console.log(err));
@@ -107,12 +111,16 @@ const Chat = ({ socket }) => {
     }
   };
 
+  const handleClose = () => {
+  setOpen(false);
+  };
+
   return (
     <div>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h5" className="header-message" align="center">
-            room: {name}
+            Room: {name}
           </Typography>
         </Grid>
       </Grid>
@@ -146,6 +154,14 @@ const Chat = ({ socket }) => {
             })}
           </List>
         <div ref={lastMessageRef}  />
+        {open && <Alert
+        variant="outlined"
+        severity="info"
+        onClose={handleClose}
+        icon={<MeetingRoomIcon fontSize="inherit" />}
+        >
+          {newUser.message} - {newUser.username}
+        </Alert>}
       </div>
       <Grid container style={{ padding: '20px' }}>
         <Grid item xs={11}>
