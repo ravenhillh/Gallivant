@@ -47,7 +47,7 @@ const CurrentTour = (): JSX.Element => {
       .put(`/user/leaveTour/${user.id}/`)
       .then((res) => {
         if (res.status === 200) {
-          navigate('/tours');
+          navigate('/tours/all');
           setLeaveModal(false);
         }
       })

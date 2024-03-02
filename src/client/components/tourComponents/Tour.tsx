@@ -274,9 +274,9 @@ const Tour = (): JSX.Element => {
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold' gutterBottom>
-              {/* <Link to={`/categories/${tour?.category}`}> */}
-                {tour?.category}
-              {/* </Link> */}
+              <Link to={`/tours/${tour?.category}`}>
+                {tour?.category?.toUpperCase()}
+              </Link>
             </Typography>
           </Grid>
         </Grid>
