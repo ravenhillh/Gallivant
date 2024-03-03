@@ -5,6 +5,10 @@
   font-family: "Roboto";
 }
 
+.outlet {
+  padding: 5px;
+}
+
 body {
   background-color: #fdfdfd;
 }

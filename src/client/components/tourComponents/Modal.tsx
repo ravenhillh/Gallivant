@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { Button, Modal, Box, CancelIcon } from '../../utils/material';
+import { Box, Button, CancelIcon, Modal } from '../../utils/material';
 
 type CustomModal = {
   openModal: boolean;
@@ -8,20 +8,21 @@ type CustomModal = {
 };
 
 const style = {
-  position: 'absolute',
+  position: 'sticky',
   my: '4',
-  width: '75%',
+  width: '80%',
   alignItems: 'center',
-  top: '25%',
-  left: '50%',
+  top: '10%',
+  left: '10%',
   gap: '4',
   p: '2',
-  transform: 'translate(-50%, -50%)',
+  // transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '3px solid #222',
+  borderRadius: 2,
   boxShadow: 24,
-  pt: 2,
-  px: 4,
+  pt: 3,
+  px: 5,
   pb: 3,
 };
 

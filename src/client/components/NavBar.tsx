@@ -152,7 +152,11 @@ function NavBar() {
               <Divider />
               <ListItem className='logout-link'>
                 <form action='/logout' method='post'>
-                  <Button startIcon={<LogoutIcon />} variant='outlined' type='submit'>
+                  <Button
+                    startIcon={<LogoutIcon />}
+                    variant='outlined'
+                    type='submit'
+                  >
                     Sign out
                   </Button>
                 </form>
@@ -161,7 +165,9 @@ function NavBar() {
           </Box>
         </Drawer>
       </AppBar>
-      <Outlet />
+      <div className='outlet'>
+        <Outlet />
+      </div>
     </Container>
   );
 }

@@ -70,6 +70,7 @@ const CurrentTour = (): JSX.Element => {
       >
         <Fab
           disabled={currentWP === 0}
+          size='small'
           onClick={() => {
             setCurrentWP((prev) => {
               updatePosition(prev - 1);
@@ -85,6 +86,7 @@ const CurrentTour = (): JSX.Element => {
         </Suspense>
         <Fab
           disabled={currentWP === waypoints.length - 1}
+          size='small'
           onClick={() => {
             setCurrentWP((prev) => {
               updatePosition(prev + 1);
