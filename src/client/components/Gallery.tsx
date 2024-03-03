@@ -21,36 +21,18 @@ const Gallery = (props) => {
   const { waypoint, edit } = props;
   const [images, setImages] = useState<ImageProperties[]>([]);
   const [open, setOpen] = useState(false);
-  // console.log(props);
 
-  // function to send GET request to db
-  // const getImages = () => {
-  //   axios.get('/images/user')
-  //     .then(({data}) => {
-  //       // console.log('GET data ', data);
-  //       setImages(data);
-  //     })
-  //     .catch(err => console.error('Could not GET imgs ', err));
-  // };
-
+  // GET Image by Waypoint Id
   const getImagesWP = (waypointId) => {
-    // console.log('wp id ', waypointId);
     axios
       .get(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
-        // console.log('data ', data);
         setImages(data);
       })
       .catch((err) =>
         console.error('could not get images by waypoint Id', err)
       );
   };
-
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   // getImages();
-  //   getImagesWP(props.waypoint.id);
-  // };
 
   const deleteImage = (imageId) => {
     axios
@@ -86,7 +68,6 @@ const Gallery = (props) => {
 
   return (
     <div>
-      {/* <button type="submit" onClick={handleClick}>Get Images</button> */}
       {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
       <ImageList>
         {images.map((image) => (
@@ -98,7 +79,7 @@ const Gallery = (props) => {
             {edit && (
               <Button
                 id='delete-image'
-                // variant="outlined"
+                // variant="contained"
                 size='small'
                 type='submit'
                 fullWidth={false}
@@ -108,7 +89,7 @@ const Gallery = (props) => {
                   handleClick();
                 }}
               >
-                <RemoveCircleIcon />
+                Delete  <RemoveCircleIcon />
               </Button>
             )}
           </li>

@@ -13,7 +13,9 @@ import {
   Rating,
   RemoveCircleIcon,
   Snackbar,
-  TextField } from '../utils/material';
+  TextField,
+  Typography
+ } from '../utils/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
@@ -97,14 +99,14 @@ const Review = ({review, getReviews }) => {
     <div>
     <Card>
       <CardContent>
+      <Typography variant="h6">{username}</Typography>
       <Rating
         name="read-only"
         value={review.rating}
         readOnly
       />
-      <p>{username}</p>
-      <p>{review.feedback}</p>
-      <p>{dayjs(review.createdAt).fromNow()}</p>
+      <Typography variant="caption" display="block">{dayjs(review.createdAt).fromNow()}</Typography>
+      <Typography variant="body1">{review.feedback}</Typography>
       {currentUserId === review.id_user? 
         <div>
         <Button
