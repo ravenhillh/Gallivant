@@ -34,6 +34,7 @@ const Review = ({review, getReviews }) => {
   };
   const handleClose = () => {
     setOpen(false);
+    getReviews();
   };
 
   const handleOpenSB = () => {
