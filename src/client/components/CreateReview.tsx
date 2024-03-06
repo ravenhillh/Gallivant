@@ -27,58 +27,39 @@ const CreateReview = ({ tourId, handleClose }) => {
 
   return (
     <div className="create-review">
-      {/* <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-          border: 2,
-          bgcolor: 'white'
+      <Typography component="legend">Rate This Tour</Typography>
+      <Rating
+        name="no-value"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
         }}
-        noValidate
-        autoComplete="off"
-      > */}
-        <Typography component="legend">Rate This Tour</Typography>
-        <Rating
-          name="no-value"
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        />
-        <br />
-        <TextField
-          id="outlined-multiline-static"
-          multiline
-          rows={4}
-          placeholder="Leave a Review"
-          onChange={(event) => {
-            event.preventDefault();
-            setReviewText(event.target.value);
-          }}
-        />
-        <br />
-        <Button
-          type="submit"
-          variant="contained"
-          endIcon={<SendIcon />}
-          onClick={(e) => {
-            e.preventDefault();
-            postReview();
-            handleClose();
-          }}
-        >
-          Send
-        </Button>
-        {/* <Button
-          variant='outlined'
-          size='small'
-          color='secondary'
-          startIcon={<CancelIcon />}
-          onClick={handleClose}
-        >
-          Cancel
-        </Button> */}
-      {/* </Box> */}
+      />
+      <br />
+      <TextField
+        id="outlined-multiline-static"
+        multiline
+        rows={4}
+        placeholder="Leave a Review"
+        margin="normal"
+        onChange={(event) => {
+          event.preventDefault();
+          setReviewText(event.target.value);
+        }}
+      />
+      <br />
+      <Button
+        type="submit"
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={(e) => {
+          e.preventDefault();
+          postReview();
+          handleClose();
+        }}
+      >
+        Send
+      </Button>
     </div>
   );
 

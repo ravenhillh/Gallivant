@@ -3,7 +3,6 @@ import { useParams, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
-  Box,
   Button,
   AddIcon,
   CancelIcon,
@@ -11,7 +10,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Modal,
   Stack,
   Typography,
   Grid,
