@@ -27,7 +27,7 @@ const CreateReview = ({ tourId, handleClose }) => {
 
   return (
     <div className="create-review">
-      <Box
+      {/* <Box
         component="form"
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -36,8 +36,7 @@ const CreateReview = ({ tourId, handleClose }) => {
         }}
         noValidate
         autoComplete="off"
-      >
-        <div>
+      > */}
         <Typography component="legend">Rate This Tour</Typography>
         <Rating
           name="no-value"
@@ -49,14 +48,12 @@ const CreateReview = ({ tourId, handleClose }) => {
         <br />
         <TextField
           id="outlined-multiline-static"
-          // label="Multiline"
           multiline
           rows={4}
           placeholder="Leave a Review"
           onChange={(event) => {
             event.preventDefault();
             setReviewText(event.target.value);
-            // console.log(event.target.value);
           }}
         />
         <br />
@@ -72,7 +69,7 @@ const CreateReview = ({ tourId, handleClose }) => {
         >
           Send
         </Button>
-        <Button
+        {/* <Button
           variant='outlined'
           size='small'
           color='secondary'
@@ -80,9 +77,8 @@ const CreateReview = ({ tourId, handleClose }) => {
           onClick={handleClose}
         >
           Cancel
-        </Button>
-        </div>
-      </Box>
+        </Button> */}
+      {/* </Box> */}
     </div>
   );
 

@@ -3,6 +3,7 @@ import { useParams, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+  Box,
   Button,
   AddIcon,
   CancelIcon,
@@ -40,6 +41,17 @@ type User = {
   currentPosition: number;
 };
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 // Read review button, launches review page or modal
 
 const Tour = (): JSX.Element => {
@@ -320,16 +332,16 @@ const Tour = (): JSX.Element => {
               Add Review
             </Button>
           )}
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='modal-modal-title'
-            aria-describedby='modal-modal-description'
+          <CustomModal
+            openModal={open}
+            closeModal={handleClose}
+            // aria-labelledby='modal-modal-title'
+            // aria-describedby='modal-modal-description'
           >
             <Suspense fallback={<>Loading...</>}>
               <CreateReview tourId={tour?.id} handleClose={handleClose} />
             </Suspense>
-          </Modal>
+          </CustomModal>
           {/* <br /> */}
           {edit && (
             <Button
