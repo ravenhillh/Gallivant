@@ -224,12 +224,12 @@ function MapView(): JSX.Element {
   return (
     <div>
       <Typography mt={2} variant="h3" fontWeight="bold" align="center">
-        Map View
+        Browse Tours
       </Typography>
       {tours.length === 0 ? (
-         <List>
-           <Divider component="li" />
-           <ListItem>
+        <List>
+          <Divider component="li" />
+          <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <DirectionsWalkIcon />
@@ -238,54 +238,60 @@ function MapView(): JSX.Element {
             <ListItemText primary="explore the different tours in your area!" />
           </ListItem>
           <Divider component="li" />
-         </List>
+        </List>
       ) : (
         ''
       )}
       <div>
-        <div>{showTours()}</div>
         <div
           style={{ height: '400px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
       </div>
-      <List>
-        {image.length === 0 ? (
-          ''
-        ) : (
-          <div>
-            <Divider component="li" />
+      <Grid container>
+        <Grid xs={6} item>
+          <div>{showTours()}</div>
+        </Grid>
+        <Grid xs={6} item>
+          <List>
+            {image.length === 0 ? (
+              ''
+            ) : (
+              <div>
+                <Divider component="li" />
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={3}>
+                      <Typography variant="h6" fontWeight="bold">
+                        Images
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={9} align="right">
+                      <ImageIcon />
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <Divider component="li" />
+              </div>
+            )}
             <ListItem>
-              <Grid container>
-                <Grid item xs={3}>
-                  <Typography variant="h6" fontWeight="bold">
-                    Images
-                  </Typography>
-                </Grid>
-                <Grid item xs={9} align="right">
-                  <ImageIcon />
-                </Grid>
-              </Grid>
+              {image.length === 0 ? (
+                ''
+              ) : (
+                <Card>
+                  <CardContent>
+                    <img
+                      src={`/api/images/${image[0].largeImg}`}
+                      style={{ width: 'auto', height: '180px' }}
+                    />
+                  </CardContent>
+                </Card>
+              )}
             </ListItem>
-            <Divider component="li" />
-          </div>
-        )}
-        <ListItem>
-          {image.length === 0 ? (
-            ''
-          ) : (
-            <Card>
-              <CardContent>
-                <img
-                  src={`/api/images/${image[0].largeImg}`}
-                  style={{ width: 'auto', height: '180px' }}
-                />
-              </CardContent>
-            </Card>
-          )}
-        </ListItem>
-      </List>
+          </List>
+        </Grid>
+      </Grid>
     </div>
   );
 }
