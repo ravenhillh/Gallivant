@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useRef, Fragment } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, 
-  AddAPhotoIcon, 
+import { Button,
+  AddAPhotoIcon,
   CameraAltIcon,
   CloseIcon,
   IconButton,
@@ -61,7 +61,6 @@ function Camera(props): JSX.Element {
       .post('/api/images', {
         imageName: name,
         base64: imageData,
-        // tour/waypoint/etc id, coming from props
       })
       .then(({ data }) => {
         postDb(data);
@@ -97,11 +96,11 @@ function Camera(props): JSX.Element {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // prevent default to stop loop
     e.preventDefault();
     sendPic(e);
   };
 
+  // Post photo button handle click
   const handleClick = () => {
     // set unique name with uuid to be used as image Key, for gallery view
     const name = uuidv4();
@@ -128,14 +127,13 @@ function Camera(props): JSX.Element {
   );
 
   return (
-    <div>
+    <div className="camera-container">
       <br />
       <input
         type='file'
         ref={envInputRef}
         id='environment'
         style={{ display: 'none' }}
-        // capture='environment'
         accept='image/*'
         onChange={handleChange}
       />
@@ -143,19 +141,21 @@ function Camera(props): JSX.Element {
         image ?
         <div>
         <Button onClick={handleClick}>
-          <AddAPhotoIcon /> Post Photo
+          <AddAPhotoIcon />&nbsp;Post Photo
         </Button>
         <Button type='button' onClick={() => envInputRef.current!.click()}>
-          <CameraAltIcon /> Change Photo
+          <CameraAltIcon />&nbsp;Change Photo
         </Button>
         </div>
         :
         <Button type='button' onClick={() => envInputRef.current!.click()}>
-          <CameraAltIcon /> Add Photo
+          <CameraAltIcon />&nbsp;Add Photo
         </Button>
       }
       <br />
-      <img src={image} style={{ width: '250px', height: 'auto' }} />
+      <div className="image-container">
+        <img src={image} />
+      </div>
       <Snackbar
         open={open}
         autoHideDuration={5000}
