@@ -72,12 +72,10 @@ const Gallery = (props) => {
       <ImageList>
         {images.map((image) => (
           <li key={`${image.id}`}>
-            <img
-              src={`/api/images/${image.largeImg}`}
-              style={{ width: '250px', height: 'auto' }}
-            />
-            {edit && (
+            {/* {edit && (
               <Button
+                // sx={{ position: 'absolute'}}
+                className="delete-button"
                 id='delete-image'
                 // variant="contained"
                 size='small'
@@ -91,11 +89,37 @@ const Gallery = (props) => {
               >
                 Delete  <RemoveCircleIcon />
               </Button>
+            )} */}
+            {/* <br /> */}
+            <div className="image-container">
+            <img
+              src={`/api/images/${image.largeImg}`}
+              style={{ width: '100%' }}
+            />
+            {edit && (
+              <Button
+                // sx={{ position: 'absolute'}}
+                className="delete-button"
+                id='delete-image'
+                variant="contained"
+                size='small'
+                type='submit'
+                color="error"
+                fullWidth={false}
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteImage(image.id);
+                  handleClick();
+                }}
+              >
+                Delete  <RemoveCircleIcon />
+              </Button>
             )}
+            </div>
           </li>
         ))}
       </ImageList>
-      <Snackbar 
+      <Snackbar
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}

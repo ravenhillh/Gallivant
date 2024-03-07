@@ -97,11 +97,11 @@ function Camera(props): JSX.Element {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // prevent default to stop loop
     e.preventDefault();
     sendPic(e);
   };
 
+  // Post photo button handle click
   const handleClick = () => {
     // set unique name with uuid to be used as image Key, for gallery view
     const name = uuidv4();
@@ -135,7 +135,6 @@ function Camera(props): JSX.Element {
         ref={envInputRef}
         id='environment'
         style={{ display: 'none' }}
-        // capture='environment'
         accept='image/*'
         onChange={handleChange}
       />
