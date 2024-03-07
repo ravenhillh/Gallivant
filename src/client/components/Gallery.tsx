@@ -1,7 +1,8 @@
 import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Button, 
-  RemoveCircleIcon, 
+  RemoveCircleIcon,
+  CancelIcon,
   CloseIcon,
   IconButton,
   Snackbar,
@@ -112,7 +113,7 @@ const Gallery = (props) => {
                   handleClick();
                 }}
               >
-                Delete  <RemoveCircleIcon />
+                <CancelIcon />
               </Button>
             )}
             </div>
