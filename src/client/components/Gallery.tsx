@@ -73,25 +73,6 @@ const Gallery = (props) => {
       <ImageList>
         {images.map((image) => (
           <li key={`${image.id}`}>
-            {/* {edit && (
-              <Button
-                // sx={{ position: 'absolute'}}
-                className="delete-button"
-                id='delete-image'
-                // variant="contained"
-                size='small'
-                type='submit'
-                fullWidth={false}
-                onClick={(e) => {
-                  e.preventDefault();
-                  deleteImage(image.id);
-                  handleClick();
-                }}
-              >
-                Delete  <RemoveCircleIcon />
-              </Button>
-            )} */}
-            {/* <br /> */}
             <div className="image-container">
             <img
               src={`/api/images/${image.largeImg}`}
@@ -99,7 +80,6 @@ const Gallery = (props) => {
             />
             {edit && (
               <Button
-                // sx={{ position: 'absolute'}}
                 className="delete-button"
                 id='delete-image'
                 variant="contained"
