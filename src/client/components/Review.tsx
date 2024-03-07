@@ -1,15 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { lazy, Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import { requireAuth } from './../utils/requireAuth';
 import {
-  Box,
   Button,
-  CancelIcon,
   Card,
   CardContent,
   CloseIcon,
   IconButton,
-  Modal,
   Rating,
   RemoveCircleIcon,
   Snackbar,
@@ -20,8 +17,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
+const CustomModal = lazy(() => import('./tourComponents/Modal'));
+
 const Review = ({review, getReviews }) => {
-  // set username on review
+  // state variables
   const [username, setUsername] = useState('');
   const [feedback, setFeedback] = useState(review.feedback);
   const [rating, setRating] = useState(review.rating);
@@ -29,6 +28,7 @@ const Review = ({review, getReviews }) => {
   const [openSB, setOpenSB] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<number | null>();
 
+  // modal handlers
   const handleOpen = () => {
     setOpen(true);
   };
@@ -36,7 +36,8 @@ const Review = ({review, getReviews }) => {
     setOpen(false);
     getReviews();
   };
-
+  
+  // snackbar handlers
   const handleOpenSB = () => {
     setOpenSB(true);
   };
@@ -97,111 +98,90 @@ const Review = ({review, getReviews }) => {
 
 
   return (
-    <div>
-    <Card>
-      <CardContent>
-      <Typography variant="h6">{username}</Typography>
-      <Rating
-        name="read-only"
-        value={review.rating}
-        readOnly
-      />
-      <Typography variant="caption" display="block">{dayjs(review.createdAt).fromNow()}</Typography>
-      <Typography variant="body1">{review.feedback}</Typography>
-      {currentUserId === review.id_user? 
-        <div>
-        <Button
-          id='delete-review'
-          size='small'
-          type='submit'
-          fullWidth={false}
-          onClick={(e) => {
-            e.preventDefault();
-            deleteReview();
-            handleOpenSB();
-          }}
-        >
-          <RemoveCircleIcon />
-        </Button>
-        <Button
-          id='edit-review'
-          size='small'
-          type='submit'
-          fullWidth={false}
-          onClick={(e) => {
-            e.preventDefault();
-            handleOpen();
-          }}
-        >
-          Edit Review
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-        >
-          <Box
-            component="form"
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' },
-              border: 2,
-              bgcolor: 'white'
+    <div id="review">
+      <Card>
+        <CardContent>
+        <Typography variant="h6">{username}</Typography>
+        <Rating
+          name="read-only"
+          value={review.rating}
+          readOnly
+        />
+        <Typography variant="caption" display="block">{dayjs(review.createdAt).fromNow()}</Typography>
+        <Typography variant="body1">{review.feedback}</Typography>
+        {currentUserId === review.id_user?
+          <div>
+          <Button
+            id='delete-review'
+            size='small'
+            type='submit'
+            fullWidth={false}
+            onClick={(e) => {
+              e.preventDefault();
+              deleteReview();
+              handleOpenSB();
             }}
-            noValidate
-            autoComplete="off"
           >
-            <div>
-              <Rating
+            <RemoveCircleIcon />
+          </Button>
+          <Button
+            id='edit-review'
+            size='small'
+            type='submit'
+            fullWidth={false}
+            onClick={(e) => {
+              e.preventDefault();
+              handleOpen();
+            }}
+          >
+            Edit Review
+          </Button>
+          <CustomModal
+            openModal={open}
+            closeModal={handleClose}
+          >
+            <Rating
               name="no-value"
               value={rating}
               onChange={(event, newValue) => {
                 setRating(newValue);
               }}
-              />
-              <br />
-              <TextField
-                id="outlined-multiline-static"
-                // label="Multiline"
-                multiline
-                rows={4}
-                placeholder="Edit Your Review"
-                onChange={(event) => {
-                  event.preventDefault();
-                  setFeedback(event.target.value);
-                  // console.log(event.target.value);
-                }}
-              />
-              <Button
-                id='edit-review'
-                size='small'
-                type='submit'
-                fullWidth={false}
-                onClick={(e) => {
-                  e.preventDefault();
-                  // open edit modal
-                  updateReview();
-                  handleClose();
-                }}
-              >
-                Update Review
-              </Button>
-              <Button
-                variant='outlined'
-                size='small'
-                color='secondary'
-                startIcon={<CancelIcon />}
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </div>
-          </Box>
-        </Modal>
-        </div>
-        : null
-      }
-      </CardContent>
-    </Card>
-      <Snackbar 
+            />
+            <br />
+            <TextField
+              id="outlined-multiline-static"
+              multiline
+              rows={4}
+              placeholder="Edit Your Review"
+              margin="normal"
+              onChange={(event) => {
+                event.preventDefault();
+                setFeedback(event.target.value);
+              }}
+            />
+            <br />
+            <Button
+              id='edit-review'
+              size='small'
+              type='submit'
+              variant="contained"
+              fullWidth={false}
+              onClick={(e) => {
+                e.preventDefault();
+                // open edit modal
+                updateReview();
+                handleClose();
+              }}
+            >
+              Update Review
+            </Button>
+          </CustomModal>
+          </div>
+          : null
+        }
+        </CardContent>
+      </Card>
+      <Snackbar
         open={openSB}
         autoHideDuration={5000}
         onClose={handleCloseSB}
