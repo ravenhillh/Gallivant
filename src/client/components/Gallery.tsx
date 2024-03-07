@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Button, 
-  RemoveCircleIcon, 
+  CancelIcon,
   CloseIcon,
   IconButton,
   Snackbar,
@@ -71,17 +71,19 @@ const Gallery = (props) => {
       {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
       <ImageList>
         {images.map((image) => (
-          <li key={`${image.id}`}>
+          <li className="image-list" key={`${image.id}`}>
+            <div className="image-container">
             <img
               src={`/api/images/${image.largeImg}`}
-              style={{ width: '250px', height: 'auto' }}
             />
             {edit && (
               <Button
+                className="delete-button"
                 id='delete-image'
-                // variant="contained"
+                variant="contained"
                 size='small'
                 type='submit'
+                color="error"
                 fullWidth={false}
                 onClick={(e) => {
                   e.preventDefault();
@@ -89,13 +91,14 @@ const Gallery = (props) => {
                   handleClick();
                 }}
               >
-                Delete  <RemoveCircleIcon />
+                <CancelIcon />
               </Button>
             )}
+            </div>
           </li>
         ))}
       </ImageList>
-      <Snackbar 
+      <Snackbar
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}
