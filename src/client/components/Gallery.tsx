@@ -1,7 +1,6 @@
 import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Button, 
-  RemoveCircleIcon,
   CancelIcon,
   CloseIcon,
   IconButton,
@@ -72,11 +71,10 @@ const Gallery = (props) => {
       {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
       <ImageList>
         {images.map((image) => (
-          <li key={`${image.id}`}>
+          <li className="image-list" key={`${image.id}`}>
             <div className="image-container">
             <img
               src={`/api/images/${image.largeImg}`}
-              style={{ width: '100%' }}
             />
             {edit && (
               <Button

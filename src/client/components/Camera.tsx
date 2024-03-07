@@ -128,7 +128,7 @@ function Camera(props): JSX.Element {
   );
 
   return (
-    <div>
+    <div className="camera-container">
       <br />
       <input
         type='file'
@@ -154,7 +154,9 @@ function Camera(props): JSX.Element {
         </Button>
       }
       <br />
-      <img src={image} style={{ width: '250px', height: 'auto' }} />
+      <div className="image-container">
+        <img src={image} />
+      </div>
       <Snackbar
         open={open}
         autoHideDuration={5000}

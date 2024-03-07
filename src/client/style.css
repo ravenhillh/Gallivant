@@ -52,11 +52,23 @@ body {
   /* padding: 200px; */
 }
 
+.camera-container {
+  max-width: 600px;
+  min-width: 350px;
+}
+
+.image-list {
+  max-width: 600px;
+  min-width: 350px;
+}
+
 .image-container {
   position: relative;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  min-width: 300px;
+  padding: 1em;
 }
 
 .image-container img {
@@ -66,7 +78,7 @@ body {
 .image-container .delete-button{
   position: absolute;
 	border-radius: 16px;
-	top: 10%;
+	top: 15%;
 	left: 85%;
   transform: translate(-50%, -50%); 
   -ms-transform: translate(-50%, -50%);
