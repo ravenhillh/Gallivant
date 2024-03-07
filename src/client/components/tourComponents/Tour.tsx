@@ -279,12 +279,16 @@ const Tour = (): JSX.Element => {
         >
           <Grid item>
             {rating && (
-              <Rating
-                name='read-only'
-                value={rating}
-                precision={0.25}
-                readOnly
-              />
+              <div>
+                <Rating
+                  name='read-only'
+                  value={rating}
+                  precision={0.25}
+                  readOnly
+                />
+                <br />
+                <a href="#reviews">Read Reviews</a>
+              </div>
             )}
           </Grid>
           <Grid item>
