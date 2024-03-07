@@ -98,7 +98,7 @@ const Review = ({review, getReviews }) => {
 
 
   return (
-    <div>
+    <div id="review">
       <Card>
         <CardContent>
         <Typography variant="h6">{username}</Typography>
@@ -109,7 +109,7 @@ const Review = ({review, getReviews }) => {
         />
         <Typography variant="caption" display="block">{dayjs(review.createdAt).fromNow()}</Typography>
         <Typography variant="body1">{review.feedback}</Typography>
-        {currentUserId === review.id_user? 
+        {currentUserId === review.id_user?
           <div>
           <Button
             id='delete-review'

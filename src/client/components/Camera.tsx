@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useRef, Fragment } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, 
-  AddAPhotoIcon, 
+import { Button,
+  AddAPhotoIcon,
   CameraAltIcon,
   CloseIcon,
   IconButton,
@@ -61,7 +61,6 @@ function Camera(props): JSX.Element {
       .post('/api/images', {
         imageName: name,
         base64: imageData,
-        // tour/waypoint/etc id, coming from props
       })
       .then(({ data }) => {
         postDb(data);

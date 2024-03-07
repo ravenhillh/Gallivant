@@ -27,8 +27,8 @@ const Reviews = ({ id, open }) => {
 
   // console.log(average);
   return (
-    <div>
-      <h2>Reviews</h2>
+    <div id="reviews">
+      <h2 style={{ fontWeight: 'bold'}}>Reviews</h2>
       <List>
       { reviews &&
         reviews.map((review, index) => (

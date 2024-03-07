@@ -83,3 +83,8 @@ body {
   transform: translate(-50%, -50%); 
   -ms-transform: translate(-50%, -50%);
 }
+
+#reviews {
+  margin: 1em;
+  align-items: center;
+}
