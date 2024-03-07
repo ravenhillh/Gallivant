@@ -141,15 +141,15 @@ function Camera(props): JSX.Element {
         image ?
         <div>
         <Button onClick={handleClick}>
-          <AddAPhotoIcon /> Post Photo
+          <AddAPhotoIcon />&nbsp;Post Photo
         </Button>
         <Button type='button' onClick={() => envInputRef.current!.click()}>
-          <CameraAltIcon /> Change Photo
+          <CameraAltIcon />&nbsp;Change Photo
         </Button>
         </div>
         :
         <Button type='button' onClick={() => envInputRef.current!.click()}>
-          <CameraAltIcon /> Add Photo
+          <CameraAltIcon />&nbsp;Add Photo
         </Button>
       }
       <br />
