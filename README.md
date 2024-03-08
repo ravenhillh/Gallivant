@@ -92,9 +92,19 @@ You will need to set up cloud storage with s3 for image hosting (you will need a
 10. You will need to assign this policy to a User, so click on Users under Access Management. Click 'Add User'. Set a user name under 'Set User Details,' then select 'Programmatic Access' for Access Type.
 11. Next, go to Set Permissions, and click 'Attach Existing Policies Directly,' Search for the policy you just created, click the check box, and click Next. Click through until you get to Review, the click on 'Create the User.' This will bring you to a Success page which will give you your Access Key Id and Secret Access Key, copy them and add them to your .env in the appropriate places. And you're done!
 
----
+# Get an access token for Mapbox
 
-## **Run Tests**
+Gallivant uses the Mapbox API for embedding maps in the application, as well as using their directions API for providing users with directions in the current tour feature.
+
+1. First go to the Mapbox website and sign up for a free account. https://www.mapbox.com/
+2. Then on the user dashboard look for the access tokens section, and click create a token.
+3. When creating the token you do not have to choose any specific scopes or URLs, you can just create token. Now your access token will be listed on the dashboard under access tokens.
+4. You can copy it from there and paste it into the repo. The token will be used in Map.tsx, MapView.tsx and CurrentMap.tsx.
+
+The free tier allows 50,000 map loads, and 100,000 requests to the directions API, which
+will be plenty for the development stage.
+
+# Run Tests
 
 `npm run test`
 

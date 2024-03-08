@@ -117,9 +117,9 @@ const Chat = ({ socket }) => {
 
   return (
     <div>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h5" className="header-message" align="center">
+      <Grid container className='chats'>
+        <Grid item xs={12} className='chat-header'>
+          <Typography variant="h5" align="center" >
             Room: {name}
           </Typography>
         </Grid>
