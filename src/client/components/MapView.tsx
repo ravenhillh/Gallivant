@@ -152,7 +152,7 @@ function MapView(): JSX.Element {
   const style = {
     p: 0,
     width: '100%',
-    maxWidth: 400,
+    height: '100%',
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
@@ -161,48 +161,82 @@ function MapView(): JSX.Element {
 
   const showTours = () => {
     return tours.length ? (
-      <div>
-        <List sx={style} aria-label="tour details">
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <InsightsIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].tourName} />
-          </ListItem>
-          <Divider component="li" />
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <BubbleChartIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].category} />
-          </ListItem>
-          <Divider component="li" />
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <DirectionsWalkIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={tours[0].description} />
-          </ListItem>
-          <Divider component="li" />
-          <ListItem>
-            <Button variant="outlined" onClick={() => routeToTour(tours[0].id)}>
-              View Tour
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
-            >
-              Tour Chat
-            </Button>
-          </ListItem>
-        </List>
-      </div>
+        <Grid className="show-tours" container>
+          <Grid className="map-details" item>
+            <List sx={style} aria-label="tour details">
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <InsightsIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].tourName} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <BubbleChartIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].category} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <DirectionsWalkIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={tours[0].description} />
+              </ListItem>
+              <Divider component="li" />
+              <ListItem>
+                <Button
+                  className="map-buttons"
+                  variant="outlined"
+                  onClick={() => routeToTour(tours[0].id)}
+                >
+                  View Tour
+                </Button>
+                <Button
+                  className="map-buttons"
+                  variant="outlined"
+                  onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
+                >
+                  Tour Chat
+                </Button>
+              </ListItem>
+            </List>
+          </Grid>
+          {image.length === 0 ? (
+            ''
+          ) : (
+              <Grid className="map-details" item>
+                <List sx={style}>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <ImageIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={'Images'} />
+                  </ListItem>
+                  <Divider component="li" />
+                  <ListItem>
+                    <Card>
+                      <CardContent>
+                        <img
+                          src={`/api/images/${image[0].largeImg}`}
+                          style={{ width: 'auto', height: '180px' }}
+                        />
+                      </CardContent>
+                    </Card>
+                  </ListItem>
+                </List>
+              </Grid>
+          )}
+        </Grid>
     ) : (
       ''
     );
@@ -224,12 +258,12 @@ function MapView(): JSX.Element {
   return (
     <div>
       <Typography mt={2} variant="h3" fontWeight="bold" align="center">
-        Map View
+        Browse Tours
       </Typography>
       {tours.length === 0 ? (
-         <List>
-           <Divider component="li" />
-           <ListItem>
+        <List>
+          <Divider component="li" />
+          <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <DirectionsWalkIcon />
@@ -238,54 +272,22 @@ function MapView(): JSX.Element {
             <ListItemText primary="explore the different tours in your area!" />
           </ListItem>
           <Divider component="li" />
-         </List>
+        </List>
       ) : (
         ''
       )}
       <div>
-        <div>{showTours()}</div>
         <div
           style={{ height: '400px' }}
           ref={mapContainer}
           className="map-container"
         ></div>
       </div>
-      <List>
-        {image.length === 0 ? (
-          ''
-        ) : (
-          <div>
-            <Divider component="li" />
-            <ListItem>
-              <Grid container>
-                <Grid item xs={3}>
-                  <Typography variant="h6" fontWeight="bold">
-                    Images
-                  </Typography>
-                </Grid>
-                <Grid item xs={9} align="right">
-                  <ImageIcon />
-                </Grid>
-              </Grid>
-            </ListItem>
-            <Divider component="li" />
-          </div>
-        )}
-        <ListItem>
-          {image.length === 0 ? (
-            ''
-          ) : (
-            <Card>
-              <CardContent>
-                <img
-                  src={`/api/images/${image[0].largeImg}`}
-                  style={{ width: 'auto', height: '180px' }}
-                />
-              </CardContent>
-            </Card>
-          )}
-        </ListItem>
-      </List>
+      <Grid container>
+        <Grid xs={12} item>
+          <div>{showTours()}</div>
+        </Grid>
+      </Grid>
     </div>
   );
 }

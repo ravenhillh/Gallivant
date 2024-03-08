@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Cypress Tests
 
 on:
   push:
@@ -8,16 +8,16 @@ on:
     types: [opened, reopened]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  cypress-run:
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
         with:
-          node-version: '20.x'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+          build: npm run build
+          start: npm start
+          browser: chrome
