@@ -37,6 +37,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import InsightsIcon from '@mui/icons-material/Insights';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -105,6 +106,7 @@ export {
   InputAdornment,
   InputLabel,
   InsightsIcon,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
