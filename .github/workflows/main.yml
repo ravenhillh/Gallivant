@@ -20,3 +20,4 @@ jobs:
         with:
           build: npm run build
           start: npm start
+          command: npm test
