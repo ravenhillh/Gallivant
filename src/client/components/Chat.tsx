@@ -116,10 +116,10 @@ const Chat = ({ socket }) => {
   };
 
   return (
-    <div>
-      <Grid container className='chats'>
-        <Grid item xs={12} className='chat-header'>
-          <Typography variant="h5" align="center" >
+    <div className='chat-container'>
+      <Grid container className='chat-header'>
+        <Grid item xs={12}>
+          <Typography variant="h5" align="center">
             Room: {name}
           </Typography>
         </Grid>

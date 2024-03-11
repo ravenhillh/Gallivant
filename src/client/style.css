@@ -98,8 +98,10 @@ body {
 
 .chat-header {
   position: sticky;
-  position: -webkit-sticky;
-  top: 10px;
-  min-width: auto;
-  z-index: 5;
+  top: 5px;
+}
+
+.chat-container {
+  height: 20px;
+  align-items: flex-start;
 }
