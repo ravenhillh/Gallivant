@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import {
-  Box,
   Button,
-  CancelIcon,
   TextField,
   Rating,
   SendIcon,
@@ -38,6 +36,7 @@ const CreateReview = ({ tourId, handleClose }) => {
       <br />
       <TextField
         id="outlined-multiline-static"
+        sx={{ width: '100%' }}
         multiline
         rows={4}
         placeholder="Leave a Review"
@@ -50,6 +49,7 @@ const CreateReview = ({ tourId, handleClose }) => {
       <br />
       <Button
         type="submit"
+        sx={{ marginBottom: '10px'}}
         variant="contained"
         endIcon={<SendIcon />}
         onClick={(e) => {
@@ -58,7 +58,7 @@ const CreateReview = ({ tourId, handleClose }) => {
           handleClose();
         }}
       >
-        Send
+        Post Review
       </Button>
     </div>
   );

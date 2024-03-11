@@ -140,6 +140,7 @@ const Review = ({review, getReviews }) => {
             openModal={open}
             closeModal={handleClose}
           >
+            <Typography sx={{ opacity: '0.5'}}>Edit Rating</Typography>
             <Rating
               name="no-value"
               value={rating}
@@ -150,6 +151,7 @@ const Review = ({review, getReviews }) => {
             <br />
             <TextField
               id="outlined-multiline-static"
+              sx={{ width: '100%' }}
               multiline
               rows={4}
               placeholder="Edit Your Review"
@@ -163,6 +165,7 @@ const Review = ({review, getReviews }) => {
             <Button
               id='edit-review'
               size='small'
+              sx={{ marginRight: '10px '}}
               type='submit'
               variant="contained"
               fullWidth={false}

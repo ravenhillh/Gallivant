@@ -337,8 +337,6 @@ const Tour = (): JSX.Element => {
           <CustomModal
             openModal={open}
             closeModal={handleClose}
-            // aria-labelledby='modal-modal-title'
-            // aria-describedby='modal-modal-description'
           >
             <Suspense fallback={<>Loading...</>}>
               <CreateReview tourId={tour?.id} handleClose={handleClose} />
