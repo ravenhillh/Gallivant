@@ -61,7 +61,11 @@ imageRouter.delete('/:imageId', (req, res) => {
   const { imageId } = req.params;
 
   Image.destroy({ where: { id: imageId}})
-    .catch((err:string) => console.error('Could not delete image from db ', err));
+    .then(() => res.sendStatus(200))
+    .catch((err:string) => {
+      console.error('Could not delete image from db ', err);
+      res.sendStatus(500);
+    });
 });
 
 export default imageRouter;
