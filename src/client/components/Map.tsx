@@ -102,7 +102,7 @@ function Map(props: MapProps): JSX.Element {
       const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
 
       const marker1 = new mapboxgl.Marker({
-        color: 'blue',
+        color: '#2196f3',
         draggable: false,
       })
         .setLngLat([Number(marker.long), Number(marker.lat)])

@@ -95,10 +95,10 @@ const Tours = (): JSX.Element => {
         container
         direction='row'
         justifyContent='space-between'
-        alignItems='flex-end'
+        alignItems='center'
       >
         <Grid item>
-          <Typography fontWeight='bold' variant='h2'>
+          <Typography fontSize='48px' fontWeight='bold' variant='h2'>
             Tours
           </Typography>
         </Grid>
