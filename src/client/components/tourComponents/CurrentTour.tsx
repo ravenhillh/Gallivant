@@ -38,6 +38,44 @@ const CurrentTour = (): JSX.Element => {
       );
   };
 
+  //click handler for forward (1) or backward (-1)
+  const positionClickHandler = (direction) => {
+    setCurrentWP((prev) => {
+      updatePosition(prev + direction);
+      return prev + direction;
+    });
+  };
+
+  const forwardClick = () => {
+    positionClickHandler(1);
+  };
+
+  const ForwardFab = (
+    <Fab
+      disabled={currentWP === waypoints.length - 1}
+      size='small'
+      onClick={forwardClick}
+      aria-label='next waypoint'
+    >
+      <ChevronRightIcon />
+    </Fab>
+  );
+
+  const backwardClick = () => {
+    positionClickHandler(-1);
+  };
+
+  const BackwardFab = (
+    <Fab
+      disabled={currentWP === 0}
+      size='small'
+      onClick={backwardClick}
+      aria-label='previous waypoint'
+    >
+      <ChevronLeftIcon />
+    </Fab>
+  );
+
   const passInstructions = (instructions: JSX.Element | null) => {
     setInstructions(instructions);
   };
@@ -68,35 +106,14 @@ const CurrentTour = (): JSX.Element => {
         justifyContent='space-around'
         alignItems='center'
       >
-        <Fab
-          disabled={currentWP === 0}
-          size='small'
-          onClick={() => {
-            setCurrentWP((prev) => {
-              updatePosition(prev - 1);
-              return prev - 1;
-            });
-          }}
-          aria-label='previous waypoint'
-        >
-          <ChevronLeftIcon />
-        </Fab>
         <Suspense fallback={<>Loading...</>}>
-          <CurrentWaypoint edit={false} waypoint={waypoints[currentWP]} />
+          <CurrentWaypoint
+            edit={false}
+            waypoint={waypoints[currentWP]}
+            forwardFab={ForwardFab}
+            backwardFab={BackwardFab}
+          />
         </Suspense>
-        <Fab
-          disabled={currentWP === waypoints.length - 1}
-          size='small'
-          onClick={() => {
-            setCurrentWP((prev) => {
-              updatePosition(prev + 1);
-              return prev + 1;
-            });
-          }}
-          aria-label='next waypoint'
-        >
-          <ChevronRightIcon />
-        </Fab>
       </Grid>
 
       <Grid
@@ -110,6 +127,7 @@ const CurrentTour = (): JSX.Element => {
           startIcon={<DirectionsWalkIcon />}
           disabled={instructions === null}
           onClick={() => setInstructionModal(true)}
+          sx={{ margin: '1rem' }}
         >
           Directions
         </Button>
@@ -117,6 +135,7 @@ const CurrentTour = (): JSX.Element => {
           variant='contained'
           startIcon={<SendIcon />}
           onClick={() => routeToChat(tour?.id, tour?.tourName)}
+          sx={{ margin: '1rem' }}
         >
           Chat
         </Button>
@@ -136,10 +155,12 @@ const CurrentTour = (): JSX.Element => {
         justifyContent='space-evenly'
         alignItems='center'
       >
-        <Typography fontWeight='bold' variant='h5'>
+        <Typography fontSize='18px' fontWeight='bold' variant='h5'>
           {`${tour?.tourName}: `}
         </Typography>
-        <Typography variant='h5'>{tour?.description}</Typography>
+        <Typography fontSize='16px' variant='h5'>
+          {tour?.description}
+        </Typography>
       </Grid>
 
       <Button
