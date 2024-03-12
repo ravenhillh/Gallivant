@@ -3,6 +3,7 @@ import { useParams, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+  AutoStoriesIcon,
   Button,
   AddIcon,
   CancelIcon,
@@ -287,9 +288,38 @@ const Tour = (): JSX.Element => {
                   readOnly
                 />
                 <br />
-                <a href="#reviews">Read Reviews</a>
+                <Button
+                  startIcon={<AutoStoriesIcon />}
+                  variant='contained'
+                  color='primary'
+                  sx={{ marginBottom: '5px'}}
+                >
+                  <a
+                    style={{ color: 'white', textDecoration: 'none'}}
+                    href="#reviews">Read Reviews
+                  </a>
+                </Button>
               </div>
             )}
+             {edit ? null : (
+            <Button
+              startIcon={<AddIcon />}
+              variant='contained'
+              color='primary'
+              onClick={handleOpen}
+              sx={{ width: '100%'}}
+            >
+              Add Review
+            </Button>
+            )}
+            <CustomModal
+              openModal={open}
+              closeModal={handleClose}
+            >
+             <Suspense fallback={<>Loading...</>}>
+                < CreateReview tourId={tour?.id} handleClose={handleClose} />
+              </Suspense>
+            </CustomModal>
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold' gutterBottom>
@@ -324,25 +354,6 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          {edit ? null : (
-            <Button
-              startIcon={<AddIcon />}
-              variant='contained'
-              color='primary'
-              onClick={handleOpen}
-            >
-              Add Review
-            </Button>
-          )}
-          <CustomModal
-            openModal={open}
-            closeModal={handleClose}
-          >
-            <Suspense fallback={<>Loading...</>}>
-              <CreateReview tourId={tour?.id} handleClose={handleClose} />
-            </Suspense>
-          </CustomModal>
-          {/* <br /> */}
           {edit && (
             <Button
               startIcon={<AddIcon />}
