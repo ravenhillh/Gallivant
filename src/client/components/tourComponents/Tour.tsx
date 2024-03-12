@@ -252,7 +252,13 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Typography variant='h2' fontWeight='bold' fontSize='36px' gutterBottom>
+          <Typography 
+            variant='h2' 
+            fontWeight='bold' 
+            // fontSize='36px' 
+            gutterBottom
+            sx={{ fontSize: { xs: '24px', lg: '42px'}}}
+            >
             {tour?.tourName}
           </Typography>
           <Typography variant='body1'>

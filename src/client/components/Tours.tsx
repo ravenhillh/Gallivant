@@ -98,7 +98,12 @@ const Tours = (): JSX.Element => {
         alignItems='center'
       >
         <Grid item>
-          <Typography fontSize='48px' fontWeight='bold' variant='h2'>
+          <Typography 
+            fontSize='48px' 
+            fontWeight='bold' 
+            variant='h2'
+            sx={{ fontSize: { xs: '40px', lg: '48px'}}}
+          >
             Tours
           </Typography>
         </Grid>
