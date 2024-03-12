@@ -251,10 +251,10 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Typography variant='h2' fontWeight='bold' gutterBottom>
+          <Typography variant='h2' fontWeight='bold' fontSize='36px' gutterBottom>
             {tour?.tourName}
           </Typography>
-          <Typography variant='body1' gutterBottom>
+          <Typography variant='body1'>
             {tour?.description}
           </Typography>
           {user.username === creator ? (
@@ -266,7 +266,7 @@ const Tour = (): JSX.Element => {
               Edit Tour
             </Button>
           ) : (
-            <Typography variant='caption' gutterBottom>
+            <Typography variant='caption'>
               Created by: {creator}
             </Typography>
           )}
@@ -292,7 +292,7 @@ const Tour = (): JSX.Element => {
             )}
           </Grid>
           <Grid item>
-            <Typography variant='h5' fontWeight='bold' gutterBottom>
+            <Typography variant='h5' fontWeight='bold'>
               <Link to={`/tours/${tour?.category}`}>
                 {tour?.category?.toUpperCase()}
               </Link>
@@ -363,7 +363,7 @@ const Tour = (): JSX.Element => {
           justifyContent='center'
           alignItems='baseline'
         >
-          <Typography variant='h3' gutterBottom>
+          <Typography variant='h3' fontWeight='bold' fontSize='28px'>
             Waypoints
           </Typography>
         </Grid>
