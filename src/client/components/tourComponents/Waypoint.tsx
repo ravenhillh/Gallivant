@@ -77,7 +77,14 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   };
 
   return (
-    <Card>
+    <Card
+      className='waypoint-card'
+      sx={{
+        backgroundColor: 'aliceblue',
+        boxShadow:
+          '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
+      }}
+    >
       <Grid
         container
         direction='row'
