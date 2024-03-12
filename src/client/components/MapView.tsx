@@ -257,7 +257,13 @@ function MapView(): JSX.Element {
 
   return (
     <div>
-      <Typography mt={2} variant="h3" fontWeight="bold" align="center">
+      <Typography 
+        mt={2} 
+        variant="h3" 
+        fontWeight="bold" 
+        align="center"
+        sx={{ fontSize: { xs: '40px', lg: '60px'}}}
+      >
         Browse Tours
       </Typography>
       {tours.length === 0 ? (

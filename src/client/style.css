@@ -41,7 +41,6 @@ body {
 
 .image-container {
   position: relative;
-  /* align-items: center; */
   width: 100%;
   max-width: 500px;
   min-width: 300px;
@@ -49,7 +48,9 @@ body {
 }
 
 .image-container img {
-  width: 100%
+  max-width: 100%;
+  height: auto;
+
 }
 
 .image-container .delete-button{

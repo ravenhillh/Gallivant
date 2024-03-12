@@ -98,7 +98,7 @@ const Tours = (): JSX.Element => {
         alignItems='flex-end'
       >
         <Grid item>
-          <Typography fontWeight='bold' variant='h2'>
+          <Typography fontWeight='bold' variant='h2' sx={{ fontSize: { xs: '40px', lg: '60px'}}}>
             Tours
           </Typography>
         </Grid>

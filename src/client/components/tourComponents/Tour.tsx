@@ -40,18 +40,18 @@ type User = {
   currentPosition: number;
 };
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-// Read review button, launches review page or modal
+// const style = {
+//   position: 'absolute' as 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4,
+// };
+// // Read review button, launches review page or modal
 
 const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
@@ -252,7 +252,12 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Typography variant='h2' fontWeight='bold' gutterBottom>
+          <Typography 
+            variant='h2' 
+            fontWeight='bold'
+            sx={{ fontSize: { xs: '30px', lg: '50px'}}}
+            gutterBottom
+          >
             {tour?.tourName}
           </Typography>
           <Typography variant='body1' gutterBottom>
