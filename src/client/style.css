@@ -10,7 +10,11 @@
 }
 
 body {
-  background-color: #fdfdfd;
+  /* background-color: #fdfdfd; */
+  background: rgb(240, 255, 246);
+  background:linear-gradient(to bottom right, #c9dcf0, #e4fbd2 );
+/* background: linear-gradient(270deg, rgb(198, 253, 219) 0%, rgb(202, 238, 255) 100%); */
+
 }
 
 #delete-image {
