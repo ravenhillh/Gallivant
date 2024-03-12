@@ -103,13 +103,18 @@ function MapView(): JSX.Element {
   //get tours by waypoint id
   const getTours = (id: string | undefined) => {
     axios(`maps/tours/${id}`)
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         setTours(data);
+        const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+        console.log(waypoints);
       })
       .catch((err) => console.log(err));
   };
   //get images for one tour/waypoint
-  const getTourImage = (waypointId) => {
+  //get all waypoints for tour - '/db/tourWaypoints/:tourId'
+  //send each waypoint request
+  //add each image object to image state array
+  const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
         console.log(data);

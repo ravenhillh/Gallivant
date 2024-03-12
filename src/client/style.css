@@ -88,10 +88,37 @@ body {
 
 .chat-header {
   position: sticky;
-  top: 5px;
+  top: 20px;
+  bottom: 10px;
+  height: 75px;
+  display: table-cell;
+  vertical-align: bottom;
 }
 
-.chat-container {
-  height: 20px;
-  align-items: flex-start;
+@media screen and (min-width: 800px) {
+  .chat-container {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+.message-text {
+  margin-top: 15px;
+  line-height: .5;
+}
+
+.message-username {
+  line-height: .25;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.message-time {
+  line-height: .25;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.message-container {
+  line-height: 0;
 }

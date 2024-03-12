@@ -115,16 +115,18 @@ const Chat = ({ socket }) => {
   setOpen(false);
   };
 
+  const style = {
+  lineHeight: .25,
+  marginTop: 0,
+  marginBottom: 0
+  };
+
   return (
     <div className='chat-container'>
-      <Grid container className='chat-header'>
-        <Grid item xs={12}>
-          <Typography variant="h5" align="center">
+      <Typography variant="h5" align="center" className='chat-header'>
             Room: {name}
-          </Typography>
-        </Grid>
-      </Grid>
-      <div className="message-container">
+            </Typography>
+      <div >
           <List>
             {messages.map((message: Message, i) => {
               return (
@@ -134,18 +136,21 @@ const Chat = ({ socket }) => {
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
                         primary={message.message}
+                        sx={style}
                       ></ListItemText>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
                         secondary={message.username}
+                        sx={style}
                       ></ListItemText>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12}  >
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
                         secondary={dayjs(message.createdAt).fromNow()}
+                        sx={style}
                       ></ListItemText>
                     </Grid>
                   </Grid>
