@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CloseIcon,
+  EditIcon,
   IconButton,
   Rating,
   RemoveCircleIcon,
@@ -107,8 +108,19 @@ const Review = ({review, getReviews }) => {
           value={review.rating}
           readOnly
         />
-        <Typography variant="caption" display="block">{dayjs(review.createdAt).fromNow()}</Typography>
-        <Typography variant="body1">{review.feedback}</Typography>
+        <Typography 
+          variant="caption" 
+          display="block"
+          sx={{ opacity: '0.5'}}
+        >
+          {dayjs(review.createdAt).fromNow()}
+        </Typography>
+        <Typography 
+          variant="body1"
+          sx={{ marginTop: '10px', marginBottom: '10px' }}
+        >
+          {review.feedback}
+        </Typography>
         {currentUserId === review.id_user?
           <div>
           <Button
@@ -116,13 +128,14 @@ const Review = ({review, getReviews }) => {
             size='small'
             type='submit'
             fullWidth={false}
+            sx={{ marginRight: '5px' }}
             onClick={(e) => {
               e.preventDefault();
               deleteReview();
               handleOpenSB();
             }}
           >
-            <RemoveCircleIcon />
+            <RemoveCircleIcon />&nbsp;Delete
           </Button>
           <Button
             id='edit-review'
@@ -134,7 +147,7 @@ const Review = ({review, getReviews }) => {
               handleOpen();
             }}
           >
-            Edit Review
+            <EditIcon />&nbsp;Edit
           </Button>
           <CustomModal
             openModal={open}
