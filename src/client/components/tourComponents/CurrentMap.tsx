@@ -147,7 +147,7 @@ function CurrentMap(props: MapProps): JSX.Element {
 
     showMarkers(waypoints.slice(0, currentWP), 'gray');
     showMarkers([waypoints[currentWP]], 'gold');
-    showMarkers(waypoints.slice(currentWP + 1), 'blue');
+    showMarkers(waypoints.slice(currentWP + 1), '#2196f3');
 
     map.current?.flyTo({
       center: [currentWPlong, currentWPlat],
