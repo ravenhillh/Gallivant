@@ -8,22 +8,25 @@ type CustomModal = {
 };
 
 const style = {
-  position: 'sticky',
+  position: 'relative',
   my: '4',
-  width: '80%',
-  alignItems: 'center',
+  width: '88%',
+  maxWidth: '500px',
+  height: 'fit-content',
   top: '10%',
-  left: '10%',
   gap: '4',
-  p: '2',
-  // transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
-  border: '3px solid #222',
-  borderRadius: 2,
+  borderRadius: 3,
   boxShadow: 24,
   pt: 3,
   px: 5,
   pb: 3,
+};
+
+const containerStyle = {
+  display: 'flex',
+  alignItems: '10%',
+  justifyContent: 'center',
 };
 
 function CustomModal(
@@ -32,8 +35,8 @@ function CustomModal(
   const { openModal, closeModal, children } = props;
 
   return (
-    <Modal open={openModal} onClose={closeModal}>
-      <Box sx={{ ...style }}>
+    <Modal sx={containerStyle} open={openModal} onClose={closeModal}>
+      <Box sx={style}>
         {children}
         <Button
           variant='outlined'
