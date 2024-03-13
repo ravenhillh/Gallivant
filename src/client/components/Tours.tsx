@@ -27,7 +27,6 @@ type Tour = {
 
 const Tours = (): JSX.Element => {
   const { cat } = useParams();
-  const navigate = useNavigate();
   const [tours, setTours] = useState<Tour[]>([]);
 
   // state for creating a new Tour
@@ -95,11 +94,10 @@ const Tours = (): JSX.Element => {
         alignItems='center'
       >
         <Grid item>
-          <Typography 
-            fontSize='48px' 
-            fontWeight='bold' 
+          <Typography
+            fontWeight='bold'
             variant='h2'
-            sx={{ fontSize: { xs: '40px', md: '44px', lg: '48px'}}}
+            sx={{ fontSize: { xs: '40px', md: '44px', lg: '48px' } }}
           >
             Tours
           </Typography>
@@ -119,9 +117,7 @@ const Tours = (): JSX.Element => {
 
       <List>
         {tours.map((tour, i) => {
-          return (
-            <TourLink key={i} tour={tour} />
-          );
+          return <TourLink key={i} tour={tour} />;
         })}
       </List>
 

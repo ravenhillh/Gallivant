@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { 
+import {
   ExploreIcon,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Rating
+  Rating,
 } from '../utils/material';
 
-
-const TourLink = ({tour}) => {
+const TourLink = ({ tour }) => {
+  const navigate = useNavigate();
   const [rating, setRating] = useState<number>(0);
 
   const getTourRating = (id) => {
@@ -28,13 +28,16 @@ const TourLink = ({tour}) => {
 
   return (
     <ListItem>
-      <ListItemIcon>
+      <ListItemIcon
+        onClick={() => navigate(`/tour/${tour.id}`)}
+        sx={{ cursor: 'pointer', color: '#2196f3', minWidth: '33px' }}
+      >
         <ExploreIcon />
       </ListItemIcon>
       <ListItemText
         primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
         secondary={tour.description}
-        sx={{ maxWidth: '150px'}}
+        sx={{ maxWidth: '150px' }}
       />
       <br />
       {rating && (
@@ -46,7 +49,7 @@ const TourLink = ({tour}) => {
             size="small"
             readOnly
           />
-          </div>
+        </div>
       )}
     </ListItem>
   );
