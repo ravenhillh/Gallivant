@@ -3,6 +3,7 @@ import { useParams, Link, useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+  AutoStoriesIcon,
   Button,
   AddIcon,
   CancelIcon,
@@ -39,18 +40,18 @@ type User = {
   currentPosition: number;
 };
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-// Read review button, launches review page or modal
+// const style = {
+//   position: 'absolute' as 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4,
+// };
+// // Read review button, launches review page or modal
 
 const Tour = (): JSX.Element => {
   // useParam hook to retrieve specific Tour
@@ -251,7 +252,13 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Typography variant='h2' fontWeight='bold' fontSize='36px' gutterBottom>
+          <Typography 
+            variant='h2' 
+            fontWeight='bold' 
+            // fontSize='36px' 
+            gutterBottom
+            sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px'}}}
+            >
             {tour?.tourName}
           </Typography>
           <Typography variant='body1'>
@@ -287,9 +294,38 @@ const Tour = (): JSX.Element => {
                   readOnly
                 />
                 <br />
-                <a href="#reviews">Read Reviews</a>
+                <Button
+                  startIcon={<AutoStoriesIcon />}
+                  variant='contained'
+                  color='primary'
+                  sx={{ marginBottom: '5px'}}
+                >
+                  <a
+                    style={{ color: 'white', textDecoration: 'none'}}
+                    href="#reviews">Read Reviews
+                  </a>
+                </Button>
               </div>
             )}
+             {edit ? null : (
+            <Button
+              startIcon={<AddIcon />}
+              variant='contained'
+              color='primary'
+              onClick={handleOpen}
+              sx={{ width: '100%'}}
+            >
+              Add Review
+            </Button>
+            )}
+            <CustomModal
+              openModal={open}
+              closeModal={handleClose}
+            >
+             <Suspense fallback={<>Loading...</>}>
+                < CreateReview tourId={tour?.id} handleClose={handleClose} />
+              </Suspense>
+            </CustomModal>
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold'>
@@ -324,27 +360,6 @@ const Tour = (): JSX.Element => {
           justifyContent='flex-end'
           alignItems='baseline'
         >
-          {edit ? null : (
-            <Button
-              startIcon={<AddIcon />}
-              variant='contained'
-              color='primary'
-              onClick={handleOpen}
-            >
-              Add Review
-            </Button>
-          )}
-          <CustomModal
-            openModal={open}
-            closeModal={handleClose}
-            // aria-labelledby='modal-modal-title'
-            // aria-describedby='modal-modal-description'
-          >
-            <Suspense fallback={<>Loading...</>}>
-              <CreateReview tourId={tour?.id} handleClose={handleClose} />
-            </Suspense>
-          </CustomModal>
-          {/* <br /> */}
           {edit && (
             <Button
               startIcon={<AddIcon />}

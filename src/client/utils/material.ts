@@ -5,6 +5,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Alert from '@mui/material/Alert';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Box from '@mui/material/Box';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import Button from '@mui/material/Button';
@@ -73,6 +74,7 @@ export {
   AddAPhotoIcon,
   Alert,
   AppBar,
+  AutoStoriesIcon,
   Avatar,
   Box,
   BubbleChartIcon,

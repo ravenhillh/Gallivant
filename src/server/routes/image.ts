@@ -11,8 +11,6 @@ imageRouter.post('/post', (req, res) => {
 
   Image.create({ id_user: id, largeImg: key })
     .then((data:any) => {
-      // console.log(data.dataValues);
-      // data.dataValues has image id
       Images_Waypoints.create({ id_waypoint: joinId, id_image: data.dataValues.id });
       res.sendStatus(201);
     })
@@ -43,15 +41,12 @@ imageRouter.post('/post', (req, res) => {
 // GET waypoint image by waypoint id, user id, and image id
 imageRouter.get('/waypoint/:waypointId', (req, res) => {
   const { waypointId } = req.params;
-  // console.log('wp id ', waypointId);
-  // find image id in Images_Waypoints
 
   db.query(
     `SELECT * from Images WHERE id = (SELECT id_image FROM Images_Waypoints WHERE id_waypoint = ${waypointId})`,
     { type: QueryTypes.SELECT }
   )
   .then((imgWaypoint:any) => {
-    // console.log('join data ', imgWaypoint);
     res.send(imgWaypoint).status(200);
   })
   .catch((err:string) => {
@@ -65,13 +60,12 @@ imageRouter.get('/waypoint/:waypointId', (req, res) => {
 imageRouter.delete('/:imageId', (req, res) => {
   const { imageId } = req.params;
 
-  // Images_Waypoints.destroy({ where: { id_waypoint: waypointId, id_image: imageId } })
   Image.destroy({ where: { id: imageId}})
-    .then(() => {
-      // Image.destroy({ where: { id: imageId}});
-      // console.log('destoryed ', data);
-    })
-    .catch((err:string) => console.error('Could not delete image from db ', err));
+    .then(() => res.sendStatus(200))
+    .catch((err:string) => {
+      console.error('Could not delete image from db ', err);
+      res.sendStatus(500);
+    });
 });
 
 export default imageRouter;

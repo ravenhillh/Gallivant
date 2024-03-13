@@ -32,7 +32,7 @@ function CustomModal(
   const { openModal, closeModal, children } = props;
 
   return (
-    <Modal open={openModal} onClose={closeModal}>
+    <Modal className="custom-modal" disableScrollLock={true} open={openModal} onClose={closeModal}>
       <Box sx={{ ...style }}>
         {children}
         <Button
