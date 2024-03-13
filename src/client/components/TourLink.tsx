@@ -34,7 +34,9 @@ const TourLink = ({tour}) => {
       <ListItemText
         primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
         secondary={tour.description}
+        sx={{ maxWidth: '150px'}}
       />
+      <br />
       {rating && (
         <div>
           <Rating

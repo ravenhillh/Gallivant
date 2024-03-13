@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import {
   Button,
   AddIcon,
-  ExploreIcon,
   FormControl,
   InputLabel,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Grid,
   MenuItem,
-  // Modal,
   Select,
   Typography,
 } from '../utils/material';
@@ -122,18 +117,9 @@ const Tours = (): JSX.Element => {
       <Categories categories={categories} category={cat} getTours={getTours} />
 
       <List>
-        {tours.map((tour) => {
+        {tours.map((tour, i) => {
           return (
-            // <ListItem key={i}>
-            //   <ListItemIcon>
-            //     <ExploreIcon />
-            //   </ListItemIcon>
-            //   <ListItemText
-            //     primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
-            //     secondary={tour.description}
-            //   />
-            // </ListItem>
-            <TourLink key={tour.id} tour={tour} />
+            <TourLink key={i} tour={tour} />
           );
         })}
       </List>
