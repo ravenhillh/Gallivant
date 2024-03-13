@@ -102,7 +102,7 @@ const Tours = (): JSX.Element => {
             fontSize='48px' 
             fontWeight='bold' 
             variant='h2'
-            sx={{ fontSize: { xs: '40px', lg: '48px'}}}
+            sx={{ fontSize: { xs: '40px', md: '44px', lg: '48px'}}}
           >
             Tours
           </Typography>

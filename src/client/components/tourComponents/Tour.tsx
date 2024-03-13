@@ -257,7 +257,7 @@ const Tour = (): JSX.Element => {
             fontWeight='bold' 
             // fontSize='36px' 
             gutterBottom
-            sx={{ fontSize: { xs: '24px', lg: '42px'}}}
+            sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px'}}}
             >
             {tour?.tourName}
           </Typography>

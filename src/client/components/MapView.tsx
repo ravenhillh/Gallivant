@@ -262,7 +262,7 @@ function MapView(): JSX.Element {
         variant="h3" 
         fontWeight="bold" 
         align="center"
-        sx={{ fontSize: { xs: '40px', lg: '60px'}}}
+        sx={{ fontSize: { xs: '40px', md: '50px', lg: '60px'}}}
       >
         Browse Tours
       </Typography>
