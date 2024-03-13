@@ -7,8 +7,6 @@ import {
   Fab,
   Button,
   Card,
-  CardActions,
-  CardContent,
   RoomOutlinedIcon,
   Typography,
   Grid,
@@ -79,28 +77,39 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant='h4' fontWeight='bold' gutterBottom>
-          {<RoomOutlinedIcon />} {waypoint.waypointName}
-        </Typography>
-        <Typography variant='subtitle1' gutterBottom>
-          {waypoint.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
+    <Card
+      className='waypoint-card'
+      sx={{
+        backgroundColor: 'aliceblue',
+        boxShadow:
+          '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
+      }}
+    >
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-between'
+        alignItems='center'
+      >
+        <Grid sx={{ padding: '1rem' }} item>
+          <Typography variant='h4' fontWeight='bold' fontSize={'20px'}>
+            {<RoomOutlinedIcon />} {waypoint.waypointName}
+          </Typography>
+          <Typography variant='subtitle1'>{waypoint.description}</Typography>
+        </Grid>
+        <Grid item>
+          <Gallery waypoint={waypoint} edit={edit} />
+        </Grid>
         <Grid
           container
           direction='row'
-          justifyContent='space-between'
-          alignItems='flex-end'
+          justifyContent='end'
+          alignItems='center'
         >
-          <Grid item>
-            <Gallery waypoint={waypoint} edit={edit} />
-          </Grid>
-          <Grid item>
+          <Grid justifyContent='end' alignItems='center' item>
             {edit && (
               <Fab
+                sx={{ margin: '.5rem' }}
                 aria-label='delete'
                 size='small'
                 color='error'
@@ -111,6 +120,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
             )}
             {edit && (
               <Fab
+                sx={{ margin: '.5rem' }}
                 aria-label='edit'
                 color='primary'
                 size='small'
@@ -121,7 +131,7 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
             )}
           </Grid>
         </Grid>
-      </CardActions>
+      </Grid>
 
       <CustomModal
         className='delete-waypoint-modal'

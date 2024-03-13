@@ -17,7 +17,10 @@ passport.use(
     {
       clientID,
       clientSecret,
-      callbackURL: '/auth/google/callback',
+      callbackURL:
+        process.env.NODE_ENV === 'production'
+          ? `${process.env.PRODUCTION_URL}/auth/google/callback`
+          : '/auth/google/callback',
       passReqToCallback: true,
     },
     function (req, accessToken, refreshToken, profile, cb) {
@@ -27,7 +30,7 @@ passport.use(
           username: profile.displayName,
         },
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((user: Array<any>) => {
           cb(null, user);
         })
@@ -46,7 +49,6 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function ([userInstance, created], cb) {
   cb(null, userInstance);
 });
-
 
 //AUTH ROUTES
 // client side authentication check for protected component loaders
