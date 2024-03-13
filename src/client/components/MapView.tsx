@@ -105,25 +105,18 @@ function MapView(): JSX.Element {
     axios(`maps/tours/${id}`)
       .then(async ({ data }) => {
         setTours(data);
-        const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
-        // waypoints.data.map((waypoint) => {
-          const images = waypoints.data.map(async (waypoint) => {
-            const pics = []
-          let pic = await axios(`/images/waypoint/${waypoint.id}`);
-          pics.push(pic)
-          return pics
+        // const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+        //   const images = waypoints.data.map(async (waypoint) => {
+        //     const pics = []
+        //   let pic = await axios(`/images/waypoint/${waypoint.id}`);
+        //   pics.push(pic)
+        //   return pics
           // .then(async ({ data }) => {
           //   setImages([...images, data]);
           // }).catch((err) => console.log(err));
         });
-        console.log(images)
       // })
-     
-  });
-}
-  //get images for one tour/waypoint
-  //get all waypoints for tour - '/db/tourWaypoints/:tourId'
-  //send each waypoint request
+  };
   //add each image object to image state array
   const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
@@ -172,9 +165,9 @@ function MapView(): JSX.Element {
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
-    backgroundColor: 'background.paper',
+    background:'linear-gradient(to bottom right, #c9dcf0, #e4fbd2 )',
   };
-
+//#fdfdfd;
   const showTours = () => {
     return tours.length ? (
         <Grid className="show-tours" container>
