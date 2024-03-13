@@ -47,7 +47,7 @@ function MapView(): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
 
   // const user = useLoaderData();
@@ -106,10 +106,21 @@ function MapView(): JSX.Element {
       .then(async ({ data }) => {
         setTours(data);
         const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
-        console.log(waypoints);
-      })
-      .catch((err) => console.log(err));
-  };
+        // waypoints.data.map((waypoint) => {
+          const images = waypoints.data.map(async (waypoint) => {
+            const pics = []
+          let pic = await axios(`/images/waypoint/${waypoint.id}`);
+          pics.push(pic)
+          return pics
+          // .then(async ({ data }) => {
+          //   setImages([...images, data]);
+          // }).catch((err) => console.log(err));
+        });
+        console.log(images)
+      // })
+     
+  });
+}
   //get images for one tour/waypoint
   //get all waypoints for tour - '/db/tourWaypoints/:tourId'
   //send each waypoint request
@@ -117,8 +128,8 @@ function MapView(): JSX.Element {
   const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
-        console.log(data);
-        setImage(data);
+
+        setImages(data);
       })
       .catch((err: string) => console.log(err, 'image get failed'));
   };
@@ -214,7 +225,7 @@ function MapView(): JSX.Element {
               </ListItem>
             </List>
           </Grid>
-          {image.length === 0 ? (
+          {images.length === 0 ? (
             ''
           ) : (
               <Grid className="map-details" item>
@@ -232,7 +243,7 @@ function MapView(): JSX.Element {
                     <Card>
                       <CardContent>
                         <img
-                          src={`/api/images/${image[0].largeImg}`}
+                          src={`/api/images/${images[0].largeImg}`}
                           style={{ width: 'auto', height: '180px' }}
                         />
                       </CardContent>
