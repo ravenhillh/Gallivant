@@ -116,9 +116,9 @@ const Tours = (): JSX.Element => {
       <Categories categories={categories} category={cat} getTours={getTours} />
 
       <List>
-        {tours.map((tour, i) => {
-          return <TourLink key={i} tour={tour} />;
-        })}
+        {tours.map((tour, i) => (
+          <TourLink key={i} tour={tour} />
+        ))}
       </List>
 
       <CustomModal
