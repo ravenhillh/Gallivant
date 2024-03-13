@@ -47,7 +47,7 @@ function MapView(): JSX.Element {
   const [zoom, setZoom] = useState(9);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
 
   // const user = useLoaderData();
@@ -103,17 +103,26 @@ function MapView(): JSX.Element {
   //get tours by waypoint id
   const getTours = (id: string | undefined) => {
     axios(`maps/tours/${id}`)
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         setTours(data);
-      })
-      .catch((err) => console.log(err));
+        // const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+        //   const images = waypoints.data.map(async (waypoint) => {
+        //     const pics = []
+        //   let pic = await axios(`/images/waypoint/${waypoint.id}`);
+        //   pics.push(pic)
+        //   return pics
+          // .then(async ({ data }) => {
+          //   setImages([...images, data]);
+          // }).catch((err) => console.log(err));
+        });
+      // })
   };
-  //get images for one tour/waypoint
-  const getTourImage = (waypointId) => {
+  //add each image object to image state array
+  const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
-        console.log(data);
-        setImage(data);
+
+        setImages(data);
       })
       .catch((err: string) => console.log(err, 'image get failed'));
   };
@@ -156,7 +165,7 @@ function MapView(): JSX.Element {
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
-    backgroundColor: 'background.paper',
+    background:'linear-gradient(to bottom right, #c9dcf0, #e4fbd2 )',
   };
 
   const showTours = () => {
@@ -209,7 +218,7 @@ function MapView(): JSX.Element {
               </ListItem>
             </List>
           </Grid>
-          {image.length === 0 ? (
+          {images.length === 0 ? (
             ''
           ) : (
               <Grid className="map-details" item>
@@ -227,7 +236,7 @@ function MapView(): JSX.Element {
                     <Card>
                       <CardContent>
                         <img
-                          src={`/api/images/${image[0].largeImg}`}
+                          src={`/api/images/${images[0].largeImg}`}
                           style={{ width: 'auto', height: '180px' }}
                         />
                       </CardContent>
@@ -256,8 +265,14 @@ function MapView(): JSX.Element {
   };
 
   return (
-    <div>
-      <Typography mt={2} variant="h3" fontWeight="bold" align="center">
+    <div className='map-view'>
+      <Typography 
+        mt={2} 
+        variant="h3" 
+        fontWeight="bold" 
+        align="center"
+        sx={{ fontSize: { xs: '40px', md: '50px', lg: '60px'}}}
+      >
         Browse Tours
       </Typography>
       {tours.length === 0 ? (

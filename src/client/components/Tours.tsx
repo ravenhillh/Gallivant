@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import {
   Button,
   AddIcon,
-  ExploreIcon,
   FormControl,
   InputLabel,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Grid,
   MenuItem,
-  // Modal,
   Select,
   Typography,
 } from '../utils/material';
@@ -22,6 +17,7 @@ import {
 import Categories from './Categories';
 import Voice from './tourComponents/Voice';
 import CustomModal from './tourComponents/Modal';
+import TourLink from './TourLink';
 
 type Tour = {
   id: number;
@@ -99,7 +95,12 @@ const Tours = (): JSX.Element => {
         alignItems='center'
       >
         <Grid item>
-          <Typography fontSize='48px' fontWeight='bold' variant='h2'>
+          <Typography 
+            fontSize='48px' 
+            fontWeight='bold' 
+            variant='h2'
+            sx={{ fontSize: { xs: '40px', md: '44px', lg: '48px'}}}
+          >
             Tours
           </Typography>
         </Grid>
@@ -119,18 +120,7 @@ const Tours = (): JSX.Element => {
       <List>
         {tours.map((tour, i) => {
           return (
-            <ListItem key={i}>
-              <ListItemIcon
-                onClick={() => navigate(`/tour/${tour.id}`)}
-                sx={{ cursor: 'pointer', color: '#2196f3', minWidth: '33px' }}
-              >
-                <ExploreIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
-                secondary={tour.description}
-              />
-            </ListItem>
+            <TourLink key={i} tour={tour} />
           );
         })}
       </List>
