@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
-// import Home from './Home';
 const NavBar = lazy(() => import('./NavBar'));
 const Login = lazy(() => import('./Login'));
 // import Map from './Map';
