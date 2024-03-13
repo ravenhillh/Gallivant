@@ -167,7 +167,7 @@ function MapView(): JSX.Element {
     borderColor: 'divider',
     background:'linear-gradient(to bottom right, #c9dcf0, #e4fbd2 )',
   };
-//#fdfdfd;
+
   const showTours = () => {
     return tours.length ? (
         <Grid className="show-tours" container>

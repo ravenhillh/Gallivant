@@ -99,7 +99,6 @@ const Chat = ({ socket }) => {
   const getMessagesByTour = (id) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
-        // console.log(data);
         setMessages(data);
       })
       .catch((err) => console.log(err));
