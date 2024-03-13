@@ -105,23 +105,21 @@ function MapView(): JSX.Element {
     axios(`maps/tours/${id}`)
       .then(async ({ data }) => {
         setTours(data);
-        // const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
-        //   const images = waypoints.data.map(async (waypoint) => {
-        //     const pics = []
-        //   let pic = await axios(`/images/waypoint/${waypoint.id}`);
-        //   pics.push(pic)
-        //   return pics
-          // .then(async ({ data }) => {
-          //   setImages([...images, data]);
-          // }).catch((err) => console.log(err));
+        const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+        for (let i = 0; i < waypoints.data.length; i ++) {
+          axios(`/images/waypoint/${waypoints.data[i].id}`)
+          .then(({ data }) => {
+            setImages([...images, data]);
+          });
+        }
+
         });
-      // })
+    
   };
   //add each image object to image state array
   const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
       .then(({ data }) => {
-
         setImages(data);
       })
       .catch((err: string) => console.log(err, 'image get failed'));
