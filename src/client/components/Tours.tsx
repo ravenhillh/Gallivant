@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
@@ -31,6 +31,7 @@ type Tour = {
 
 const Tours = (): JSX.Element => {
   const { cat } = useParams();
+  const navigate = useNavigate();
   const [tours, setTours] = useState<Tour[]>([]);
 
   // state for creating a new Tour
@@ -119,7 +120,10 @@ const Tours = (): JSX.Element => {
         {tours.map((tour, i) => {
           return (
             <ListItem key={i}>
-              <ListItemIcon>
+              <ListItemIcon
+                onClick={() => navigate(`/tour/${tour.id}`)}
+                sx={{ cursor: 'pointer', color: '#2196f3', minWidth: '33px' }}
+              >
                 <ExploreIcon />
               </ListItemIcon>
               <ListItemText

@@ -11,6 +11,7 @@
 
 body {
   /* background-color: #fdfdfd; */
+  min-height: 100vh;
   background: rgb(240, 255, 246);
   background:linear-gradient(to bottom right, #c9dcf0, #e4fbd2 );
 /* background: linear-gradient(270deg, rgb(198, 253, 219) 0%, rgb(202, 238, 255) 100%); */
@@ -44,11 +45,8 @@ body {
 }
 
 .log {
-  /* background-image:linear-gradient(to bottom right, #e4fbd2 , #c9dcf0); */
-  /* align-items: center;
-  justify-content: center; */
-  /* position: absolute; */
-  /* left: 50%;
+  /* position: absolute;
+  left: 50%;
   top: 50%;
   transform: translate(-50%, -50%); */
   text-align: center;
