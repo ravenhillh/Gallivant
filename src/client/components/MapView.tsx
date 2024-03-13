@@ -265,7 +265,7 @@ function MapView(): JSX.Element {
   };
 
   return (
-    <div>
+    <div className='map-view'>
       <Typography mt={2} variant="h3" fontWeight="bold" align="center">
         Browse Tours
       </Typography>
