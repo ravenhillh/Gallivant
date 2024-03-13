@@ -22,6 +22,7 @@ import {
 import Categories from './Categories';
 import Voice from './tourComponents/Voice';
 import CustomModal from './tourComponents/Modal';
+import TourLink from './TourLink';
 
 type Tour = {
   id: number;
@@ -121,17 +122,18 @@ const Tours = (): JSX.Element => {
       <Categories categories={categories} category={cat} getTours={getTours} />
 
       <List>
-        {tours.map((tour, i) => {
+        {tours.map((tour) => {
           return (
-            <ListItem key={i}>
-              <ListItemIcon>
-                <ExploreIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
-                secondary={tour.description}
-              />
-            </ListItem>
+            // <ListItem key={i}>
+            //   <ListItemIcon>
+            //     <ExploreIcon />
+            //   </ListItemIcon>
+            //   <ListItemText
+            //     primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
+            //     secondary={tour.description}
+            //   />
+            // </ListItem>
+            <TourLink key={tour.id} tour={tour} />
           );
         })}
       </List>
