@@ -32,11 +32,25 @@ body {
   height: 400px;
 }
 
+.log-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background-image:linear-gradient(to bottom right, #c9dcf0, #e4fbd2 );
+}
+
 .log {
-  position: absolute;
-  left: 50%;
+  /* background-image:linear-gradient(to bottom right, #e4fbd2 , #c9dcf0); */
+  /* align-items: center;
+  justify-content: center; */
+  /* position: absolute; */
+  /* left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   text-align: center;
 }
 
