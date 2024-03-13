@@ -109,12 +109,10 @@ function MapView(): JSX.Element {
         for (let i = 0; i < waypoints.data.length; i ++) {
           axios(`/images/waypoint/${waypoints.data[i].id}`)
           .then(({ data }) => {
-            setImages([...images, data]);
+            setImages(data);
           });
         }
-
         });
-    
   };
   //add each image object to image state array
   const getTourImage = async (waypointId) => {
