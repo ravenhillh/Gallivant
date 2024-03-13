@@ -89,11 +89,11 @@ function NavBar() {
           // onClick={toggleDrawer}
           onClose={toggleDrawer}
         >
-          <Box sx={{ width: 250 }} role='presentation'>
+          <Box sx={{ width: 222 }} role='presentation'>
             <List>
               <ListItem>
                 <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-                  GALLIVANT
+                  {<RouteOutlinedIcon />} GALLIVANT
                 </Typography>
               </ListItem>
               <Divider />
@@ -110,16 +110,6 @@ function NavBar() {
                   Map
                 </ListItemButton>
               </ListItem>
-              {/* <ListItem className='camera-link'>
-                <ListItemButton>
-                  <Link to='camera'>Camera</Link>
-                </ListItemButton>
-              </ListItem>
-              <ListItem className='gallery-link'>
-                <ListItemButton>
-                  <Link to='gallery'>Gallery</Link>
-                </ListItemButton>
-              </ListItem> */}
               <ListItem className='tours-link'>
                 <ListItemButton
                   selected={pathname === '/tours/all'}
@@ -171,28 +161,5 @@ function NavBar() {
     </Container>
   );
 }
-
-// <ul>
-//   <li className='map-link'>
-//     <Link to='mapview'>MapView</Link>
-//   </li>
-//   {/* <li className='camera-link'>
-//     <Link to='camera'>Camera</Link>
-//   </li>
-//   <li className='gallery-link'>
-//     <Link to='gallery'>Gallery</Link>
-//   </li> */}
-//   <li className='tours-link'>
-//     <Link to='tours'>Tours</Link>
-//   </li>
-//   <li className='icon-link'>
-//     <Link to='icon'>Icon</Link>
-//   </li>
-//   <li className='logout-link'>
-//     <form action='/logout' method='post'>
-//       <button type='submit'>Sign out</button>
-//     </form>
-//   </li>
-// </ul>
 
 export default NavBar;
