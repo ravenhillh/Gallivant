@@ -9,6 +9,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardMedia,
   Divider,
   DirectionsWalkIcon,
   Grid,
@@ -231,7 +232,7 @@ function MapView(): JSX.Element {
                   <ListItem>
                     <Card className='map-image-card'>
                       <CardContent>
-                        <img
+                        <img //try card media
                           src={`/api/images/${images[0].largeImg}`}
                           style={{ width: 'auto', height: '180px' }}
                         />

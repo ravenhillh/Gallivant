@@ -126,27 +126,10 @@ body {
   }
 }
 
-.message-text {
-  margin-top: 15px;
-  line-height: .5;
-}
-
-.message-username {
-  line-height: .25;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.message-time {
-  line-height: .25;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 .message-container {
   line-height: 0;
 }
 
 .map-image-card {
-  max-width: 200px;
+  width: 20rem;
 }
