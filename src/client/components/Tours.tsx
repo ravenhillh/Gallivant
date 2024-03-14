@@ -133,6 +133,17 @@ const Tours = (): JSX.Element => {
       <CustomModal
         openModal={createModal}
         closeModal={() => setCreateModal(false)}
+        confirmButton={
+          <Button
+            variant='contained'
+            size='small'
+            color='primary'
+            startIcon={<AddIcon />}
+            onClick={createTourBtnClick}
+          >
+            Create Tour
+          </Button>
+        }
       >
         <div>
           <Voice
@@ -173,16 +184,6 @@ const Tours = (): JSX.Element => {
         </FormControl>
         <br />
         <br />
-
-        <Button
-          variant='contained'
-          size='small'
-          color='primary'
-          startIcon={<AddIcon />}
-          onClick={createTourBtnClick}
-        >
-          Create Tour
-        </Button>
       </CustomModal>
     </div>
   );

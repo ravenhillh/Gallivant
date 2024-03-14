@@ -1,10 +1,11 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 
 import { Box, Button, CancelIcon, Modal } from '../../utils/material';
 
 type CustomModal = {
   openModal: boolean;
   closeModal: () => void;
+  confirmButton?: ReactNode;
 };
 
 const style = {
@@ -32,21 +33,30 @@ const containerStyle = {
 function CustomModal(
   props: PropsWithChildren<CustomModal> & React.HTMLAttributes<HTMLDivElement>
 ): JSX.Element {
-  const { openModal, closeModal, children } = props;
+  const { openModal, closeModal, children, confirmButton } = props;
 
   return (
-    <Modal className="custom-modal" disableScrollLock={true} sx={containerStyle} open={openModal} onClose={closeModal}>
+    <Modal
+      className='custom-modal'
+      disableScrollLock={true}
+      sx={containerStyle}
+      open={openModal}
+      onClose={closeModal}
+    >
       <Box sx={style}>
         {children}
-        <Button
-          variant='outlined'
-          size='small'
-          color='secondary'
-          startIcon={<CancelIcon />}
-          onClick={closeModal}
-        >
-          Cancel
-        </Button>
+        <div className='modal-button-row'>
+          <Button
+            variant='outlined'
+            size='small'
+            color='secondary'
+            startIcon={<CancelIcon />}
+            onClick={closeModal}
+          >
+            Cancel
+          </Button>
+          {confirmButton}
+        </div>
       </Box>
     </Modal>
   );
