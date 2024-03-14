@@ -316,11 +316,13 @@ const Tour = (): JSX.Element => {
                 Add Review
               </Button>
             )}
-            <CustomModal openModal={open} closeModal={handleClose}>
-              <Suspense fallback={<>Loading...</>}>
-                <CreateReview tourId={tour?.id} handleClose={handleClose} />
-              </Suspense>
-            </CustomModal>
+            <Suspense fallback={<>Loading...</>}>
+              <CreateReview
+                tourId={tour?.id}
+                open={open}
+                handleClose={handleClose}
+              />
+            </Suspense>
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold'>
@@ -401,6 +403,8 @@ const Tour = (): JSX.Element => {
           ))}
         </Stack>
       </Stack>
+
+      <Reviews id={id} open={open} />
 
       <Suspense fallback={<>Loading...</>}>
         <CustomModal
@@ -519,7 +523,6 @@ const Tour = (): JSX.Element => {
           <br />
         </CustomModal>
       </Suspense>
-      <Reviews id={id} open={open} />
     </div>
   );
 };
