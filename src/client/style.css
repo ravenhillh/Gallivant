@@ -32,7 +32,7 @@ body {
 .waypoint-card {
   margin: 0 auto;
   max-width: 800px;
-  background:linear-gradient(to bottom right, #fafdffe7, #bbe2f9 );
+  /* background:linear-gradient(to bottom right, #fafdffe7, #bbe2f9 ); */
 }
 
 #delete-image {

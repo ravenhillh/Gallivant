@@ -100,7 +100,7 @@ const Review = ({review, getReviews }) => {
 
   return (
     <div id="review">
-      <Card sx={{ marginBottom: '0.5em'}}>
+      <Card sx={{ backgroundColor: 'rgba(255, 255, 255, .9)', marginBottom: '0.5em'}}>
         <CardContent>
         <Typography variant="h6">{username}</Typography>
         <Rating
