@@ -137,26 +137,38 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         className='delete-waypoint-modal'
         openModal={delModal}
         closeModal={() => setDelModal(false)}
+        confirmButton={
+          <Button
+            variant='contained'
+            color='error'
+            size='small'
+            startIcon={<DeleteIcon />}
+            onClick={() => deleteWaypoint(waypoint.id)}
+          >
+            Delete Waypoint
+          </Button>
+        }
       >
         <Typography variant='body1'>
           Are you sure you want to delete Waypoint?
         </Typography>
         <br />
-        <Button
-          variant='contained'
-          color='error'
-          size='small'
-          startIcon={<DeleteIcon />}
-          onClick={() => deleteWaypoint(waypoint.id)}
-        >
-          Delete Waypoint
-        </Button>
       </CustomModal>
 
       <CustomModal
         className='edit-waypoint-modal'
         openModal={editModal}
         closeModal={() => setEditModal(false)}
+        confirmButton={
+          <Button
+            size='small'
+            variant='contained'
+            startIcon={<EditIcon />}
+            onClick={() => editWaypoint(waypoint.id)}
+          >
+            Edit
+          </Button>
+        }
       >
         <div>
           <Voice
@@ -178,14 +190,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           />
         </div>
         <br />
-        <Button
-          size='small'
-          variant='contained'
-          startIcon={<EditIcon />}
-          onClick={() => editWaypoint(waypoint.id)}
-        >
-          Edit
-        </Button>
       </CustomModal>
     </Card>
   );

@@ -2,7 +2,15 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: "Roboto";
+  /* font-family: "Roboto", sans-serif; */
+}
+
+a {
+  color: '#2196f3';
+}
+
+:root {
+  font-family: "Roboto", sans-serif;
 }
 
 .outlet {
@@ -31,6 +39,11 @@ body {
 
 .map-container {
   height: 400px;
+}
+
+.modal-button-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 .log-container {
