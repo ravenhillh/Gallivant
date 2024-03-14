@@ -69,7 +69,7 @@ const Gallery = (props) => {
   return (
     <div>
       {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
-      <ImageList>
+      <ul style={{listStyleType: 'none'}}>
         {images.map((image) => (
           <li className="image-list" key={`${image.id}`}>
             <div className="image-container">
@@ -97,7 +97,7 @@ const Gallery = (props) => {
             </div>
           </li>
         ))}
-      </ImageList>
+      </ul>
       <Snackbar
         open={open}
         autoHideDuration={5000}
