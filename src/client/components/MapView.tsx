@@ -108,9 +108,9 @@ function MapView(): JSX.Element {
         const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
         for (let i = 0; i < waypoints.data.length; i ++) {
           axios(`/images/waypoint/${waypoints.data[i].id}`)
-          .then(({ data }) => {
-            setImages(data);
-          });
+          .then(async ({ data }) => {
+            await setImages(data);
+          }).catch((err) => console.log('get extra image failed', err));
         }
         });
   };
@@ -229,7 +229,7 @@ function MapView(): JSX.Element {
                   </ListItem>
                   <Divider component="li" />
                   <ListItem>
-                    <Card>
+                    <Card className='map-image-card'>
                       <CardContent>
                         <img
                           src={`/api/images/${images[0].largeImg}`}

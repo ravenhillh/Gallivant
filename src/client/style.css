@@ -146,3 +146,7 @@ body {
 .message-container {
   line-height: 0;
 }
+
+.map-image-card {
+  max-width: 200px;
+}
