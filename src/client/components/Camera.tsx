@@ -148,7 +148,7 @@ function Camera(props): JSX.Element {
         </Button>
         </div>
         :
-        <Button type='button' onClick={() => envInputRef.current!.click()}>
+        <Button sx={{ margin: '5px' }}type='button' onClick={() => envInputRef.current!.click()}>
           <CameraAltIcon />&nbsp;Add Photo
         </Button>
       }
