@@ -181,21 +181,23 @@ const CurrentTour = (): JSX.Element => {
       <CustomModal
         openModal={leaveModal}
         closeModal={() => setLeaveModal(false)}
+        confirmButton={
+          <Button
+            variant='contained'
+            startIcon={<TransitEnterexitIcon />}
+            color='warning'
+            size='small'
+            onClick={onLeave}
+          >
+            Leave Tour
+          </Button>
+        }
       >
         Are you sure you want to leave this tour?
         <br />
         Your progress will be lost.
         <br />
         <br />
-        <Button
-          variant='contained'
-          startIcon={<TransitEnterexitIcon />}
-          color='warning'
-          size='small'
-          onClick={onLeave}
-        >
-          Leave Tour
-        </Button>
       </CustomModal>
     </>
   );

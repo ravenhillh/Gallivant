@@ -252,18 +252,16 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Typography 
-            variant='h2' 
-            fontWeight='bold' 
-            // fontSize='36px' 
+          <Typography
+            variant='h2'
+            fontWeight='bold'
+            // fontSize='36px'
             gutterBottom
-            sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px'}}}
-            >
+            sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px' } }}
+          >
             {tour?.tourName}
           </Typography>
-          <Typography variant='body1'>
-            {tour?.description}
-          </Typography>
+          <Typography variant='body1'>{tour?.description}</Typography>
           {user.username === creator ? (
             <Button
               startIcon={<EditIcon />}
@@ -273,9 +271,7 @@ const Tour = (): JSX.Element => {
               Edit Tour
             </Button>
           ) : (
-            <Typography variant='caption'>
-              Created by: {creator}
-            </Typography>
+            <Typography variant='caption'>Created by: {creator}</Typography>
           )}
         </Grid>
         <Grid
@@ -298,32 +294,31 @@ const Tour = (): JSX.Element => {
                   startIcon={<AutoStoriesIcon />}
                   variant='contained'
                   color='primary'
-                  sx={{ marginBottom: '5px'}}
+                  sx={{ marginBottom: '5px' }}
                 >
                   <a
-                    style={{ color: 'white', textDecoration: 'none'}}
-                    href="#reviews">Read Reviews
+                    style={{ color: 'white', textDecoration: 'none' }}
+                    href='#reviews'
+                  >
+                    Read Reviews
                   </a>
                 </Button>
               </div>
             )}
-             {edit ? null : (
-            <Button
-              startIcon={<AddIcon />}
-              variant='contained'
-              color='primary'
-              onClick={handleOpen}
-              sx={{ width: '100%'}}
-            >
-              Add Review
-            </Button>
+            {edit ? null : (
+              <Button
+                startIcon={<AddIcon />}
+                variant='contained'
+                color='primary'
+                onClick={handleOpen}
+                sx={{ width: '100%' }}
+              >
+                Add Review
+              </Button>
             )}
-            <CustomModal
-              openModal={open}
-              closeModal={handleClose}
-            >
-             <Suspense fallback={<>Loading...</>}>
-                < CreateReview tourId={tour?.id} handleClose={handleClose} />
+            <CustomModal openModal={open} closeModal={handleClose}>
+              <Suspense fallback={<>Loading...</>}>
+                <CreateReview tourId={tour?.id} handleClose={handleClose} />
               </Suspense>
             </CustomModal>
           </Grid>
@@ -411,6 +406,17 @@ const Tour = (): JSX.Element => {
         <CustomModal
           openModal={updateTourModal}
           closeModal={() => setUpdateTourModal(false)}
+          confirmButton={
+            <Button
+              variant='contained'
+              size='small'
+              color='primary'
+              startIcon={<AddIcon />}
+              onClick={updateTour}
+            >
+              Update Tour
+            </Button>
+          }
         >
           <div>
             <Voice
@@ -449,15 +455,6 @@ const Tour = (): JSX.Element => {
           </FormControl>
           <br />
           <br />
-          <Button
-            variant='contained'
-            size='small'
-            color='primary'
-            startIcon={<AddIcon />}
-            onClick={updateTour}
-          >
-            Update Tour
-          </Button>
         </CustomModal>
       </Suspense>
 
@@ -473,7 +470,21 @@ const Tour = (): JSX.Element => {
       </Suspense>
 
       <Suspense fallback={<>Loading...</>}>
-        <CustomModal openModal={modal} closeModal={() => setModal(false)}>
+        <CustomModal
+          openModal={modal}
+          closeModal={() => setModal(false)}
+          confirmButton={
+            <Button
+              startIcon={<AddIcon />}
+              size='small'
+              variant='contained'
+              color='primary'
+              onClick={postWaypoint}
+            >
+              Save waypoint
+            </Button>
+          }
+        >
           <div>
             <Voice
               type='name'
@@ -494,15 +505,6 @@ const Tour = (): JSX.Element => {
             />
           </div>
           <br />
-          <Button
-            startIcon={<AddIcon />}
-            size='small'
-            variant='contained'
-            color='primary'
-            onClick={postWaypoint}
-          >
-            Save waypoint
-          </Button>
         </CustomModal>
       </Suspense>
 
@@ -517,7 +519,7 @@ const Tour = (): JSX.Element => {
           <br />
         </CustomModal>
       </Suspense>
-      <Reviews id={id} open={open}/>
+      <Reviews id={id} open={open} />
     </div>
   );
 };
