@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/';
 import theme from './theme';
 import './style.css';
-import '@fontsource/roboto';
+// import '@fontsource/roboto';
 
 import App from './components/App';
 

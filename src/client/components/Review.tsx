@@ -37,7 +37,7 @@ const Review = ({review, getReviews }) => {
     setOpen(false);
     getReviews();
   };
-  
+
   // snackbar handlers
   const handleOpenSB = () => {
     setOpenSB(true);
@@ -152,6 +152,24 @@ const Review = ({review, getReviews }) => {
           <CustomModal
             openModal={open}
             closeModal={handleClose}
+            confirmButton={
+              <Button
+                id='edit-review'
+                size='small'
+                sx={{ marginRight: '10px '}}
+                type='submit'
+                variant="contained"
+                fullWidth={false}
+                onClick={(e) => {
+                  e.preventDefault();
+                  // open edit modal
+                  updateReview();
+                  handleClose();
+                }}
+              >
+                Update Review
+              </Button>
+            }
           >
             <Typography sx={{ opacity: '0.5'}}>Edit Rating</Typography>
             <Rating
@@ -175,22 +193,6 @@ const Review = ({review, getReviews }) => {
               }}
             />
             <br />
-            <Button
-              id='edit-review'
-              size='small'
-              sx={{ marginRight: '10px '}}
-              type='submit'
-              variant="contained"
-              fullWidth={false}
-              onClick={(e) => {
-                e.preventDefault();
-                // open edit modal
-                updateReview();
-                handleClose();
-              }}
-            >
-              Update Review
-            </Button>
           </CustomModal>
           </div>
           : null
