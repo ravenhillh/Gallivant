@@ -110,8 +110,9 @@ body {
 }
 
 #reviews {
-  margin: 1em;
-  align-items: center;
+  margin: 0 auto;
+  margin-top: 2em;
+  max-width: 800px;
 }
 
 
