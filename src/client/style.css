@@ -30,6 +30,8 @@ body {
 }
 
 .waypoint-card {
+  margin: 0 auto;
+  max-width: 800px;
   background:linear-gradient(to bottom right, #fafdffe7, #bbe2f9 );
 }
 
@@ -58,10 +60,6 @@ body {
 }
 
 .log {
-  /* position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); */
   text-align: center;
 }
 
@@ -71,17 +69,19 @@ body {
 
 @media only screen and (max-width: 600px) {
   .camera-container {
-    min-width: 350px;
+    min-width: 300px;
   }
 }
 
 .image-list {
   max-width: 500px;
+  justify-content: center;
+  list-style-type: none;
 }
 
 @media only screen and (max-width: 600px) {
   .image-list {
-    min-width: 350px;
+    min-width: 300px;
   }
 }
 

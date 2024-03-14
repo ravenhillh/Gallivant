@@ -88,13 +88,13 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
       <Grid
         container
         direction='row'
-        justifyContent='space-between'
-        alignItems='center'
+        justifyContent='start'
+        // alignItems='center'
       >
         <Grid item>
           <Gallery waypoint={waypoint} edit={edit} />
         </Grid>
-        <Grid sx={{ padding: '1rem' }} item justify-content="start">
+        <Grid sx={{ padding: '1rem' }} item >
           <Typography variant='h4' fontWeight='bold' fontSize={'20px'}>
             {<RoomOutlinedIcon />} {waypoint.waypointName}
           </Typography>

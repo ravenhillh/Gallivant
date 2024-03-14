@@ -1,11 +1,13 @@
 import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-import { Box,
+import {
+  Box,
   Button,
   ClearIcon,
   CloseIcon,
   IconButton,
-  Snackbar } from '../utils/material';
+  Snackbar,
+} from '../utils/material';
 const Camera = lazy(() => import('./Camera'));
 
 interface ImageProperties {
@@ -56,44 +58,45 @@ const Gallery = (props) => {
   const action = (
     <Fragment>
       <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
+        size='small'
+        aria-label='close'
+        color='inherit'
         onClick={handleClose}
       >
-        <CloseIcon fontSize="small" />
+        <CloseIcon fontSize='small' />
       </IconButton>
     </Fragment>
   );
 
   return (
     <div>
-      {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
+      {edit &&
+        (images.length ? null : (
+          <Camera waypoint={waypoint} getImagesWP={getImagesWP} />
+        ))}
       <Box>
         {images.map((image) => (
-          <li className="image-list" key={`${image.id}`}>
-            <div className="image-container">
-            <img
-              src={`/api/images/${image.largeImg}`}
-            />
-            {edit && (
-              <Button
-                className="delete-button"
-                id='delete-image'
-                variant="contained"
-                size='small'
-                type='submit'
-                color="error"
-                fullWidth={false}
-                onClick={(e) => {
-                  e.preventDefault();
-                  deleteImage(image.id);
-                  handleClick();
-                }}
-              >
-                <ClearIcon />
-              </Button>
-            )}
+          <li className='image-list' key={`${image.id}`}>
+            <div className='image-container'>
+              <img src={`/api/images/${image.largeImg}`} />
+              {edit && (
+                <Button
+                  className='delete-button'
+                  id='delete-image'
+                  variant='contained'
+                  size='small'
+                  type='submit'
+                  color='error'
+                  fullWidth={false}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteImage(image.id);
+                    handleClick();
+                  }}
+                >
+                  <ClearIcon />
+                </Button>
+              )}
             </div>
           </li>
         ))}
@@ -102,7 +105,7 @@ const Gallery = (props) => {
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}
-        message="Image deleted"
+        message='Image deleted'
         action={action}
       />
     </div>
