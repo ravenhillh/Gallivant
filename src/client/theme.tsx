@@ -5,7 +5,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: blue[900],
-      contrastText: 'white'
+      contrastText: '#e5e1e1'
     },
   },
   breakpoints: {

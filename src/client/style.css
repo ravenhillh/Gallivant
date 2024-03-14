@@ -26,7 +26,7 @@ body {
 }
 
 #delete-image {
-  color: #0a0a23;
+  color: whitesmoke;
 }
 
 .map-container {
@@ -53,39 +53,46 @@ body {
 }
 
 .camera-container {
-  max-width: 600px;
-  min-width: 350px;
+  max-width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .camera-container {
+    min-width: 350px;
+  }
 }
 
 .image-list {
-  max-width: 600px;
-  min-width: 350px;
+  max-width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .image-list {
+    min-width: 350px;
+  }
 }
 
 .image-container {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  min-width: 300px;
   padding: 1em;
 }
 
 .image-container img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 
 }
 
 .image-container .delete-button{
   position: absolute;
-	/* border-radius: 16px; */
   width: '10px';
   height: '10px';
   min-width: 0;
-  opacity: 0.75;
+  opacity: 0.90;
 	top: 15%;
-	left: 85%;
-  transform: translate(-50%, -50%); 
+	left: 88%;
+  transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
 
