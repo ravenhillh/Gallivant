@@ -1,11 +1,11 @@
 import React, { lazy, useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-import { Button, 
+import { Box,
+  Button,
   ClearIcon,
   CloseIcon,
   IconButton,
-  Snackbar,
-  ImageList } from '../utils/material';
+  Snackbar } from '../utils/material';
 const Camera = lazy(() => import('./Camera'));
 
 interface ImageProperties {
@@ -69,7 +69,7 @@ const Gallery = (props) => {
   return (
     <div>
       {edit && (images.length ? null : <Camera waypoint={waypoint} getImagesWP={getImagesWP} />)}
-      <ul style={{listStyleType: 'none'}}>
+      <Box>
         {images.map((image) => (
           <li className="image-list" key={`${image.id}`}>
             <div className="image-container">
@@ -97,7 +97,7 @@ const Gallery = (props) => {
             </div>
           </li>
         ))}
-      </ul>
+      </Box>
       <Snackbar
         open={open}
         autoHideDuration={5000}
