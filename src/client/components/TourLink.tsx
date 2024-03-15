@@ -30,20 +30,38 @@ const TourLink = ({ tour }) => {
     <ListItem>
       <ListItemIcon
         onClick={() => navigate(`/tour/${tour.id}`)}
-        sx={{ cursor: 'pointer', color: '#2196f3', minWidth: '33px' }}
+        sx={{ 
+          cursor: 'pointer', 
+          color: '#2196f3', 
+          minWidth: '33px', 
+          alignSelf: 'stretch',
+          paddingTop: '9px'
+          }}
       >
         <ExploreIcon />
       </ListItemIcon>
       <ListItemText
         primary={<Link 
           to={`/tour/${tour.id}`}
-          style={{ color: '#1F1F29', textDecoration: 'none' }}
-          >{tour.tourName}</Link>}
+          style={{ color: '#1F1F29', textDecoration: 'none', fontWeight: 'bold' }}
+          >{tour.tourName}
+          {rating && (
+            <div>
+              <Rating
+                name='read-only'
+                value={rating}
+                precision={0.25}
+                size="small"
+                sx={{ paddingTop: '.25em'}}
+                readOnly
+              />
+            </div>
+          )}
+          </Link>}
         secondary={tour.description}
-        sx={{ maxWidth: '150px' }}
       />
       <br />
-      {rating && (
+      {/* {rating && (
         <div>
           <Rating
             name='read-only'
@@ -53,7 +71,7 @@ const TourLink = ({ tour }) => {
             readOnly
           />
         </div>
-      )}
+      )} */}
     </ListItem>
   );
 };
