@@ -9,6 +9,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardMedia,
   Divider,
   DirectionsWalkIcon,
   Grid,
@@ -33,12 +34,6 @@ type Marker = {
   lat: number;
 };
 
-type Tour = {
-  tourName: string;
-  description: string;
-  id: number;
-};
-
 function MapView(): JSX.Element {
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
@@ -48,9 +43,8 @@ function MapView(): JSX.Element {
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
   const [images, setImages] = useState([]);
+  const [tourWaypoints, setTourWaypoints] = useState([]);
   const navigate = useNavigate();
-
-  // const user = useLoaderData();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -100,36 +94,35 @@ function MapView(): JSX.Element {
       })
       .catch((err) => console.log(err, 'get markers failed'));
   };
-  //get tours by waypoint id
+  //get tours id by waypoint and set waypoints array per tour
   const getTours = (id: string | undefined) => {
     axios(`maps/tours/${id}`)
       .then(async ({ data }) => {
         setTours(data);
-        // const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
-        //   const images = waypoints.data.map(async (waypoint) => {
-        //     const pics = []
-        //   let pic = await axios(`/images/waypoint/${waypoint.id}`);
-        //   pics.push(pic)
-        //   return pics
-          // .then(async ({ data }) => {
-          //   setImages([...images, data]);
-          // }).catch((err) => console.log(err));
-        });
-      // })
+        const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+        setTourWaypoints(waypoints.data);
+      }).catch((err) => console.log(err));
   };
-  //add each image object to image state array
-  const getTourImage = async (waypointId) => {
-    axios(`/images/waypoint/${waypointId}`)
-      .then(({ data }) => {
-
-        setImages(data);
-      })
-      .catch((err: string) => console.log(err, 'image get failed'));
+  //get all images for one tour
+  const getTourImages = () => {
+    const ids = [];
+    tourWaypoints?.forEach((waypoint) => {
+      ids.push(waypoint.id);
+    });
+    axios.post('/images/tour/waypoints', {
+      ids: ids
+    })
+    .then(({ data }) => {
+      setImages(data);
+    }).catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    getTourImages();
+  }, [tourWaypoints]);
+  //set markers for all waypoints
   const showMarkers = () => {
     allMarkers.map((marker: Marker) => {
-      //use setHTML or setDOMContent to add each tour with a click event
       const markerContent = `<div>
       <h3>${marker.waypointName}</h3>
       <div>${marker.description}</div>
@@ -167,7 +160,7 @@ function MapView(): JSX.Element {
     borderColor: 'divider',
     background:'linear-gradient(to bottom right, #c9dcf0, #e4fbd2 )',
   };
-
+  //tour details rendered on waypoint click
   const showTours = () => {
     return tours.length ? (
         <Grid className="show-tours" container>
@@ -232,16 +225,18 @@ function MapView(): JSX.Element {
                     <ListItemText primary={'Images'} />
                   </ListItem>
                   <Divider component="li" />
-                  <ListItem>
-                    <Card>
+                  {images.map((image, i) => (
+                  <ListItem key={i}>
+                    <Card className='map-image-card'>
                       <CardContent>
                         <img
-                          src={`/api/images/${images[0].largeImg}`}
-                          style={{ width: 'auto', height: '180px' }}
+                          src={`/api/images/${image.largeImg}`}
+                          style={{ maxWidth: '95%', height: '180px'}}
                         />
                       </CardContent>
                     </Card>
                   </ListItem>
+                  ))}
                 </List>
               </Grid>
           )}
@@ -250,18 +245,17 @@ function MapView(): JSX.Element {
       ''
     );
   };
-
+  //route to tour page for specific tour
   const routeToTour = (id: string | undefined) => {
     navigate(`/tour/${id}`);
   };
-
+  //route to chat room for specific tour
   const routeToChat = (id: string, name: string) => {
     navigate(`/chat/${id}/${name}`);
   };
-
+  //get tour details on waypoint click
   const handleClick = (id) => {
     getTours(id);
-    getTourImage(id);
   };
 
   return (
