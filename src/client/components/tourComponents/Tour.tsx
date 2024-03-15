@@ -326,7 +326,10 @@ const Tour = (): JSX.Element => {
           </Grid>
           <Grid item>
             <Typography variant='h5' fontWeight='bold'>
-              <Link to={`/tours/${tour?.category}`}>
+              <Link 
+                to={`/tours/${tour?.category}`}
+                style={{ color: '#1F1F29', textDecoration: 'none' }}
+              >
                 {tour?.category?.toUpperCase()}
               </Link>
             </Typography>

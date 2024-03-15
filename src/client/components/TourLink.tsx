@@ -35,7 +35,10 @@ const TourLink = ({ tour }) => {
         <ExploreIcon />
       </ListItemIcon>
       <ListItemText
-        primary={<Link to={`/tour/${tour.id}`}>{tour.tourName}</Link>}
+        primary={<Link 
+          to={`/tour/${tour.id}`}
+          style={{ color: '#1F1F29', textDecoration: 'none' }}
+          >{tour.tourName}</Link>}
         secondary={tour.description}
         sx={{ maxWidth: '150px' }}
       />
