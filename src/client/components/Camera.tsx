@@ -2,7 +2,8 @@ import React from 'react';
 import { useState, useRef, Fragment } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { Button,
+import { 
+  Button,
   AddAPhotoIcon,
   CameraAltIcon,
   CloseIcon,
@@ -148,7 +149,9 @@ function Camera(props): JSX.Element {
         </Button>
         </div>
         :
-        <Button sx={{ margin: '5px' }}type='button' onClick={() => envInputRef.current!.click()}>
+        <Button className='map-buttons'
+          variant='outlined'
+          onClick={() => envInputRef.current!.click()}>
           <CameraAltIcon />&nbsp;Add Photo
         </Button>
       }
