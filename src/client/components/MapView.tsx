@@ -106,15 +106,10 @@ function MapView(): JSX.Element {
     axios(`maps/tours/${id}`)
       .then(async ({ data }) => {
         setTours(data);
-        const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
-        for (let i = 0; i < waypoints.data.length; i ++) {
-          axios(`/images/waypoint/${waypoints.data[i].id}`)
-          .then(async ({ data }) => {
-            await setImages(data);
-          }).catch((err) => console.log('get extra image failed', err));
-        }
-        });
+        // const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
+      }).catch((err) => console.log(err));
   };
+  
   //add each image object to image state array
   const getTourImage = async (waypointId) => {
     axios(`/images/waypoint/${waypointId}`)
@@ -234,7 +229,7 @@ function MapView(): JSX.Element {
                       <CardContent>
                         <img //try card media
                           src={`/api/images/${images[0].largeImg}`}
-                          style={{ width: 'auto', height: '180px' }}
+                          style={{ maxWidth: '95%', height: '180px'}}
                         />
                       </CardContent>
                     </Card>

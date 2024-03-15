@@ -144,5 +144,9 @@ body {
 }
 
 .map-image-card {
-  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  text-align: center;
+ 
 }
