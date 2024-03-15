@@ -80,26 +80,30 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
     <Card
       className='waypoint-card'
       sx={{
-        backgroundColor: 'aliceblue',
-        boxShadow:
-          '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
+        backgroundColor: 'rgba(255, 255, 255, .9)'
+        // backgroundColor: 'aliceblue',
+        // boxShadow:
+        //   '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
       }}
     >
       <Grid
         container
         direction='row'
-        justifyContent='space-between'
-        alignItems='center'
+        justifyContent='start'
+        // alignItems='center'
       >
-        <Grid sx={{ padding: '1rem' }} item>
+        <Grid item>
+          <Gallery waypoint={waypoint} edit={edit} />
+        </Grid>
+        <Grid sx={{ padding: '1rem' }} item >
           <Typography variant='h4' fontWeight='bold' fontSize={'20px'}>
             {<RoomOutlinedIcon />} {waypoint.waypointName}
           </Typography>
           <Typography variant='subtitle1'>{waypoint.description}</Typography>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <Gallery waypoint={waypoint} edit={edit} />
-        </Grid>
+        </Grid> */}
         <Grid
           container
           direction='row'

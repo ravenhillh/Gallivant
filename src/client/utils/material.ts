@@ -18,6 +18,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -88,6 +89,7 @@ export {
   CenterFocusWeakIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ClearIcon,
   CloseIcon,
   Container,
   DeleteIcon,
