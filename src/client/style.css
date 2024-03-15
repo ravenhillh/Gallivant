@@ -151,23 +151,14 @@ body {
   }
 }
 
-.message-text {
-  margin-top: 15px;
-  line-height: .5;
-}
-
-.message-username {
-  line-height: .25;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.message-time {
-  line-height: .25;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 .message-container {
   line-height: 0;
+}
+
+.map-image-card {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  text-align: center;
+ 
 }

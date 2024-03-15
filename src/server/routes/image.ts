@@ -56,6 +56,20 @@ imageRouter.get('/waypoint/:waypointId', (req, res) => {
 
 });
 
+//Get all images associated with tour (takes an array of waypoint ids)
+imageRouter.post('/tour/waypoints', (req, res) => {
+  const { ids } = req.body;
+  Images_Waypoints.findAll({where: {id_waypoint : ids}})
+  .then((imageIds: object[]) => {
+    const imgIds: number[] = [];
+    imageIds.forEach((image: any) => imgIds.push(image.dataValues.id_image));
+    Image.findAll({where: {id: imgIds}})
+    .then((images: object[]) => {
+      res.status(200).send(images);
+    }).catch((err: string) => console.log(err));
+  }).catch((err: string) => console.log(err));
+});
+
 // DELETE image from images and images_waypoints
 imageRouter.delete('/:imageId', (req, res) => {
   const { imageId } = req.params;
