@@ -43,7 +43,7 @@ const TourLink = ({ tour }) => {
       <ListItemText
         primary={<Link 
           to={`/tour/${tour.id}`}
-          style={{ color: '#1F1F29', textDecoration: 'none', fontWeight: 'bold' }}
+          style={{ color: '#1F1F29', textDecoration: 'none', fontWeight: '500' }}
           >{tour.tourName}
           {rating && (
             <div>
