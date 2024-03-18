@@ -65,11 +65,13 @@ body {
 
 .camera-container {
   max-width: 500px;
+  min-width: 300px;
+  padding: 1em;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 516px) {
   .camera-container {
-    min-width: 300px;
+    min-width: 500px;
   }
 }
 

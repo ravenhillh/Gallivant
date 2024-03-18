@@ -252,6 +252,7 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
+          <Grid item>
           <Typography
             variant='h2'
             fontWeight='bold'
@@ -261,7 +262,31 @@ const Tour = (): JSX.Element => {
           >
             {tour?.tourName}
           </Typography>
+          {/* <Typography variant='h6' fontWeight='bold'>
+              <Link 
+                to={`/tours/${tour?.category}`}
+                style={{ color: '#1F1F29', textDecoration: 'none' }}
+              >
+                {tour?.category?.toUpperCase()}
+              </Link>
+            </Typography> */}
           <Typography variant='body1'>{tour?.description}</Typography>
+          {/* {user.username === creator ? (
+            <Button
+              startIcon={<EditIcon />}
+              onClick={() => setUpdateTourModal(true)}
+              variant='contained'
+            >
+              Edit Tour
+            </Button>
+          ) : (
+            <Typography variant='caption'>Created by: {creator}</Typography>
+          )} */}
+           </Grid>
+           <Grid 
+            item
+            sx={{ alignSelf: 'stretch'}}
+            >
           {user.username === creator ? (
             <Button
               startIcon={<EditIcon />}
@@ -273,6 +298,7 @@ const Tour = (): JSX.Element => {
           ) : (
             <Typography variant='caption'>Created by: {creator}</Typography>
           )}
+           </Grid>
         </Grid>
         <Grid
           container
@@ -281,6 +307,18 @@ const Tour = (): JSX.Element => {
           alignItems='center'
         >
           <Grid item>
+          <Typography variant='h5' fontWeight='600'>
+              <Link
+                to={`/tours/${tour?.category}`}
+                style={{
+                  color: '#1F1F29',
+                  textDecoration: 'none',
+                  fontSize: '20px'
+                 }}
+              >
+                {tour?.category?.toUpperCase()}
+              </Link>
+            </Typography>
             {rating && (
               <div>
                 <Rating
@@ -288,6 +326,7 @@ const Tour = (): JSX.Element => {
                   value={rating}
                   precision={0.25}
                   readOnly
+                  sx={{ marginTop: '5px', marginBottom: '5px' }}
                 />
                 <br />
                 <Button
@@ -324,13 +363,16 @@ const Tour = (): JSX.Element => {
               />
             </Suspense>
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <Typography variant='h5' fontWeight='bold'>
-              <Link to={`/tours/${tour?.category}`}>
+              <Link 
+                to={`/tours/${tour?.category}`}
+                style={{ color: '#1F1F29', textDecoration: 'none' }}
+              >
                 {tour?.category?.toUpperCase()}
               </Link>
             </Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         <Button
