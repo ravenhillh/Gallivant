@@ -11,7 +11,7 @@ import {
   AppBar,
   Box,
   Button,
-  CenterFocusWeakIcon,
+  // CenterFocusWeakIcon,
   Container,
   Divider,
   Drawer,
@@ -125,7 +125,7 @@ function NavBar() {
                     setDrawer(false);
                   }}
                 >
-                  <MapIcon />
+                  <MapIcon color='primary' />
                   &nbsp;Map
                 </ListItemButton>
               </ListItem>
@@ -137,7 +137,7 @@ function NavBar() {
                     setDrawer(false);
                   }}
                 >
-                  <ExploreIcon />
+                  <ExploreIcon color='primary' />
                   &nbsp;Tours
                 </ListItemButton>
               </ListItem>
@@ -150,7 +150,7 @@ function NavBar() {
                       setDrawer(false);
                     }}
                   >
-                    <CenterFocusWeakIcon />
+                    <RouteOutlinedIcon color='primary' />
                     &nbsp;Current Tour
                   </ListItemButton>
                 </ListItem>
