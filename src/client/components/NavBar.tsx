@@ -67,9 +67,17 @@ function NavBar() {
             onClick={() => navigate('/')}
             variant='h6'
             component='div'
-            sx={{ cursor: 'pointer', flexGrow: 1 }}
+            sx={{ cursor: 'pointer', flexGrow: 1, display: 'flex', alignItems: 'center' }}
           >
-            {<RouteOutlinedIcon />} gallivant
+          <img 
+            src="https://res.cloudinary.com/dsxmv5yjt/image/upload/c_thumb,w_200,g_face/v1710795733/galliguy_lxo7yd.png" 
+            width="30em"
+            height="auto"
+            alt="logo-thumb"
+            style={{ marginRight: '5px'}}
+          />&nbsp;gallivant 
+            {/* {<RouteOutlinedIcon />} gallivant */}
+            
           </Typography>
           <IconButton
             size='large'
@@ -92,8 +100,18 @@ function NavBar() {
           <Box sx={{ width: 222 }} role='presentation'>
             <List>
               <ListItem>
-                <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-                  {<RouteOutlinedIcon />} GALLIVANT
+                <Typography 
+                  variant='h6' 
+                  component='div' 
+                  sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                  {/* {<RouteOutlinedIcon />} GALLIVANT */}
+                  <img 
+                    src="https://res.cloudinary.com/dsxmv5yjt/image/upload/c_thumb,w_200,g_face/v1710798650/gallyguyBW_gooyws.png" 
+                    width="30em"
+                    height="auto"
+                    alt="logobw"
+                    style={{ marginRight: '5px'}}
+                  />&nbsp;GALLIVANT
                 </Typography>
               </ListItem>
               <Divider />
@@ -107,7 +125,7 @@ function NavBar() {
                   }}
                 >
                   <MapIcon />
-                  Map
+                  &nbsp;Map
                 </ListItemButton>
               </ListItem>
               <ListItem className='tours-link'>
@@ -119,7 +137,7 @@ function NavBar() {
                   }}
                 >
                   <ExploreIcon />
-                  Tours
+                  &nbsp;Tours
                 </ListItemButton>
               </ListItem>
               {user && user?.id_currentTour ? (
@@ -132,7 +150,7 @@ function NavBar() {
                     }}
                   >
                     <CenterFocusWeakIcon />
-                    Current Tour
+                    &nbsp;Current Tour
                   </ListItemButton>
                 </ListItem>
               ) : (

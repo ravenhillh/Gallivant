@@ -336,7 +336,7 @@ const Tour = (): JSX.Element => {
                   sx={{ marginBottom: '5px' }}
                 >
                   <a
-                    style={{ color: 'white', textDecoration: 'none' }}
+                    style={{ color: '#e5e1e1', textDecoration: 'none' }}
                     href='#reviews'
                   >
                     Read Reviews
