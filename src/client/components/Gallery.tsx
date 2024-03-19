@@ -3,8 +3,8 @@ import axios from 'axios';
 import {
   Box,
   Button,
-  ClearIcon,
   CloseIcon,
+  DeleteIcon,
   IconButton,
   Snackbar,
 } from '../utils/material';
@@ -94,7 +94,7 @@ const Gallery = (props) => {
                     handleClick();
                   }}
                 >
-                  <ClearIcon />
+                  <DeleteIcon />
                 </Button>
               )}
             </div>

@@ -89,26 +89,12 @@ app.get('/api/images/:key', (req, res) => {
 });
 
 // POST image to S3
-
 app.post('/api/images', (req, res) => {
   const { imageName, base64 } = req.body;
-  // const { id } = req.user;
-  // id throws error here
+
   uploadPhoto(imageName, base64)
     .then((data) => {
-      // axios.post('/images/post', {
-      //   image: {
-      //     id_user: id,
-      //     largeImg: data.Key
-      //   }
-      // })
-      // .then((config) => {
-      //   // console.log(res.config.data);
-      //   res.send(config).status(201);
-      // })
-      // .catch(err => console.error('axios post err ', err));
       res.send(data).status(201);
-      // console.log('uploadData ', data);
     })
     .catch((err) => {
       console.error('upload error ', err);
