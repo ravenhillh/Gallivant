@@ -66,6 +66,7 @@ function NavBar() {
           <Typography
             onClick={() => navigate('/')}
             variant='h6'
+            color='inherit'
             component='div'
             sx={{ cursor: 'pointer', flexGrow: 1 }}
           >
@@ -89,7 +90,7 @@ function NavBar() {
           // onClick={toggleDrawer}
           onClose={toggleDrawer}
         >
-          <Box sx={{ width: 222 }} role='presentation'>
+          <Box className='drawer-box' sx={{ width: 222 }} role='presentation'>
             <List>
               <ListItem>
                 <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
