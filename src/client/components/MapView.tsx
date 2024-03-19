@@ -3,6 +3,7 @@ import { mapboxgl } from '../utils/material';
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import {
   Avatar,
   BubbleChartIcon,
@@ -45,6 +46,7 @@ function MapView(): JSX.Element {
   const [images, setImages] = useState([]);
   const [tourWaypoints, setTourWaypoints] = useState([]);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -131,7 +133,7 @@ function MapView(): JSX.Element {
       const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
 
       const marker1 = new mapboxgl.Marker({
-        color: '#2196f3',
+        color: theme.palette.primary.main,
         draggable: false,
       })
         .setLngLat([Number(marker.long), Number(marker.lat)])

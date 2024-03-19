@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTheme } from '@mui/material/styles';
+
 import {
   ExploreIcon,
   ListItem,
@@ -10,6 +12,7 @@ import {
 } from '../utils/material';
 
 const TourLink = ({ tour }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [rating, setRating] = useState<number>(0);
 
@@ -30,34 +33,41 @@ const TourLink = ({ tour }) => {
     <ListItem>
       <ListItemIcon
         onClick={() => navigate(`/tour/${tour.id}`)}
-        sx={{ 
-          cursor: 'pointer', 
-          color: '#2196f3', 
-          minWidth: '33px', 
+        sx={{
+          cursor: 'pointer',
+          color: theme.palette.primary.main,
+          minWidth: '33px',
           alignSelf: 'stretch',
-          paddingTop: '9px'
-          }}
+          paddingTop: '9px',
+        }}
       >
         <ExploreIcon />
       </ListItemIcon>
       <ListItemText
-        primary={<Link 
-          to={`/tour/${tour.id}`}
-          style={{ color: '#1F1F29', textDecoration: 'none', fontWeight: '500' }}
-          >{tour.tourName}
-          {rating && (
-            <div>
-              <Rating
-                name='read-only'
-                value={rating}
-                precision={0.25}
-                size="small"
-                sx={{ paddingTop: '.25em'}}
-                readOnly
-              />
-            </div>
-          )}
-          </Link>}
+        primary={
+          <Link
+            to={`/tour/${tour.id}`}
+            style={{
+              color: '#1F1F29',
+              textDecoration: 'none',
+              fontWeight: '500',
+            }}
+          >
+            {tour.tourName}
+            {rating && (
+              <div>
+                <Rating
+                  name='read-only'
+                  value={rating}
+                  precision={0.25}
+                  size='small'
+                  sx={{ paddingTop: '.25em' }}
+                  readOnly
+                />
+              </div>
+            )}
+          </Link>
+        }
         secondary={tour.description}
       />
       <br />

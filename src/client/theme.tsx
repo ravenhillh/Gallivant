@@ -8,6 +8,23 @@ const theme = createTheme({
       contrastText: '#e5e1e1'
     },
   },
+  typography: {
+    h2: {
+      color: '#0F0C0C',
+    },
+    h3: {
+      color: '#0F0C0C',
+    },
+    h4: {
+      color: '#291F1F',
+    },
+    h5: {
+      color: '#291F1F',
+    },
+    h6: {
+      color: '#291F1F',
+    },
+  },
   breakpoints: {
     values: {
       xs: 0,
