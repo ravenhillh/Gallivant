@@ -26,17 +26,19 @@ body {
 }
 
 .current-waypoint-card {
-  background:linear-gradient(to bottom right, transparent, #c9dcf0 );
+  background-color: 'rgba(255, 255, 255, .9)';
+  /* background:linear-gradient(to bottom right, transparent, #c9dcf0 ); */
 }
 
 .waypoint-card {
   margin: 0 auto;
   max-width: 800px;
+  background-color: 'rgba(255, 255, 255, .9)';
   /* background:linear-gradient(to bottom right, #fafdffe7, #bbe2f9 ); */
 }
 
 #delete-image {
-  color: whitesmoke;
+  color: #e5e1e1;
 }
 
 .map-container {
@@ -162,5 +164,9 @@ body {
   flex-direction: column;
   margin: 5px;
   text-align: center;
- 
+}
+
+.drawer-box {
+  height: 100vh;
+  background-image:linear-gradient(to bottom right, #e4fbd2 , #c9dcf0 );
 }

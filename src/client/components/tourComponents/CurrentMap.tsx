@@ -1,6 +1,7 @@
 // import mapboxgl from 'mapbox-gl';
 import { Typography, List, ListItem, mapboxgl } from '../../utils/material';
-import React, { useRef, useEffect, useState, SetStateAction } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 //import { JsxE } from 'typescript';
 
 mapboxgl.accessToken =
@@ -22,6 +23,7 @@ type MapProps = {
 };
 
 function CurrentMap(props: MapProps): JSX.Element {
+  const theme = useTheme();
   const { setInstructions, currentWP, waypoints } = props;
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
@@ -86,6 +88,7 @@ function CurrentMap(props: MapProps): JSX.Element {
         paint: {
           'circle-radius': 8,
           'circle-color': 'gold',
+          'circle-opacity': .5,
         },
       });
       // now routing is just on click events, eventually tie this into Geolocation
@@ -131,8 +134,8 @@ function CurrentMap(props: MapProps): JSX.Element {
               },
             },
             paint: {
-              'circle-radius': 10,
-              'circle-color': '#3887be',
+              'circle-radius': 9,
+              'circle-color': theme.palette.primary.main,
             },
           });
         }
@@ -147,7 +150,7 @@ function CurrentMap(props: MapProps): JSX.Element {
 
     showMarkers(waypoints.slice(0, currentWP), 'gray');
     showMarkers([waypoints[currentWP]], 'gold');
-    showMarkers(waypoints.slice(currentWP + 1), '#2196f3');
+    showMarkers(waypoints.slice(currentWP + 1), theme.palette.primary.main);
 
     map.current?.flyTo({
       center: [currentWPlong, currentWPlat],
@@ -200,7 +203,7 @@ function CurrentMap(props: MapProps): JSX.Element {
           'line-cap': 'round',
         },
         paint: {
-          'line-color': '#3887be',
+          'line-color': theme.palette.primary.main,
           'line-width': 5,
           'line-opacity': 0.75,
         },

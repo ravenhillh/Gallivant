@@ -22,12 +22,15 @@ const style = {
   pt: 3,
   px: 5,
   pb: 3,
+  // maxHeight: '95vh',
+  // overflow: 'auto',
 };
 
 const containerStyle = {
   display: 'flex',
   alignItems: '10%',
   justifyContent: 'center',
+  overflow: 'auto',
 };
 
 function CustomModal(

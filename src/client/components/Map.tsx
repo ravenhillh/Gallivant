@@ -1,6 +1,7 @@
 // import mapboxgl from 'mapbox-gl';
 import { mapboxgl } from '../utils/material';
 import React, { useRef, useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 //import { JsxE } from 'typescript';
 
 mapboxgl.accessToken =
@@ -20,6 +21,7 @@ type MapProps = {
 };
 
 function Map(props: MapProps): JSX.Element {
+  const theme = useTheme();
   const { passCoords } = props;
   const { waypoints } = props;
   const mapContainer = useRef('');
@@ -102,7 +104,7 @@ function Map(props: MapProps): JSX.Element {
       const popUp = new mapboxgl.Popup({ offset: 25 }).setHTML(markerContent);
 
       const marker1 = new mapboxgl.Marker({
-        color: '#2196f3',
+        color: theme.palette.primary.main,
         draggable: false,
       })
         .setLngLat([Number(marker.long), Number(marker.lat)])
