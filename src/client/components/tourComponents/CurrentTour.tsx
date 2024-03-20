@@ -17,8 +17,10 @@ import {
 const CurrentMap = lazy(() => import('./CurrentMap'));
 const CurrentWaypoint = lazy(() => import('./CurrentWaypoint'));
 const CustomModal = lazy(() => import('./Modal'));
+const Chat = lazy(() => import('../Chat'));
 
-const CurrentTour = (): JSX.Element => {
+
+const CurrentTour = ({ socket }): JSX.Element => {
   // loader returning user and tour from custom loader in App
   const { tour, user, waypoints } = useLoaderData();
   // state to track current index of waypoint array, i.e. user's progress thru tour
@@ -199,6 +201,7 @@ const CurrentTour = (): JSX.Element => {
         <br />
         <br />
       </CustomModal>
+      <Chat socket={socket} chatUser={user} chatTour={tour.id} chatName={tour.tourName} />
     </>
   );
 };

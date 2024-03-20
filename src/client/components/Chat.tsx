@@ -7,6 +7,7 @@ dayjs.extend(relativeTime);
 
 import {
   Alert,
+  Button,
   Fab,
   List,
   ListItem,
@@ -30,14 +31,25 @@ type User = {
   id: number;
 };
 
-const Chat = ({ socket }) => {
+const Chat = ({ socket, chatUser, chatTour, chatName }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [newUser, setNewUser] = useState([]);
   const [open, setOpen] = useState(true);
+  const [chatOpen, setChatOpen] = useState(false);
   const { tour, name } = useParams();
-  const  user: User  = useLoaderData();
+  let  user: User  = useLoaderData();
   const lastMessageRef = useRef(null);
+
+  useEffect(() => {
+    if (tour === undefined) {
+      setChatOpen(false);
+      console.log(chatUser);
+      user = chatUser;
+    } else {
+      setChatOpen(true);
+    }
+  }, []);
 
   useEffect(() => {
     socket.connect();
@@ -62,18 +74,20 @@ const Chat = ({ socket }) => {
 
   useEffect(() => {
     // receives usernames to set state
-    const username = user.username;
+    const username = user.username || chatUser.username;
+    const currTour = tour || chatTour;
     const chatListener = (data) => {
       setNewUser(data);
       setOpen(true);
     };
 
-    socket.emit('send_users', {username, tour});
+    socket.emit('send_users', {username, currTour});
     socket.on('chat_users', chatListener);
   }, []);
 
   useEffect(() => {
-    getMessagesByTour(tour);
+    const currTour = tour || chatTour;
+    getMessagesByTour(currTour);
   }, []);
 
   useEffect(() => {
@@ -83,14 +97,15 @@ const Chat = ({ socket }) => {
 
   const sendMessage = () => {
     if (message !== '') {
-      const username = user.username;
-      const id = user.id;
+      const username = user.username || chatUser.username;
+      const id = user.id || chatUser.id;
+      const currTour = tour || chatTour;
       // Send message to socket server
-      socket.emit('send_message', { message, username, id, tour });
+      socket.emit('send_message', { message, username, id, currTour });
       setMessage('');
       // save message to db
       axios
-        .post('/message/post', { chat: { message, tour, username } })
+        .post('/message/post', { chat: { message, currTour, username } })
         .then(() => console.log('successful post'))
         .catch((err) => console.log(err));
     }
@@ -100,8 +115,13 @@ const Chat = ({ socket }) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
         setMessages(data);
+        console.log(data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleClick = () => {
+    setChatOpen(!chatOpen);
   };
 
   const handleKeyDown = (e) => {
@@ -121,9 +141,11 @@ const Chat = ({ socket }) => {
   };
 
   return (
-    <div className='chat-container'>
+    <div position='absolute'>
+       {
+      chatOpen ? (<div className='chat-container'>
       <Typography variant="h5" align="center" className='chat-header'>
-            Room: {name}
+            Room: {name || chatName}
             </Typography>
       <div >
           <List>
@@ -184,6 +206,23 @@ const Chat = ({ socket }) => {
           </Fab>
         </Grid>
       </Grid>
+      {tour === undefined?
+      (<Button
+        className="chat-buttons"
+        variant="outlined"
+        onClick={() => handleClick()}
+            >
+          Chat
+        </Button>) : ''}
+    </div>
+  ) : (<Button
+    className="chat-buttons"
+    variant="outlined"
+    onClick={() => handleClick()}
+        >
+      Chat
+    </Button>)
+    }
     </div>
   );
 };
