@@ -11,7 +11,6 @@ import {
   Typography,
   Grid,
 } from '../../utils/material';
-// CardMedia?
 
 import CustomModal from './Modal';
 import Gallery from '../Gallery';
@@ -87,7 +86,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
         container
         direction='row'
         justifyContent='start'
-        // alignItems='center'
       >
         <Grid item>
           <Gallery waypoint={waypoint} edit={edit} />
@@ -98,9 +96,6 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
           </Typography>
           <Typography variant='subtitle1'>{waypoint.description}</Typography>
         </Grid>
-        {/* <Grid item>
-          <Gallery waypoint={waypoint} edit={edit} />
-        </Grid> */}
         <Grid
           container
           direction='row'
