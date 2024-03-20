@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-// import axios from 'axios';
 import { Button } from '../utils/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
-// const Category = lazy(() => import('./Category'));
 const CatButton = styled(Button)({
   // boxShadow: 'none',
   // fontSize: 12,
@@ -44,7 +42,12 @@ const Categories = ({ categories, category, getTours }) => {
   }, [category]);
 
   return (
-    <div>
+    <div
+      style={{
+        padding: '0.5em',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap'
+      }}>
       <CatButton key='all' onClick={() => navigate('/tours/all')}>
         all
       </CatButton>
