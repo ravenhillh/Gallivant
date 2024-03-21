@@ -32,4 +32,3 @@ export const getFileStream = (key:string) => {
   return s3.getObject(downloadParams).createReadStream();
 };
 
-// export default uploadPhoto;
