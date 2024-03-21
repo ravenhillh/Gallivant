@@ -152,7 +152,7 @@ const Tour = (): JSX.Element => {
   const updateTour = () => {
     if (tourName && tourDesc && category) {
       axios
-        .put(`/db/tourUpdate/${id}`, { tour: { tourName, tourDesc, category } })
+        .put(`/db/tourUpdate/${id}`, { tour: { tourName, description: tourDesc, category } })
         .then((res) => {
           if (res.status === 200) {
             getTour(id);
