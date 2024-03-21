@@ -16,6 +16,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
+import ChatIcon from '@mui/icons-material/Chat';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -87,6 +88,7 @@ export {
   CardContent,
   CardMedia,
   CenterFocusWeakIcon,
+  ChatIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ClearIcon,

@@ -143,7 +143,7 @@ const App = createBrowserRouter([
         path: '/currentTour',
         element: (
           <Suspense fallback={<>Loading...</>}>
-            <CurrentTour />
+            <CurrentTour socket={socket}/>
           </Suspense>
         ),
         loader: currentTourLoader,
