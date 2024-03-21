@@ -170,3 +170,28 @@ body {
   height: 100vh;
   background-image:linear-gradient(to bottom right, #e4fbd2 , #c9dcf0 );
 }
+
+.chat-con {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.chat-container {
+  display: block;
+  background-color: aliceblue;
+}
+
+.chat-buttons {
+  text-align: right;
+  color: primary;
+  font-size: 200%;
+}
+
+.chat-room-con {
+  background-color: aliceblue;
+}
+
+.chat-icon {
+  font-size: 30px !important;
+}

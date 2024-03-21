@@ -133,14 +133,6 @@ const CurrentTour = ({ socket }): JSX.Element => {
         >
           Directions
         </Button>
-        <Button
-          variant='contained'
-          startIcon={<SendIcon />}
-          onClick={() => routeToChat(tour?.id, tour?.tourName)}
-          sx={{ margin: '1rem' }}
-        >
-          Chat
-        </Button>
       </Grid>
 
       <Suspense fallback={<>Loading...</>}>

@@ -8,6 +8,7 @@ dayjs.extend(relativeTime);
 import {
   Alert,
   Button,
+  ChatIcon,
   Fab,
   List,
   ListItem,
@@ -115,7 +116,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
     axios(`/message/tour/${id}`)
       .then(({ data }) => {
         setMessages(data);
-        console.log(data);
       })
       .catch((err) => console.log(err));
   };
@@ -141,7 +141,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
   };
 
   return (
-    <div position='absolute'>
+    <div className={tour === undefined? 'chat-con': 'chat-room-con'}>
        {
       chatOpen ? (<div className='chat-container'>
       <Typography variant="h5" align="center" className='chat-header'>
@@ -209,18 +209,16 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
       {tour === undefined?
       (<Button
         className="chat-buttons"
-        variant="outlined"
         onClick={() => handleClick()}
             >
-          Chat
+          <ChatIcon />
         </Button>) : ''}
     </div>
   ) : (<Button
     className="chat-buttons"
-    variant="outlined"
     onClick={() => handleClick()}
         >
-      Chat
+      <ChatIcon className='chat-icon'/>
     </Button>)
     }
     </div>
