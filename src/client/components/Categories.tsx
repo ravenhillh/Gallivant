@@ -4,8 +4,6 @@ import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 const CatButton = styled(Button)({
-  // boxShadow: 'none',
-  // fontSize: 12,
   padding: '6px 12px',
   lineHeight: 1.5,
   '&:hover': {
@@ -24,18 +22,6 @@ const CatButton = styled(Button)({
 
 const Categories = ({ categories, category, getTours }) => {
   const navigate = useNavigate();
-  // const [category, setCategory] = useState('');
-
-  // on click, render list of tours by category
-  // const getToursByCat = () => {
-  //   console.log(category);
-  //   axios
-  //     .get(category === 'all' ? '/db/tours/' : `/db/tours/${category}`)
-  //     .then(({ data }) => {
-  //       setTours(data);
-  //     })
-  //     .catch((err) => console.error('Failed to GET tours by category ', err));
-  // };
 
   useEffect(() => {
     getTours();
@@ -56,13 +42,11 @@ const Categories = ({ categories, category, getTours }) => {
           key={i}
           onClick={() => {
             navigate(`/tours/${category}`);
-            // setCategory(category);
           }}
         >
           {category}
         </CatButton>
       ))}
-      {/* { category && <Category category={category} setTours={setTours} /> } */}
     </div>
   );
 };
