@@ -160,7 +160,7 @@ function MapView(): JSX.Element {
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
-    background:'linear-gradient(to bottom right, #c9dcf0, #e4fbd2 )',
+    background:'inherit',
   };
   //tour details rendered on waypoint click
   const showTours = () => {
