@@ -141,11 +141,11 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
   };
 
   return (
-    <div className={tour === undefined? 'chat-con': 'chat-room-con'}>
+    <div className={tour === undefined? 'chat-con-curr-tour': 'chat-room-con'}>
        {
       chatOpen ? (<div className='chat-container'>
-      <Typography variant="h5" align="center" className='chat-header'>
-            Room: {name || chatName}
+      <Typography variant="h6" className='chat-header'>
+            {name || chatName}
             </Typography>
       <div >
           <List>

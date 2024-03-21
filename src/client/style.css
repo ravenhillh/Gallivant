@@ -146,6 +146,7 @@ body {
   height: 75px;
   display: table-cell;
   vertical-align: bottom;
+  padding-left: 50px;
 }
 
 @media screen and (min-width: 800px) {
@@ -171,10 +172,10 @@ body {
   background-image:linear-gradient(to bottom right, #e4fbd2 , #c9dcf0 );
 }
 
-.chat-con {
+.chat-con-curr-tour {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 10px;
+  right: 10px;
 }
 
 .chat-container {
