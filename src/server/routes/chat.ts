@@ -51,7 +51,7 @@ chatRouter.post('/message/post', (req, res) => {
   Chat.create({ message: chat.message, id_user: req.user?.id, username: chat.username })
   .then( async (message: Message) => {
     //create chat on tour-chat join table using tour-id
-    await Chats_Tours.create({ id_chat: message.id, id_tour: chat.tour }).catch((err: string) => console.log(err));
+    await Chats_Tours.create({ id_chat: message.id, id_tour: chat.currTour }).catch((err: string) => console.log(err));
     res.status(201).send(message);
   })
   .catch((err: string) => console.log(err));
