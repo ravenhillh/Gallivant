@@ -9,6 +9,7 @@ import {
   Alert,
   Button,
   ChatIcon,
+  Divider,
   Fab,
   List,
   ListItem,
@@ -45,7 +46,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
   useEffect(() => {
     if (tour === undefined) {
       setChatOpen(false);
-      console.log(chatUser);
       user = chatUser;
     } else {
       setChatOpen(true);
@@ -135,43 +135,58 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
   };
 
   const style = {
-  lineHeight: .25,
-  marginTop: 0,
-  marginBottom: 0
+    lineHeight: .75,
+    marginTop: 0,
+    marginBottom: 0,
+    fontSize: '11px',
+    color: 'cadetblue'
+  };
+
+  const style2 = {
+    marginTop: 0,
+    marginBottom: 0,
+    fontSize: '14px',
+    lineHeight: .75,
+    fontWeight: 500,
+    color: 'charcoal'
   };
 
   return (
     <div className={tour === undefined? 'chat-con-curr-tour': 'chat-room-con'}>
        {
       chatOpen ? (<div className='chat-container'>
-      <Typography variant="h6" className='chat-header'>
+      <Typography variant="h6" className={tour === undefined? 'chat-header-curr-tour' : 'chat-header'}>
             {name || chatName}
             </Typography>
+            {tour === undefined? <Divider /> : ''}
       <div >
           <List>
             {messages.map((message: Message, i) => {
               return (
-                <ListItem key={i}>
+                <ListItem key={i} className='message-container'>
                   <Grid container>
                     <Grid item xs={12}>
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
                         primary={message.message}
-                        sx={style}
+                        primaryTypographyProps={style2}
+                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12} >
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
-                        secondary={message.username}
-                        sx={style}
+                        primary={message.username}
+                        primaryTypographyProps={style}
+                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12}  >
                       <ListItemText
                         align={message.username === user.username ? 'right' : 'left'}
-                        secondary={dayjs(message.createdAt).fromNow()}
-                        sx={style}
+                        primary={dayjs(message.createdAt).fromNow()}
+                        primaryTypographyProps={style}
+                        style={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                   </Grid>
@@ -189,7 +204,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
           {newUser.message} - {newUser.username}
         </Alert>}
       </div>
-      <Grid container style={{ padding: '20px' }}>
+      <Grid container style={{ padding: '20px', maxWidth: '95%' }}>
         <Grid item xs={11}>
           <TextField
             id="message-field"

@@ -156,6 +156,12 @@ body {
   }
 }
 
+@media only screen and (max-width: 600px) {
+.chat-con-curr-tour {
+    max-width: 90%;
+   
+  }
+}
 .message-container {
   line-height: 0;
 }
@@ -174,13 +180,20 @@ body {
 
 .chat-con-curr-tour {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 5px;
+  right: 5px;
+  z-index: 1100;
+  max-height: 500px;
+  overflow: scroll;
 }
 
 .chat-container {
   display: block;
   background-color: aliceblue;
+  border-style: solid;
+  border-width: 1px;
+  border-color: cornsilk;
+  border-radius: 25px;
 }
 
 .chat-buttons {
@@ -194,5 +207,21 @@ body {
 }
 
 .chat-icon {
-  font-size: 30px !important;
+  font-size: 25px !important;
+}
+
+.chat-header-curr-tour {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.map-pics {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(112, 130, 207);
+  border-radius: 25px;
+  margin-left: 20px;
 }
