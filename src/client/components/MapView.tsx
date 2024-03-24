@@ -103,7 +103,8 @@ function MapView(): JSX.Element {
         setTours(data);
         const waypoints = await axios(`/db/tourWaypoints/${data[0].id}`);
         setTourWaypoints(waypoints.data);
-      }).catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
   //get all images for one tour
   const getTourImages = () => {
@@ -111,12 +112,14 @@ function MapView(): JSX.Element {
     tourWaypoints?.forEach((waypoint) => {
       ids.push(waypoint.id);
     });
-    axios.post('/images/tour/waypoints', {
-      ids: ids
-    })
-    .then(({ data }) => {
-      setImages(data);
-    }).catch((err) => console.log(err));
+    axios
+      .post('/images/tour/waypoints', {
+        ids: ids,
+      })
+      .then(({ data }) => {
+        setImages(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -160,89 +163,93 @@ function MapView(): JSX.Element {
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
-    background:'inherit',
+    background: 'inherit',
   };
   //tour details rendered on waypoint click
   const showTours = () => {
     return tours.length ? (
-        <Grid className="show-tours" container>
+      <Grid className="show-tours" container>
+        <Grid className="map-details" item>
+          <List sx={style} aria-label="tour details">
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <InsightsIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={tours[0].tourName} />
+            </ListItem>
+            <Divider component="li" />
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <BubbleChartIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={tours[0].category} />
+            </ListItem>
+            <Divider component="li" />
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <DirectionsWalkIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={tours[0].description} />
+            </ListItem>
+            <Divider component="li" />
+            <ListItem>
+              <Button
+                className="map-buttons"
+                variant="outlined"
+                onClick={() => routeToTour(tours[0].id)}
+              >
+                View Tour
+              </Button>
+              <Button
+                className="map-buttons"
+                variant="outlined"
+                onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
+              >
+                Tour Chat
+              </Button>
+            </ListItem>
+          </List>
+        </Grid>
+        {images.length === 0 ? (
+          ''
+        ) : (
           <Grid className="map-details" item>
-            <List sx={style} aria-label="tour details">
+            <List sx={style}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
-                    <InsightsIcon />
+                    <ImageIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={tours[0].tourName} />
+                <ListItemText primary={'Images'} />
               </ListItem>
               <Divider component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <BubbleChartIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={tours[0].category} />
-              </ListItem>
-              <Divider component="li" />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <DirectionsWalkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={tours[0].description} />
-              </ListItem>
-              <Divider component="li" />
-              <ListItem>
-                <Button
-                  className="map-buttons"
-                  variant="outlined"
-                  onClick={() => routeToTour(tours[0].id)}
-                >
-                  View Tour
-                </Button>
-                <Button
-                  className="map-buttons"
-                  variant="outlined"
-                  onClick={() => routeToChat(tours[0].id, tours[0].tourName)}
-                >
-                  Tour Chat
-                </Button>
-              </ListItem>
+              <div
+                style={{
+                  padding: '0.5em',
+                  overflow: 'auto',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {images.map((image, i) => (
+                      <img
+                        src={`/api/images/${image.largeImg}`}
+                        style={{ maxWidth: '95%', height: '180px' }}
+                        key={i}
+                        className="map-pics"
+                      />
+                ))}
+              </div>
             </List>
           </Grid>
-          {images.length === 0 ? (
-            ''
-          ) : (
-              <Grid className="map-details" item>
-                <List sx={style}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <ImageIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={'Images'} />
-                  </ListItem>
-                  <Divider component="li" />
-                  {images.map((image, i) => (
-                  <ListItem key={i}>
-                    <Card className='map-image-card'>
-                      <CardContent>
-                        <img
-                          src={`/api/images/${image.largeImg}`}
-                          style={{ maxWidth: '95%', height: '180px'}}
-                        />
-                      </CardContent>
-                    </Card>
-                  </ListItem>
-                  ))}
-                </List>
-              </Grid>
-          )}
-        </Grid>
+        )}
+      </Grid>
     ) : (
       ''
     );
@@ -261,13 +268,13 @@ function MapView(): JSX.Element {
   };
 
   return (
-    <div className='map-view'>
-      <Typography 
-        mt={2} 
-        variant="h3" 
-        fontWeight="bold" 
-        align="center"
-        sx={{ fontSize: { xs: '40px', md: '50px', lg: '60px'}}}
+    <div className="map-view">
+      <Typography
+        mt={2}
+        variant="h4"
+        fontWeight={300}
+        textAlign="left"
+        sx={{ fontSize: { xs: '40px', md: '50px', lg: '60px' } }}
       >
         Browse Tours
       </Typography>
