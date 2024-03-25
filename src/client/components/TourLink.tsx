@@ -27,7 +27,7 @@ const TourLink = ({ tour }) => {
 
   useEffect(() => {
     getTourRating(tour.id);
-  }, []);
+  }, [tour.id]);
 
   return (
     <ListItem>
@@ -70,18 +70,6 @@ const TourLink = ({ tour }) => {
         }
         secondary={tour.description}
       />
-      <br />
-      {/* {rating && (
-        <div>
-          <Rating
-            name='read-only'
-            value={rating}
-            precision={0.25}
-            size="small"
-            readOnly
-          />
-        </div>
-      )} */}
     </ListItem>
   );
 };
