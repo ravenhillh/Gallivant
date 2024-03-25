@@ -36,8 +36,8 @@ const Waypoint = (props: WaypointProps): JSX.Element => {
       className='current-waypoint-card'
       sx={{
         // backgroundColor: 'transparent',
-        boxShadow:
-          '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
+        // boxShadow:
+        //   '0px 4px 2px -2px rgba(0,0,0,0.4),0px 2px 2px 0px rgba(0,0,0,0.3),0px 2px 6px 0px rgba(0,0,0,0.2)',
         maxWidth: '650px',
       }}
     >
