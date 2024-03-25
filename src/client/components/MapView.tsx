@@ -38,9 +38,9 @@ type Marker = {
 function MapView(): JSX.Element {
   const mapContainer = useRef('');
   const map = useRef<null | mapboxgl.Map>(null);
-  const [lng, setLng] = useState(-90);
-  const [lat, setLat] = useState(29.9);
-  const [zoom, setZoom] = useState(9);
+  const [lng, setLng] = useState(-90.05);
+  const [lat, setLat] = useState(29.965);
+  const [zoom, setZoom] = useState(10.5);
   const [allMarkers, setAllMarkers] = useState([]);
   const [tours, setTours] = useState([]);
   const [images, setImages] = useState([]);
