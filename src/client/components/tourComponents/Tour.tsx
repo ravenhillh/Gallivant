@@ -252,36 +252,16 @@ const Tour = (): JSX.Element => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Grid item>
+          <Grid item sx={{ maxWidth: '60%' }}>
           <Typography
             variant='h2'
             fontWeight='bold'
-            // fontSize='36px'
             gutterBottom
             sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px' } }}
           >
             {tour?.tourName}
           </Typography>
-          {/* <Typography variant='h6' fontWeight='bold'>
-              <Link 
-                to={`/tours/${tour?.category}`}
-                style={{ color: '#1F1F29', textDecoration: 'none' }}
-              >
-                {tour?.category?.toUpperCase()}
-              </Link>
-            </Typography> */}
           <Typography variant='body1'>{tour?.description}</Typography>
-          {/* {user.username === creator ? (
-            <Button
-              startIcon={<EditIcon />}
-              onClick={() => setUpdateTourModal(true)}
-              variant='contained'
-            >
-              Edit Tour
-            </Button>
-          ) : (
-            <Typography variant='caption'>Created by: {creator}</Typography>
-          )} */}
            </Grid>
            <Grid 
             item
