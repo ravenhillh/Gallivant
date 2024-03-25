@@ -167,7 +167,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                   <Grid container>
                     <Grid item xs={12}>
                       <ListItemText
-                        align={message.username === user.username ? 'right' : 'left'}
+                        align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.message}
                         primaryTypographyProps={style2}
                         sx={{lineHeight: .75}}
@@ -175,7 +175,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                     </Grid>
                     <Grid item xs={12} >
                       <ListItemText
-                        align={message.username === user.username ? 'right' : 'left'}
+                        align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.username}
                         primaryTypographyProps={style}
                         sx={{lineHeight: .75}}
@@ -183,7 +183,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                     </Grid>
                     <Grid item xs={12}  >
                       <ListItemText
-                        align={message.username === user.username ? 'right' : 'left'}
+                        align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={dayjs(message.createdAt).fromNow()}
                         primaryTypographyProps={style}
                         style={{lineHeight: .75}}
