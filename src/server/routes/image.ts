@@ -21,23 +21,6 @@ imageRouter.post('/post', (req, res) => {
 
 });
 
-// GET images by foreign key/user Id
-// imageRouter.get('/user', (req, res) => {
-//   const { id } = req.user;
-//   // console.log('id ', id);
-
-//   Image.findAll({
-//     where: {
-//       id_user: id
-//     }
-//   })
-//   .then((allImages:any) => {
-//     // console.log('GET image data ', allImages);
-//     res.send(allImages).status(200);
-//   })
-//   .catch((err:string) => console.error('could not GET ', err));
-// });
-
 // GET waypoint image by waypoint id, user id, and image id
 imageRouter.get('/waypoint/:waypointId', (req, res) => {
   const { waypointId } = req.params;

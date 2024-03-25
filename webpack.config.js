@@ -62,7 +62,7 @@ module.exports = {
       template: path.resolve(__dirname, './src/client/index.ejs'),
     }),
     new FaviconsWebpackPlugin({
-      logo: './public/placeholderLogo.svg',
+      logo: './public/galliguy_lxo7yd_Thumbnail.png',
       mode: 'webapp',
     }),
     // new BundleAnalyzerPlugin()
