@@ -146,7 +146,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
     marginTop: 0,
     marginBottom: 0,
     fontSize: '14px',
-    lineHeight: .75,
+    lineHeight: 1.1,
     fontWeight: 500,
     color: 'charcoal'
   };
@@ -170,7 +170,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.message}
                         primaryTypographyProps={style2}
-                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12} >
