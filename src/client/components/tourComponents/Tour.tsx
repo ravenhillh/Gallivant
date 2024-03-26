@@ -169,6 +169,16 @@ const Tour = (): JSX.Element => {
     }
   };
 
+  const deleteTour = () => {
+    axios
+      .delete(`/db/deleteTour/${id}`)
+      .then(() => {
+        getTour(id); //just temporarily for testing
+        setDeleteTourModal(false);
+      })
+      .catch((err: string) => console.error('Could not DELETE tour: ', err));
+  };
+
   // gets username of tour creator
   const getCreator = (userId: number | undefined) => {
     axios(`/db/tourCreatedBy/${userId}`)
@@ -509,7 +519,7 @@ const Tour = (): JSX.Element => {
               size='small'
               variant='contained'
               color='error'
-              onClick={() => console.log('delete')}
+              onClick={deleteTour}
             >
               Delete Tour
             </Button>

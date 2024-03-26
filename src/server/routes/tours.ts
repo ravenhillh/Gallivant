@@ -1,5 +1,6 @@
 import express from 'express';
-import { User, Tour } from '../db/index';
+import { QueryTypes } from 'sequelize';
+import { db, User, Tour, Tours_Waypoints, Waypoint } from '../db/index';
 
 const tourRouter = express.Router();
 
@@ -67,6 +68,33 @@ tourRouter.put('/db/tourUpdate/:tourId', (req, res) => {
       console.error('Failed to Update tour: ', err);
       res.sendStatus(500);
     });
+});
+
+tourRouter.delete('/db/deleteTour/:tourId', (req, res) => {
+  const { tourId } = req.params;
+
+  // delete all Waypoints associated with Tour
+  db.query(
+    `select distinct Waypoints.id from Waypoints
+    join Tours_Waypoints
+    on Tours_Waypoints.id_waypoint = Waypoints.id
+    and Tours_Waypoints.id_tour = ${tourId};`,
+    { type: QueryTypes.SELECT }
+  )
+    .then((wpIDs: { id: number }[]) => {
+      wpIDs.forEach(({ id }) => {
+        Waypoint.destroy({ where: { id } }).catch((err: string) => {
+          console.error('Failed to Destroy waypoint by ID: ', err);
+          res.sendStatus(500);
+        });
+      });
+    })
+    .catch((err: string) => {
+      console.error('Failed to findAll waypoint IDs by tourID: ', err);
+      res.sendStatus(500);
+    });
+
+
 });
 
 export default tourRouter;
