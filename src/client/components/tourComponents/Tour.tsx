@@ -7,6 +7,7 @@ import {
   Button,
   AddIcon,
   CancelIcon,
+  DeleteIcon,
   EditIcon,
   FormControl,
   InputLabel,
@@ -67,6 +68,7 @@ const Tour = (): JSX.Element => {
   const [category, setTourCat] = useState('');
   const [updateTourModal, setUpdateTourModal] = useState(false);
   const [errorUpdateModal, setErrorUpdateModal] = useState(false);
+  const [deleteTourModal, setDeleteTourModal] = useState(false);
 
   const [creator, setCreator] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
@@ -152,7 +154,9 @@ const Tour = (): JSX.Element => {
   const updateTour = () => {
     if (tourName && tourDesc && category) {
       axios
-        .put(`/db/tourUpdate/${id}`, { tour: { tourName, description: tourDesc, category } })
+        .put(`/db/tourUpdate/${id}`, {
+          tour: { tourName, description: tourDesc, category },
+        })
         .then((res) => {
           if (res.status === 200) {
             getTour(id);
@@ -253,32 +257,43 @@ const Tour = (): JSX.Element => {
           alignItems='center'
         >
           <Grid item sx={{ maxWidth: '60%' }}>
-          <Typography
-            variant='h2'
-            fontWeight='bold'
-            gutterBottom
-            sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px' } }}
-          >
-            {tour?.tourName}
-          </Typography>
-          <Typography variant='body1'>{tour?.description}</Typography>
-           </Grid>
-           <Grid 
-            item
-            sx={{ alignSelf: 'stretch'}}
+            <Typography
+              variant='h2'
+              fontWeight='bold'
+              gutterBottom
+              sx={{ fontSize: { xs: '24px', md: '34px', lg: '42px' } }}
             >
-          {user.username === creator ? (
-            <Button
-              startIcon={<EditIcon />}
-              onClick={() => setUpdateTourModal(true)}
-              variant='contained'
-            >
-              Edit Tour
-            </Button>
-          ) : (
-            <Typography variant='caption'>Created by: {creator}</Typography>
-          )}
-           </Grid>
+              {tour?.tourName}
+            </Typography>
+            <Typography variant='body1'>{tour?.description}</Typography>
+          </Grid>
+          <Grid item sx={{ alignSelf: 'stretch' }}>
+            <Stack spacing={1}>
+              {user.username === creator ? (
+                <Button
+                  size='small'
+                  startIcon={<EditIcon />}
+                  onClick={() => setUpdateTourModal(true)}
+                  variant='contained'
+                >
+                  Edit Tour
+                </Button>
+              ) : (
+                <Typography variant='caption'>Created by: {creator}</Typography>
+              )}
+              {user.username === creator ? (
+                <Button
+                  size='small'
+                  color='error'
+                  startIcon={<DeleteIcon />}
+                  onClick={() => setDeleteTourModal(true)}
+                  variant='contained'
+                >
+                  Delete Tour
+                </Button>
+              ) : null}
+            </Stack>
+          </Grid>
         </Grid>
         <Grid
           container
@@ -287,14 +302,14 @@ const Tour = (): JSX.Element => {
           alignItems='center'
         >
           <Grid item>
-          <Typography variant='h5' fontWeight='600'>
+            <Typography variant='h5' fontWeight='600'>
               <Link
                 to={`/tours/${tour?.category}`}
                 style={{
                   color: '#1F1F29',
                   textDecoration: 'none',
-                  fontSize: '20px'
-                 }}
+                  fontSize: '20px',
+                }}
               >
                 {tour?.category?.toUpperCase()}
               </Link>
@@ -481,6 +496,34 @@ const Tour = (): JSX.Element => {
           </FormControl>
           <br />
           <br />
+        </CustomModal>
+      </Suspense>
+
+      <Suspense>
+        <CustomModal
+          openModal={deleteTourModal}
+          closeModal={() => setDeleteTourModal(false)}
+          confirmButton={
+            <Button
+              startIcon={<DeleteIcon />}
+              size='small'
+              variant='contained'
+              color='error'
+              onClick={() => console.log('delete')}
+            >
+              Delete Tour
+            </Button>
+          }
+        >
+          <Typography sx={{ color: 'red', fontWeight: 'bold' }} variant='h5'>
+            WARNING:
+          </Typography>
+          <Typography variant='body1'>
+            This will delete all data associated with this tour, including
+            Waypoints, Images, and Reviews. Are you sure you want to continue?{' '}
+            <br />
+            <br />
+          </Typography>
         </CustomModal>
       </Suspense>
 
