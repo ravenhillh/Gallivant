@@ -165,6 +165,20 @@ function MapView(): JSX.Element {
     borderColor: 'divider',
     background: 'inherit',
   };
+
+  // capitalize tour category for tour browsing
+  const capitalize = (cat) => {
+    if (cat.includes('&')) {
+      const capped = cat.split(' & ');
+      const copy = [];
+      capped.forEach((e) => {
+        copy.push(`${e.charAt(0).toUpperCase()}${e.slice(1)}`);
+      });
+      return copy.join(' & ');
+    } else {
+      return `${cat.charAt(0).toUpperCase()}${cat.slice(1)}`;
+    }
+  };
   //tour details rendered on waypoint click
   const showTours = () => {
     return tours.length ? (
@@ -186,7 +200,7 @@ function MapView(): JSX.Element {
                   <BubbleChartIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={tours[0].category} />
+              <ListItemText primary={capitalize(tours[0].category)} />
             </ListItem>
             <Divider component="li" />
             <ListItem>

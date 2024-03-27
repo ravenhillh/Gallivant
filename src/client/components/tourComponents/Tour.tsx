@@ -338,7 +338,7 @@ const Tour = (): JSX.Element => {
                   startIcon={<AutoStoriesIcon />}
                   variant='contained'
                   color='primary'
-                  sx={{ marginBottom: '5px' }}
+                  sx={{ width: '160px', marginBottom: '5px' }}
                 >
                   <a
                     style={{ color: '#e5e1e1', textDecoration: 'none' }}
@@ -355,7 +355,7 @@ const Tour = (): JSX.Element => {
                 variant='contained'
                 color='primary'
                 onClick={handleOpen}
-                sx={{ width: '100%' }}
+                sx={{ width: '160px' }}
               >
                 Add Review
               </Button>

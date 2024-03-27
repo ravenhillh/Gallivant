@@ -85,6 +85,20 @@ const Tours = (): JSX.Element => {
     setCategory(event.target.value as string);
   };
 
+  // capitalize tour category for tour browsing
+  const capitalize = (cat) => {
+    if (cat.includes('&')) {
+      const capped = cat.split(' & ');
+      const copy = [];
+      capped.forEach((e) => {
+        copy.push(`${e.charAt(0).toUpperCase()}${e.slice(1)}`);
+      });
+      return copy.join(' & ');
+    } else {
+      return `${cat.charAt(0).toUpperCase()}${cat.slice(1)}`;
+    }
+  };
+
   return (
     <div>
       <Grid
@@ -177,7 +191,7 @@ const Tours = (): JSX.Element => {
           >
             {categories.map((category, i) => (
               <MenuItem key={i} value={category}>
-                {category}
+                {capitalize(category)}
               </MenuItem>
             ))}
           </Select>
