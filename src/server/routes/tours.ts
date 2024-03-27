@@ -1,5 +1,6 @@
 import express from 'express';
-import { User, Tour } from '../db/index';
+import { QueryTypes } from 'sequelize';
+import { db, User, Tour, Review, Waypoint } from '../db/index';
 
 const tourRouter = express.Router();
 
@@ -65,6 +66,45 @@ tourRouter.put('/db/tourUpdate/:tourId', (req, res) => {
     .then(() => res.sendStatus(200))
     .catch((err: string) => {
       console.error('Failed to Update tour: ', err);
+      res.sendStatus(500);
+    });
+});
+
+tourRouter.delete('/db/deleteTour/:tourId', (req, res) => {
+  const { tourId } = req.params;
+
+  // delete all Waypoints associated with Tour
+  db.query(
+    `select distinct Waypoints.id from Waypoints
+    join Tours_Waypoints
+    on Tours_Waypoints.id_waypoint = Waypoints.id
+    and Tours_Waypoints.id_tour = ${tourId};`,
+    { type: QueryTypes.SELECT }
+  )
+    .then((wpIDs: { id: number }[]) => {
+      wpIDs.forEach(({ id }) => {
+        Waypoint.destroy({ where: { id } }).catch((err: string) => {
+          console.error('Failed to Destroy waypoint by ID: ', err);
+          res.sendStatus(500);
+        });
+      });
+    })
+    .catch((err: string) => {
+      console.error('Failed to findAll waypoint IDs by tourID: ', err);
+      res.sendStatus(500);
+    });
+
+  //delete all Reviews associated with Tour
+  Review.destroy({ where: { id_tour: tourId } }).catch((err: string) => {
+    console.error('Failed to destroy all reviews by tourID: ', err);
+    res.sendStatus(500);
+  });
+
+  //finally, delete the tour record itself
+  Tour.destroy({ where: { id: tourId } })
+    .then(() => res.sendStatus(200))
+    .catch((err: string) => {
+      console.error('Failed to destroy tour by tourId: ', err);
       res.sendStatus(500);
     });
 });
