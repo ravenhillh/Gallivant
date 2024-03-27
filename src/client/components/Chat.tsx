@@ -119,17 +119,17 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
       })
       .catch((err) => console.log(err));
   };
-
+  //click to open chat pop up
   const handleClick = () => {
     setChatOpen(!chatOpen);
   };
-
+  //keydown for sending message
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       sendMessage();
     }
   };
-
+  //handleClose for new chat user alert
   const handleClose = () => {
   setOpen(false);
   };
