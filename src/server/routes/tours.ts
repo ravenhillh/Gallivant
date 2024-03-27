@@ -1,6 +1,6 @@
 import express from 'express';
 import { QueryTypes } from 'sequelize';
-import { db, User, Tour, Tours_Waypoints, Waypoint } from '../db/index';
+import { db, User, Tour, Review, Waypoint } from '../db/index';
 
 const tourRouter = express.Router();
 
@@ -94,7 +94,19 @@ tourRouter.delete('/db/deleteTour/:tourId', (req, res) => {
       res.sendStatus(500);
     });
 
+  //delete all Reviews associated with Tour
+  Review.destroy({ where: { id_tour: tourId } }).catch((err: string) => {
+    console.error('Failed to destroy all reviews by tourID: ', err);
+    res.sendStatus(500);
+  });
 
+  //finally, delete the tour record itself
+  Tour.destroy({ where: { id: tourId } })
+    .then(() => res.sendStatus(200))
+    .catch((err: string) => {
+      console.error('Failed to destroy tour by tourId: ', err);
+      res.sendStatus(500);
+    });
 });
 
 export default tourRouter;

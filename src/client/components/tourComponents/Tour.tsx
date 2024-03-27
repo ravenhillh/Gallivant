@@ -173,8 +173,8 @@ const Tour = (): JSX.Element => {
     axios
       .delete(`/db/deleteTour/${id}`)
       .then(() => {
-        getTour(id); //just temporarily for testing
         setDeleteTourModal(false);
+        navigate('/tours/all');
       })
       .catch((err: string) => console.error('Could not DELETE tour: ', err));
   };
