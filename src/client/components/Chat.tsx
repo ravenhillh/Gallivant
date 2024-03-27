@@ -119,17 +119,17 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
       })
       .catch((err) => console.log(err));
   };
-
+  //click to open chat pop up
   const handleClick = () => {
     setChatOpen(!chatOpen);
   };
-
+  //keydown for sending message
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       sendMessage();
     }
   };
-
+  //handleClose for new chat user alert
   const handleClose = () => {
   setOpen(false);
   };
@@ -139,16 +139,16 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
     marginTop: 0,
     marginBottom: 0,
     fontSize: '11px',
-    color: 'cadetblue'
+    color: 'cadetblue',
   };
 
   const style2 = {
     marginTop: 0,
     marginBottom: 0,
     fontSize: '14px',
-    lineHeight: .75,
+    lineHeight: 1.1,
     fontWeight: 500,
-    color: 'charcoal'
+    color: 'charcoal',
   };
 
   return (
@@ -170,7 +170,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.message}
                         primaryTypographyProps={style2}
-                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12} >
@@ -178,7 +177,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.username}
                         primaryTypographyProps={style}
-                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12}  >
@@ -186,7 +184,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={dayjs(message.createdAt).fromNow()}
                         primaryTypographyProps={style}
-                        style={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                   </Grid>
