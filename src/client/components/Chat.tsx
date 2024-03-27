@@ -139,7 +139,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
     marginTop: 0,
     marginBottom: 0,
     fontSize: '11px',
-    color: 'cadetblue'
+    color: 'cadetblue',
   };
 
   const style2 = {
@@ -148,7 +148,7 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
     fontSize: '14px',
     lineHeight: 1.1,
     fontWeight: 500,
-    color: 'charcoal'
+    color: 'charcoal',
   };
 
   return (
@@ -177,7 +177,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={message.username}
                         primaryTypographyProps={style}
-                        sx={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12}  >
@@ -185,7 +184,6 @@ const Chat = ({ socket, chatUser, chatTour, chatName }) => {
                         align={tour === undefined? (message.username === chatUser.username? 'right': 'left') :(message.username === user.username ? 'right' : 'left')}
                         primary={dayjs(message.createdAt).fromNow()}
                         primaryTypographyProps={style}
-                        style={{lineHeight: .75}}
                       ></ListItemText>
                     </Grid>
                   </Grid>
